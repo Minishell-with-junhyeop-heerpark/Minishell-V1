@@ -1,13 +1,16 @@
-#include <signal.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <unistd.h>
-#include <termios.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing_1.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/16 17:10:35 by junhyeop          #+#    #+#             */
+/*   Updated: 2024/03/16 17:45:02 by junhyeop         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "parsing.h"
 // gcc testsignal.c -lreadline -L/Users/sham/.brew/opt/readline/lib -I/Users/sham/.brew/opt/readline/include
 
 void sig_handler(int signal)
@@ -15,7 +18,7 @@ void sig_handler(int signal)
     if (signal == SIGINT)
     {
         //printf("\033[K"); 지워버리는 것을 원하지는 않았음.
-        printf("nanoshell$ \n");
+        printf("minishell$ \n");
     }
 
     if (rl_on_new_line() == -1) // readline으로 설정한 문자열을 한 번 출력한다?
@@ -39,16 +42,19 @@ int main(int argc, char **argv, char **envp)
 
     char *str;
     struct termios term;
+    // 터미널 세팅
     tcgetattr(STDIN_FILENO, &term);
     term.c_lflag &= ~(ECHOCTL);
     tcsetattr(STDIN_FILENO, TCSANOW, &term);
+    // 시그널 세팅
     setting_signal();
 
     while (1)
     {
-        str = readline("nanoshell$ ");
+        str = readline("minishell$ ");
         if (!str)
         {
+            //  minishell$ exit
             printf("\033[1A");
             printf("\033[10C");
             printf(" exit\n");
