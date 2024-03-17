@@ -3,23 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaechoe <jaechoe@student.42seoul.k>        +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/05 14:57:29 by jaechoe           #+#    #+#             */
-/*   Updated: 2023/10/23 18:17:00 by jaechoe          ###   ########.fr       */
+/*   Created: 2023/10/06 15:10:29 by junhyeop          #+#    #+#             */
+/*   Updated: 2023/11/03 17:47:59 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "libft.h"
 
-void	*ft_memset(void *b, int c, size_t len)
+void	*ft_memset(void *dest, int c, size_t count)
 {
-	unsigned char	val;
-	unsigned char	*b_c;
+	unsigned char	*f_dest;
+	size_t			i;
 
-	val = (unsigned char) c;
-	b_c = (unsigned char *) b;
-	while (len--)
-		*b_c++ = val;
-	return (b);
+	i = 0;
+	f_dest = (unsigned char *)dest;
+	while (i < count)
+		f_dest[i++] = (unsigned char)c;
+	return ((void *)f_dest);
 }
+
+// #include <stdio.h>
+// #include <string.h>
+// int main() {
+// 	void *dest = " ";
+// 	if (ft_memset(dest, 0, 0) == NULL)
+// 		printf("sdaf");
+// }

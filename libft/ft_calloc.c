@@ -3,27 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaechoe <jaechoe@student.42seoul.k>        +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/06 20:20:06 by jaechoe           #+#    #+#             */
-/*   Updated: 2023/10/23 18:46:39 by jaechoe          ###   ########.fr       */
+/*   Created: 2023/10/07 18:55:49 by junhyeop          #+#    #+#             */
+/*   Updated: 2023/11/03 18:30:35 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "libft.h"
 
-void	*ft_calloc(size_t count, size_t size)
+void	*ft_calloc(size_t num, size_t size)
 {
-	void	*p;
-	size_t	len;
+	void	*mem;
 
-	if (size && count > (size_t) -1 / size)
-		return (0);
-	len = count * size;
-	p = malloc(len);
-	if (!p)
-		return (0);
-	ft_bzero(p, len);
-	return (p);
+	if (num && size > ((size_t) 0 - 1) / num)
+	{
+		return (NULL);
+	}
+	mem = malloc((size) * num);
+	if (!(mem))
+		return (NULL);
+	ft_bzero(mem, size * num);
+	return (mem);
 }
+
+// #include <stdio.h>
+// #include <stdlib.h>
+// int main(void) {
+// 	if(ft_calloc(2147483647, 2147483647) == NULL) {
+// 		printf("asdf");
+// 	}
+// }

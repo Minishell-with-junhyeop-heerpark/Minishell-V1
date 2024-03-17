@@ -3,16 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaechoe <jaechoe@student.42seoul.k>        +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/09 22:10:08 by jaechoe           #+#    #+#             */
-/*   Updated: 2023/10/09 22:11:22 by jaechoe          ###   ########.fr       */
+/*   Created: 2023/10/13 16:24:38 by junhyeop          #+#    #+#             */
+/*   Updated: 2023/11/03 17:47:48 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "libft.h"
 
 void	ft_putchar_fd(char c, int fd)
 {
+	if (fd < 0)
+		return ;
 	write(fd, &c, 1);
 }
+
+// int main(void)
+// {
+// 	char c = 'a';
+// 	int fd = 0;
+// 	ft_putchar_fd(c, fd);
+
+// }

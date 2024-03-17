@@ -3,19 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaechoe <jaechoe@student.42seoul.k>        +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/09 22:14:48 by jaechoe           #+#    #+#             */
-/*   Updated: 2024/01/17 19:47:26 by jaechoe          ###   ########.fr       */
+/*   Created: 2023/10/13 16:37:53 by junhyeop          #+#    #+#             */
+/*   Updated: 2023/11/03 17:46:42 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include "libft.h"
 
 void	ft_putstr_fd(char *s, int fd)
 {
-	if (!s || write(fd, 0, 0) == -1)
+	if (!s || fd < 0)
 		return ;
-	write(fd, s, ft_strlen(s));
+	while (*s)
+	{
+		write(fd, s, 1);
+		s++;
+	}
 }
+
+// int main(void)
+// {
+// 	char *a = "abcd";
+// 	ft_putstr_fd(a, 1);
+// }

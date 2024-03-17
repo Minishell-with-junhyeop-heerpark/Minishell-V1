@@ -3,34 +3,52 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaechoe <jaechoe@student.42seoul.k>        +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/05 15:13:28 by jaechoe           #+#    #+#             */
-/*   Updated: 2023/11/02 21:39:50 by jaechoe          ###   ########.fr       */
+/*   Created: 2023/10/06 15:53:55 by junhyeop          #+#    #+#             */
+/*   Updated: 2023/11/03 17:49:24 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "libft.h"
 
 void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	int			*dst_i;
-	const int	*src_i;
-	char		*dst_c;
-	const char	*src_c;
+	unsigned char	*f_dst;
+	unsigned char	*f_src;
 
-	if (dst == src)
-		return (dst);
-	dst_i = (int *) dst;
-	src_i = (const int *) src;
-	while (n >= sizeof(int))
-	{
-		*dst_i++ = *src_i++;
-		n -= sizeof(int);
-	}
-	dst_c = (char *) dst_i;
-	src_c = (const char *) src_i;
+	if (dst == NULL && src == NULL)
+		return (NULL);
+	f_dst = (unsigned char *)dst;
+	f_src = (unsigned char *)src;
 	while (n--)
-		*dst_c++ = *src_c++;
+	{
+		*f_dst++ = *f_src++;
+	}
 	return (dst);
 }
+
+// #include<string.h>
+// #include<stdio.h>
+
+// int main(void)
+// {
+//     char src[] = "BlockDMask";
+//     char dest1[] = "abcdefghijklmnop";
+//     char dest2[] = "abcdefghijklmnop";
+
+//     // 메모리 복사1 : src 길이만큼만 복사
+//     memcpy(NULL, NULL, sizeof(char) * 10);
+
+//     // 메모리 복사2 : src 길이 + 1 만큼 복사
+//     ft_memcpy(NULL, NULL, sizeof(char) * 10);
+
+//     // source
+//     printf("src  : %s\n", src);
+
+//     // destination
+//     printf("dest1 : %s\n", dest1);
+//     printf("dest2 : %s\n", dest2);
+
+//     return 0;
+// }

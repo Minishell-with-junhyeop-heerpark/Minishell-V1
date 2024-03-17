@@ -1,22 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstswap.c                                       :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaechoe <jaechoe@student.42seoul.k>        +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/23 15:52:08 by jaechoe           #+#    #+#             */
-/*   Updated: 2023/10/23 15:55:03 by jaechoe          ###   ########.fr       */
+/*   Created: 2024/03/17 06:30:07 by junhyeop          #+#    #+#             */
+/*   Updated: 2024/03/17 06:30:59 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-void	ft_lstswap(t_list *node1, t_list *node2)
+void	error_msg(int type)
 {
-	void	*temp;
-
-	temp = node1->content;
-	node1->content = node2->content;
-	node2->content = temp;
+	if (type == 1)
+		ft_putstr_fd("malloc error\n", 2);
+	exit(1);
 }

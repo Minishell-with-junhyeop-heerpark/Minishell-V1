@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew_s.c                                      :+:      :+:    :+:   */
+/*   printf_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaechoe <jaechoe@student.42seoul.k>        +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/06 17:21:23 by jaechoe           #+#    #+#             */
-/*   Updated: 2024/01/06 17:21:41 by jaechoe          ###   ########.fr       */
+/*   Created: 2023/11/11 21:36:15 by junhyeop          #+#    #+#             */
+/*   Updated: 2024/02/20 21:48:57 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "libft.h"
+#include "ft_printf.h"
 
-t_list	*ft_lstnew_s(void *content)
+int	ft_putstr(char *s)
 {
-	t_list	*node;
-
-	node = malloc(sizeof(t_list));
-	while (!node)
-		node = malloc(sizeof(t_list));
-	node->content = content;
-	node->next = 0;
-	return (node);
+	if (!s)
+		return (0);
+	while (*s)
+	{
+		if (write(1, s, 1) == -1)
+			return (0);
+		s++;
+	}
+	return (1);
 }

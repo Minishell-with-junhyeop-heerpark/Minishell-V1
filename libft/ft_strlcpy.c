@@ -3,29 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaechoe <jaechoe@student.42seoul.k>        +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/05 17:17:48 by jaechoe           #+#    #+#             */
-/*   Updated: 2023/10/06 17:24:24 by jaechoe          ###   ########.fr       */
+/*   Created: 2023/10/06 18:44:50 by junhyeop          #+#    #+#             */
+/*   Updated: 2023/11/03 17:44:00 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
 #include "libft.h"
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
-	size_t	len_src;
+	size_t	i;
+	size_t	len;
 
-	len_src = ft_strlen(src);
+	len = ft_strlen(src);
+	i = 0;
 	if (dstsize == 0)
-		return (len_src);
-	if (dstsize < len_src + 1)
+		return (len);
+	while (src[i] != 0 && i < dstsize - 1)
 	{
-		ft_memcpy(dst, src, dstsize - 1);
-		*(dst + dstsize - 1) = 0;
+		dst[i] = src[i];
+		i++;
 	}
-	else
-		ft_memcpy(dst, src, len_src + 1);
-	return (len_src);
+	dst[i] = 0;
+	return (len);
 }

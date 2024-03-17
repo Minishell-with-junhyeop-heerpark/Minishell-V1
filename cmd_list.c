@@ -1,32 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_2.c                                        :+:      :+:    :+:   */
+/*   cmd_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/16 17:10:29 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/03/16 17:48:31 by junhyeop         ###   ########.fr       */
+/*   Created: 2024/03/17 06:22:43 by junhyeop          #+#    #+#             */
+/*   Updated: 2024/03/17 07:55:34 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int tokenizing(char *str)
+#include "minishell.h"
+
+t_head	*list_init()
 {
-	if (error_check(str))
-	{
-		;
-	}
+	t_head	*head;
+	
+	head = (t_head *)malloc(sizeof(t_head));
+	if (!head)
+		error_msg(1);
+	head->top = NULL;
+	head->size = 0;
+	return (head);
 }
 
-int	error_check(char *str)
+t_list	*ft_lstnew(char *cmd)
 {
-	int i;
-	char *word;
+	t_list	*newnode;
 
-
-	while (str[i] != ' ')
-		i++;
-	word = (char *)malloc
-	
-	ft_split()
+	newnode = (t_list *)malloc(sizeof(t_list));
+	if (!newnode)
+		error_msg(1);
+	newnode->next = NULL;
+	newnode->cmd = cmd;
+	return (newnode);
 }

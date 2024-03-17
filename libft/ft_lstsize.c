@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaechoe <jaechoe@student.42seoul.k>        +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/10 16:37:45 by jaechoe           #+#    #+#             */
-/*   Updated: 2023/10/10 19:12:04 by jaechoe          ###   ########.fr       */
+/*   Created: 2023/10/13 19:32:56 by junhyeop          #+#    #+#             */
+/*   Updated: 2023/11/03 17:52:01 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 int	ft_lstsize(t_list *lst)
 {
-	int	size;
+	int		cnt;
 
-	size = 0;
+	cnt = 0;
 	while (lst)
 	{
-		size++;
+		cnt++;
 		lst = lst->next;
 	}
-	return (size);
+	return (cnt);
 }

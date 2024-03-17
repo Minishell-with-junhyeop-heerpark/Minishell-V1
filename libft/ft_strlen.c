@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaechoe <jaechoe@student.42seoul.k>        +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/05 13:38:04 by jaechoe           #+#    #+#             */
-/*   Updated: 2023/10/11 16:35:41 by jaechoe          ###   ########.fr       */
+/*   Created: 2023/10/06 15:08:49 by junhyeop          #+#    #+#             */
+/*   Updated: 2023/11/08 17:15:00 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "libft.h"
 
 size_t	ft_strlen(const char *s)
 {
-	size_t	len;
+	size_t	n;
 
-	len = 0;
-	while (*s++)
-		len++;
-	return (len);
+	n = 0;
+	while (s[n] != 0)
+		n++;
+	return ((size_t)n);
 }

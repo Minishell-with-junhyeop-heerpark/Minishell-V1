@@ -3,89 +3,99 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaechoe <jaechoe@student.42seoul.k>        +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/07 21:34:54 by jaechoe           #+#    #+#             */
-/*   Updated: 2024/01/23 19:24:17 by jaechoe          ###   ########.fr       */
+/*   Created: 2024/01/23 17:06:55 by junhyeop          #+#    #+#             */
+/*   Updated: 2024/03/17 04:22:05 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "libft.h"
 
-static char	*strdup_delim(const char *s1, char c)
+size_t	ft_strlen(const char *s)
 {
-	char	*dst;
-	size_t	len;
+	size_t	n;
 
-	len = 0;
-	while (*s1 && (*s1 != c))
-	{
-		len++;
-		s1++;
-	}
-	s1 -= len;
-	dst = malloc(len + 1);
-	if (!dst)
-		return (0);
-	ft_memcpy(dst, s1, len);
-	*(dst + len) = 0;
-	return (dst);
+	n = 0;
+	while (s[n] != 0)
+		n++;
+	return ((size_t)n);
 }
 
-static size_t	cnt_str(char const *s, char c)
+char	**freeall(char **strs)
 {
-	size_t	cnt;
+	int	i;
 
-	cnt = 0;
+	i = 0;
+	while (strs[i])
+		free(strs[i++]);
+	free(strs);
+	return (NULL);
+}
+
+int	strcnt(char const *s, char c)
+{
+	int	n;
+
+	n = 0;
 	while (*s)
 	{
-		while (*s == c)
+		while (*s && *s == c)
 			s++;
 		if (*s)
-			cnt++;
-		while (*s && (*s != c))
+			n++;
+		while (*s && *s != c)
 			s++;
 	}
-	return (cnt);
+	return (n);
 }
 
-char	**free2d(char **arr, size_t size)
+char	*split_str(char const *s, char c)
 {
-	while (size)
+	int		n;
+	int		i;
+	char	*str;
+
+	n = 0;
+	i = 0;
+	while (s[n] && s[n] != c)
+		n++;
+	str = (char *)malloc(sizeof(char) * (n + 1));
+	if (!str)
+		return (NULL);
+	while (i < n)
 	{
-		free(*(arr + size - 1));
-		size--;
+		str[i] = s[i];
+		i++;
 	}
-	free(arr);
-	return (NULL);
+	str[i] = 0;
+	return (str);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	char	**result;
-	char	**ptr;
-	size_t	size;
+	char	**strs;
+	int		n;
+	int		i;
 
-	size = cnt_str(s, c);
-	result = malloc((size + 1) * sizeof(char *));
-	if (!result)
-		return (0);
-	ptr = result;
-	while (*s)
+	if (!s)
+		return (NULL);
+	n = strcnt(s, c);
+	strs = (char **)malloc(sizeof(char *) * (n + 1));
+	if (!strs)
+		return (NULL);
+	i = 0;
+	while (i < n)
 	{
-		while (*s == c)
+		while (*s && *s == c)
 			s++;
 		if (*s)
-		{
-			*ptr = strdup_delim(s, c);
-			if (*ptr == 0)
-				return (free2d(result, ptr - result));
-			ptr++;
-		}
-		while (*s && (*s != c))
+			strs[i] = split_str(s, c);
+		if (strs[i++] == 0)
+			return (freeall(strs));
+		while (*s && *s != c)
 			s++;
 	}
-	*ptr = 0;
-	return (result);
+	strs[i] = 0;
+	return (strs);
 }

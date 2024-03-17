@@ -3,43 +3,60 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaechoe <jaechoe@student.42seoul.k>        +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/07 15:11:44 by jaechoe           #+#    #+#             */
-/*   Updated: 2023/10/11 15:35:12 by jaechoe          ###   ########.fr       */
+/*   Created: 2023/10/07 18:48:41 by junhyeop          #+#    #+#             */
+/*   Updated: 2023/11/03 17:07:39 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "libft.h"
 
-static int	is_in(char c, char const *set)
+int	check_set(char c, char const *set)
 {
 	while (*set)
-		if (*set++ == c)
+	{
+		if (c == *set)
 			return (1);
+		set++;
+	}
 	return (0);
 }
 
 char	*ft_strtrim(char const *s1, char const *set)
 {
-	char	*result;
-	char	*start;
-	char	*end;
-	size_t	len;
+	char	*str;
+	size_t	start;
+	size_t	end;
 
-	start = (char *) s1;
-	while (is_in(*start, set))
+	if (!s1)
+		return (NULL);
+	if (!set)
+		return (ft_strdup(s1));
+	start = 0;
+	end = ft_strlen(s1);
+	while (s1[start] && check_set(s1[start], set))
 		start++;
-	end = start + ft_strlen(start);
-	if (end > start)
-		while (is_in(*(end - 1), set))
-			end--;
-	len = end - start;
-	result = malloc(len + 1);
-	if (!result)
-		return (0);
-	ft_memcpy(result, start, len);
-	*(result + len) = 0;
-	return (result);
+	while (s1[end - 1] && check_set(s1[end - 1], set))
+	{
+		if (end - 1 < 1)
+			break ;
+		end--;
+	}
+	if (start > end)
+		return (ft_strdup(""));
+	str = (char *)malloc(sizeof(char) * (end - start + 1));
+	if (!str)
+		return (NULL);
+	ft_strlcpy(str, s1 + start, end - start + 1);
+	return (str);
 }
+
+// #include <stdio.h>
+// int main()
+// {
+// 	// char *s1 = "****12341234&&&&";
+// 	// char *s2 = "*&";
+// 	char *s3 = ft_strtrim("tripouille   xxx", " x");
+// 	printf("%s %zu\n", s3, ft_strlen(s3));
+// }

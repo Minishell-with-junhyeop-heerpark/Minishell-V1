@@ -3,33 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaechoe <jaechoe@student.42seoul.k>        +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/05 20:26:04 by jaechoe           #+#    #+#             */
-/*   Updated: 2023/10/11 20:25:56 by jaechoe          ###   ########.fr       */
+/*   Created: 2023/10/06 18:42:31 by junhyeop          #+#    #+#             */
+/*   Updated: 2023/11/03 18:01:53 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
 #include "libft.h"
 
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 {
-	size_t	len_dst;
-	size_t	len_src;
+	size_t	i;
+	size_t	d_len;
+	size_t	s_len;
 
-	len_src = ft_strlen(src);
 	if (dstsize == 0)
-		return (len_src);
-	len_dst = ft_strlen(dst);
-	if (dstsize < len_dst + 1)
-		return (dstsize + len_src);
-	if (dstsize < len_dst + len_src + 1)
+		return (ft_strlen(src));
+	d_len = ft_strlen(dst);
+	s_len = ft_strlen(src);
+	i = 0;
+	while (src[i] != 0 && d_len + i + 1 < dstsize)
 	{
-		ft_memcpy(dst + len_dst, src, dstsize - len_dst - 1);
-		*(dst + dstsize - 1) = 0;
+		dst[d_len + i] = src[i];
+		i++;
 	}
-	else
-		ft_memcpy(dst + len_dst, src, len_src + 1);
-	return (len_dst + len_src);
+	dst[d_len + i] = 0;
+	if (dstsize > d_len)
+		return (s_len + d_len);
+	return (s_len + dstsize);
 }
+
+// #include <stdio.h>
+// #include <string.h>
+// int	main(void)
+// {
+//     char s1[50] = "hello";
+//     char s2[7] = "world";
+//     char s3[50] = "hello";
+
+//     size_t j = strlcat(s2, s1, 0);
+//     printf("%zu\n", j);			// 10
+//     printf("%s\n", s1);			// hellowo
+//     j = ft_strlcat(0, s3, 0);
+//     printf("%zu\n", j);			// 10
+//     printf("%s\n", s3);			// hellowo
+// }

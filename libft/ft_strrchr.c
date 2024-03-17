@@ -3,29 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaechoe <jaechoe@student.42seoul.k>        +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/05 21:48:52 by jaechoe           #+#    #+#             */
-/*   Updated: 2023/10/11 15:41:09 by jaechoe          ###   ########.fr       */
+/*   Created: 2023/10/06 19:36:17 by junhyeop          #+#    #+#             */
+/*   Updated: 2023/11/08 17:16:52 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "libft.h"
 
-char	*ft_strrchr(const char *s, int c)
+char	*ft_strrchr(const char *string, int c)
 {
-	size_t	len;
+	const char	*last;
 
-	len = 0;
-	while (*s)
+	last = NULL;
+	while (*string)
 	{
-		len++;
-		s++;
+		if (*string == (unsigned char)c)
+			last = string;
+		string++;
 	}
-	if (!c)
-		return ((char *) s);
-	while (len-- != 0)
-		if (*(--s) == c)
-			return ((char *) s);
-	return (0);
+	if (*string == (unsigned char) c)
+		return ((char *)string);
+	return ((char *)last);
 }
+
+// #include <stdio.h>
+// #include <string.h>
+// int main(void){
+// 		char s2[] = "ltripouiel";
+// 		printf("%s",strrchr(s2, 'e'));
+// }

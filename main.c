@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_1.c                                        :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:10:35 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/03/16 17:45:02 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/03/17 06:34:26 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "minishell.h"
 // gcc testsignal.c -lreadline -L/Users/sham/.brew/opt/readline/lib -I/Users/sham/.brew/opt/readline/include
 
 void sig_handler(int signal)
@@ -40,15 +40,19 @@ int main(int argc, char **argv, char **envp)
 	(void)argv;
 	(void)envp;
 
-    char *str;
-    struct termios term;
+    char			*str;
+    struct termios	term;
+	t_head			*cmd_list;
+
     // 터미널 세팅
     tcgetattr(STDIN_FILENO, &term);
     term.c_lflag &= ~(ECHOCTL);
     tcsetattr(STDIN_FILENO, TCSANOW, &term);
     // 시그널 세팅
+	
     setting_signal();
-
+	cmd_list = list_init();
+	printf("Welcome to minishell!\n");
     while (1)
     {
         str = readline("minishell$ ");
@@ -67,6 +71,7 @@ int main(int argc, char **argv, char **envp)
         else
         {
             add_history(str);
+			parse(str, cmd_list);
             printf("%s\n", str);
             free(str);
         }

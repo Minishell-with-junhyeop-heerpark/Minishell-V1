@@ -3,31 +3,51 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaechoe <jaechoe@student.42seoul.k>        +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/04 20:56:48 by jaechoe           #+#    #+#             */
-/*   Updated: 2023/10/25 16:41:16 by jaechoe          ###   ########.fr       */
+/*   Created: 2023/10/04 19:43:55 by junhyeop          #+#    #+#             */
+/*   Updated: 2023/11/05 19:53:03 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "libft.h"
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char	*dst;
+	size_t	slen;
+	size_t	idx;
+	char	*substr;
 
 	if (!s)
-		return (0);
-	while (start--)
-		if (!*++s)
-			return (ft_calloc(1, sizeof(char)));
-	if (len >= ft_strlen(s))
-		return (ft_strdup(s));
-	dst = malloc(len + 1);
-	if (!dst)
-		return (0);
-	ft_memcpy(dst, s, len);
-	*(dst + len) = 0;
-	return (dst);
+		return (NULL);
+	slen = ft_strlen(s);
+	if (slen <= start || len == 0)
+		return ((char *)ft_calloc(1, sizeof(char)));
+	if (slen - start <= len)
+		return (ft_strdup(s + start));
+	substr = (char *)malloc(sizeof(char) * (len + 1));
+	if (!substr)
+		return (NULL);
+	idx = 0;
+	while (idx < len && s[idx + start] != 0)
+	{
+		substr[idx] = s[idx + start];
+		idx++;
+	}
+	substr[idx] = 0;
+	return (substr);
 }
+
+// #include <stdio.h>
+// #include <string.h>
+// int main(){
+// 	char * s = ft_substr("tripouille", 0, 42000);
+
+// 	// printf("%zu\n", strlen(s));
+// 	// printf("%s\n", s);
+
+// 	s = ft_substr("tripouille", 1, 1);
+
+// 	printf("%zu\n", strlen(s));
+// 	printf("%s\n", s);
+// }

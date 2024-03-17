@@ -3,24 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaechoe <jaechoe@student.42seoul.k>        +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/10 14:45:08 by jaechoe           #+#    #+#             */
-/*   Updated: 2024/01/06 17:22:53 by jaechoe          ###   ########.fr       */
+/*   Created: 2023/10/13 19:14:40 by junhyeop          #+#    #+#             */
+/*   Updated: 2024/03/17 06:48:14 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "libft.h"
 
 t_list	*ft_lstnew(void *content)
 {
-	t_list	*node;
+	t_list	*newnode;
 
-	node = malloc(sizeof(t_list));
-	if (!node)
+	newnode = (t_list *)malloc(sizeof(t_list));
+	if (!newnode)
 		return (NULL);
-	node->content = content;
-	node->next = 0;
-	return (node);
+	newnode->next = NULL;
+	newnode->content = content;
+	return (newnode);
 }

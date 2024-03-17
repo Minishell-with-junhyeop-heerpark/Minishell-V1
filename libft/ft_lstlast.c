@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaechoe <jaechoe@student.42seoul.k>        +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/10 16:44:16 by jaechoe           #+#    #+#             */
-/*   Updated: 2023/10/11 17:17:34 by jaechoe          ###   ########.fr       */
+/*   Created: 2023/10/13 19:36:49 by junhyeop          #+#    #+#             */
+/*   Updated: 2023/11/03 17:54:13 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,12 @@
 
 t_list	*ft_lstlast(t_list *lst)
 {
+	t_list	*tmp;
+
 	if (!lst)
-		return (0);
-	while (lst->next)
-		lst = lst->next;
-	return (lst);
+		return (NULL);
+	tmp = lst;
+	while (tmp->next)
+		tmp = tmp->next;
+	return (tmp);
 }

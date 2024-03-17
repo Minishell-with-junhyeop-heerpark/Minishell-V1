@@ -3,34 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaechoe <jaechoe@student.42seoul.k>        +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/06 19:45:40 by jaechoe           #+#    #+#             */
-/*   Updated: 2023/10/06 19:54:45 by jaechoe          ###   ########.fr       */
+/*   Created: 2024/01/23 17:19:48 by junhyeop          #+#    #+#             */
+/*   Updated: 2024/02/02 19:36:40 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
+
+int	is_space(char c)
+{
+	if ((c >= 9 && c <= 13) || c == ' ')
+		return (1);
+	return (0);
+}
+
 int	ft_atoi(const char *str)
 {
-	int	num;
-	int	sign;
+	long long	res;
+	int			sign;
 
-	while ((*str >= 9 && *str <= 13) || *str == 32)
-		str++;
+	res = 0;
 	sign = 1;
-	if (*str == '+' || *str == '-')
+	if (*str == 0 || ft_strlen(str) > 11)
+		return (0);
+	while (is_space(*str))
+		str++;
+	if (*str == '-' || *str == '+')
+	{
 		if (*str++ == '-')
 			sign = -1;
-	if (*str >= '0' && *str <= '9')
-	{
-		num = 0;
-		while (1)
-		{
-			if (*str < '0' || *str > '9')
-				break ;
-			num = num * 10 + *str++ - '0';
-		}
-		return (sign * num);
 	}
-	return (0);
+	if (*str < '0' || *str > '9')
+		return (0);
+	while (*str != 0)
+	{
+		if (*str < '0' || *str > '9')
+			return (0);
+		res = (res * 10) + (*str++ - 48) * (sign);
+		if (res < -2147483648 || res > 2147483647)
+			return (0);
+	}
+	return (res);
 }

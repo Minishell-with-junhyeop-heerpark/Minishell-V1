@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isprint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaechoe <jaechoe@student.42seoul.k>        +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/05 14:54:29 by jaechoe           #+#    #+#             */
-/*   Updated: 2023/10/05 17:06:10 by jaechoe          ###   ########.fr       */
+/*   Created: 2023/10/06 15:06:18 by junhyeop          #+#    #+#             */
+/*   Updated: 2023/11/03 17:58:17 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
+
 int	ft_isprint(int c)
 {
-	if (c >= ' ' && c <= '~')
+	if (c >= 32 && c <= 126)
 		return (1);
 	return (0);
 }
