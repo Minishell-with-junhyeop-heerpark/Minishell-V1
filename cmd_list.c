@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 06:22:43 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/03/17 07:55:34 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/03/21 22:40:54 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_head	*list_init()
 {
 	t_head	*head;
-	
+
 	head = (t_head *)malloc(sizeof(t_head));
 	if (!head)
 		error_msg(1);
@@ -24,7 +24,7 @@ t_head	*list_init()
 	return (head);
 }
 
-t_list	*ft_lstnew(char *cmd)
+t_list	*cmd_list_new(char *command)
 {
 	t_list	*newnode;
 
@@ -32,6 +32,51 @@ t_list	*ft_lstnew(char *cmd)
 	if (!newnode)
 		error_msg(1);
 	newnode->next = NULL;
-	newnode->cmd = cmd;
+	newnode->prev = NULL;
+	newnode->cmd = add_token(command);
 	return (newnode);
+}
+
+t_token	*token_list_new(char *command)
+{
+	t_token	*new;
+
+	new = (t_token *)malloc(sizeof(t_token));
+	if (!new)
+		error_msg(1);
+	new->prev = NULL;
+	new->next = NULL;
+	new->redir_flag = 0;
+	new->cmd = command;
+}
+
+t_token	*add_token(t_list *lst, char *command)
+{
+	int		i;
+	t_list	*cmds;
+	
+	i = 0;
+	cmds = space_split(command);
+	
+}
+
+void	ft_lstadd_back(t_head *head, t_list *new)
+{
+	t_list	*tmp;
+
+	tmp = head->top;
+	if (tmp == NULL)
+	{
+		tmp = new;
+		return ; 
+	}
+	else if (tmp == NULL && new == NULL)
+		return ;
+	else
+	{
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = new;
+		new->prev = tmp;
+	}
 }
