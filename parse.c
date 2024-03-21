@@ -6,56 +6,68 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:10:29 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/03/17 08:25:32 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/03/21 22:23:40 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	quote_check(char c, int quote_flag)
+int	quote_check(char c, t_flag *flag)
 {
-	if ((c == '\'' || c == '\"') && quote_flag == 0)
+	if (flag->dquote == 1)
+		return (flag->quote);
+	if ((c == '\'' || c == '\"') && flag->quote == 0)
 		return (1);
-	else if ((c == '\'' || c == '\"') && quote_flag == 1)
-		return (0);
+	if ((c == '\'' || c == '\"') && flag->quote == 1)
+		return (0); 
 }
 
-void	add_cmd(t_head *head, char *line, int pipe_flag)
+int	dquote_check(char c, t_flag *flag)
 {
-	t_list	*new;
+	if (flag->quote == 1)
+		return (flag->dquote);
+	if ((c == '\'' || c == '\"') && flag->dquote == 0)
+		return (1);
+	if ((c == '\'' || c == '\"') && flag->dquote == 1)
+		return (0); 
+}
 
-	new = (t_list *)malloc(sizeof(t_list));
-	if (!new)
+
+
+t_list	*add_cmd(t_head *head, char *line, int pipe_flag)
+{
+	int		i;
+	char	*command;
+
+	i = 0;
+	if (*line == ' ')
+		line++;
+	command = ft_strdup(line);
+	if (!command)
 		error_msg(1);
-	new->next = head->top;
-	head->top = new;
-	new->cmd = cmd_split(line, ' ');
-	if (!new->cmd)
-		error_msg(1);
-	
+	ft_lstadd_back(head, cmd_list_new(command));
 }
 
 void	parse(char *line, t_head *head)
 {
-	t_falg	flag;
-	int		s_ind;
+	t_flag	flag;
+	int		start;
 	int		i;
 
-	flag = (t_falg){0, 0, 1};
+	flag = (t_flag){0, 0, 1};
 	i = 0;
-	s_ind = 0;
+	start = 0;
 	while (1)
 	{
-		flag.quote = quote_check(line[i], flag.quote);
-		if (line[i] == '\0' || (line[i] == '|' && flag.quote == 0))
+		flag.quote = quote_check(line[i], &flag);	// quote 여부 확인
+		flag.dquote = dquote_check(line[i], &flag); // dquote 여부 확인
+		if (line[i] == '\0' || (line[i] == '|' && flag.quote == 0) && flag.dquote == 0)
 		{
 			if (line[i] == '\0')
-				flag.pipe = 0;
-			line[i] = '\0';
-			
-			add_cmd(head, &line[s_ind], flag.pipe);
-			
-			s_ind = i + 1;
+				flag.pipe = 0;	// 끝난 부분이 pipe가 아니라면
+			line[i] = '\0';		// 분리하기 쉽게 널 값으로 변환
+			add_cmd(head, &line[start], flag.pipe);
+			start = i + 1;
 			if (flag.pipe == 0)
 				break ;
 		}
@@ -63,20 +75,20 @@ void	parse(char *line, t_head *head)
 	}
 }
 
-int	error_check(char *str)
-{
-	int n;
-	char *command;
+// int	error_check(char *str)
+// {
+// 	int n;
+// 	char *command;
 
-	n = 0;
-	while (str[n] != ' ' || str[n] != ';' || str[n] != '|')
-		n++;
-	command = (char *)malloc(sizeof(char) * n + 1);
-	command = memcpy(command, str, n);
-	printf("%s", command);
-	// ft_split()
-	return (1);
-}
+// 	n = 0;
+// 	while (str[n] != ' ' || str[n] != ';' || str[n] != '|')
+// 		n++;
+// 	command = (char *)malloc(sizeof(char) * n + 1);
+// 	command = memcpy(command, str, n);
+// 	printf("%s", command);
+// 	split_pipe(str);
+// 	return (1);
+// }
 
 // int main(int ac, char **av, char **envp)
 // {
@@ -87,7 +99,7 @@ int	error_check(char *str)
 // 		printf("%s\n", *envp);
 // 		envp++;
 // 	}
-	
+
 // 	error_check("asdhfjkl sdfsdkf | dsfjklds");
 // 	return (0);
 // }
