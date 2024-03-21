@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:10:35 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/03/17 06:34:26 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/03/21 22:00:00 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ int main(int argc, char **argv, char **envp)
         {
             add_history(str);
 			parse(str, cmd_list);
-            printf("%s\n", str);
+			make_token(cmd_list);
+            // printf("%s\n", str);
             free(str);
         }
     }
