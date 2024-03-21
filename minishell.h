@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:27:44 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/03/17 08:09:43 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/03/21 22:55:04 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,22 +34,32 @@ void	parse(char *str, t_head *head);
 
 typedef struct s_token
 {
-	char	*cmd;
-	char	redir_flag;
+	char			*cmd;
+	int				redir_flag;
+	struct s_token	*next;
+	struct s_token	*prev;
 }	t_token;
 
-typedef struct s_falg
+typedef struct s_flag
 {
 	int	quote;
 	int	dquote;
 	int pipe;
 
-}	t_falg;
+}	t_flag;
 
-typedef struct s_list
+typedef struct s_split_list 
 {
 	char			*cmd;
 	struct s_list	*next;
+	struct s_list	*prev;
+}	t_split_list;
+
+typedef struct s_list
+{
+	t_token			*cmd;
+	struct s_list	*next;
+	struct s_list	*prev;
 }	t_list;
 
 typedef struct s_head {
@@ -60,7 +70,11 @@ typedef struct s_head {
 void	error_msg(int type);
 
 t_head	*list_init();
-t_list	*ft_lstnew(char *cmd);
+t_list	*cmd_list_new(char *command);
+void	ft_lstadd_back(t_list **lst, t_list *new);
 
+char	**split_pipe(char const *s);
+
+void	make_token(t_head *head);
 
 #endif
