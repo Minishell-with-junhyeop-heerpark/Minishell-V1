@@ -12,11 +12,13 @@
 
 #include "minishell.h"
 
-void	make_token(t_head *head)
-{
-	t_list	*tmp;
-	char	**cmds;
+// void	make_token(t_head *head)
+// {
+// 	t_list	*tmp;
+// 	char	**cmds;
 
-	tmp = head->top;
-	cmds = ft_split();
-}
+// 	tmp = head->top;
+// 	cmds = split_space(head, ' ');
+// }
+
+// pipe -> space -> redir

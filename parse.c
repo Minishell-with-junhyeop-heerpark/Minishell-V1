@@ -61,7 +61,7 @@ void	parse(char *line, t_head *head)
 	{
 		flag.quote = quote_check(line[i], &flag);	// quote 여부 확인
 		flag.dquote = dquote_check(line[i], &flag); // dquote 여부 확인
-		if (line[i] == '\0' || (line[i] == '|' && flag.quote == 0) && flag.dquote == 0)
+		if (line[i] == '\0' || (line[i] == '|' && (flag.quote == 0 || flag.dquote == 0)))
 		{
 			if (line[i] == '\0')
 				flag.pipe = 0;	// 끝난 부분이 pipe가 아니라면

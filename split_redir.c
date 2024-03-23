@@ -10,11 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "minishell.h"
-
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include "minishell.h"
 
 void	ft_putstr_fd(char *s, int fd)
 {
@@ -97,7 +93,7 @@ char	*split_str(char const *s, char c)
 	return (str);
 }
 
-char	**split_redir(char const *s)
+char	**split_redir(t_list *lst)
 {
 	char	**strs;
 	int		n;
@@ -105,7 +101,7 @@ char	**split_redir(char const *s)
 
 	if (!s)
 		return (NULL);
-	n = strcnt(s, '|');
+	n = find(s, '|');
 	strs = (char **)malloc(sizeof(char *) * (n + 1));
 	if (!strs)
 		return (NULL);

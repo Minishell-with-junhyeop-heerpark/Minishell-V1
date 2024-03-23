@@ -25,12 +25,10 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
-# include <readline/readline.h>
-# include <readline/history.h>
+// # include <readline/readline.h>
+// # include <readline/history.h>
 # include <unistd.h>
 # include <termios.h>
-
-void	parse(char *str, t_head *head);
 
 typedef struct s_token
 {
@@ -69,12 +67,18 @@ typedef struct s_head {
 
 void	error_msg(int type);
 
+void	add_token(t_token **lst, char *cmd);
+t_token	*make_token(char *command);
+
+
 t_head	*list_init();
 t_list	*cmd_list_new(char *command);
-void	ft_lstadd_back(t_list **lst, t_list *new);
+void	ft_lstadd_back(t_head *head, t_list *new);
 
 char	**split_pipe(char const *s);
+t_token	*split_space(char *s, char space);	// pipe 단위로 나눈 것 -> 공백 단위로 나눔
 
-void	make_token(t_head *head);
+// void	make_token(t_head *head);
 
+void	parse(char *str, t_head *head);
 #endif

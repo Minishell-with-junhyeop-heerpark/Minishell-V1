@@ -17,11 +17,11 @@
 # include "./get_next_line/get_next_line.h"
 # include "./ft_printf/ft_printf.h"
 
-typedef struct s_list
-{
-	char			*content;
-	struct s_list	*next;
-}	t_list;
+// typedef struct s_list
+// {
+// 	char			*content;
+// 	struct s_list	*next;
+// }	t_list;
 
 int		ft_atoi(const char *str);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);

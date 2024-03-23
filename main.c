@@ -72,7 +72,7 @@ int main(int argc, char **argv, char **envp)
         {
             add_history(str);
 			parse(str, cmd_list);
-			make_token(cmd_list);
+			// make_token(cmd_list);
             // printf("%s\n", str);
             free(str);
         }

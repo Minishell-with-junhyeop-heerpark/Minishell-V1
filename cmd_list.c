@@ -24,6 +24,7 @@ t_head	*list_init()
 	return (head);
 }
 
+
 t_list	*cmd_list_new(char *command)
 {
 	t_list	*newnode;
@@ -33,7 +34,7 @@ t_list	*cmd_list_new(char *command)
 		error_msg(1);
 	newnode->next = NULL;
 	newnode->prev = NULL;
-	newnode->cmd = add_token(command);
+	newnode->cmd = make_token(command);
 	return (newnode);
 }
 
@@ -50,13 +51,13 @@ t_token	*token_list_new(char *command)
 	new->cmd = command;
 }
 
-t_token	*add_token(t_list *lst, char *command)
+t_token	*make_token(char *command)
 {
 	int		i;
-	t_list	*cmds;
+	t_token	*token;
 	
 	i = 0;
-	cmds = space_split(command);
+	token = space_split(command);
 	
 }
 

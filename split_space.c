@@ -93,35 +93,80 @@ char	*split_str(char const *s, char c)
 	return (str);
 }
 
-t_list	*split_space(char *s, char space)
+int	find_redir(char	*cmd)
 {
-	t_list	*lst;
+	int	i;
+	int	start;
+
+	start = 0;
+	i = 0;
+	while (cmd[i])
+	{
+		if (cmd[i] == '<' || cmd[i] == '>')
+
+	}
+}
+
+void	check_redir(t_list **new)
+{
+	t_list	*tmp;
+
+	tmp = *new;
+	find_redir(tmp->cmd);
+}
+
+
+// redir 기준으로 한번 더 나눔
+void	add_token(t_list **lst, char *cmd)
+{
+	t_list	*tmp;
+	int		start;
+	int		i;
+
+	i = 0;
+	start = 0;
+	while (cmd[i])
+	{
+		if (cmd[start] == '<' || cmd[start] == '>')
+			new_token);
+	}
+}
+
+// input : echo ls >a
+// output : echo, ls, >, a
+
+t_token	*split_space(char *s, char space)	// pipe 단위로 나눈 것 -> 공백 단위로 나눔
+{
+	t_token	*lst;
 	int		i;
 	int		start;
 
 	i = 0;
 	if (!s)
 		return (NULL);
-	lst = (t_list *)malloc(sizeof(t_list));
+	lst = (t_token *)malloc(sizeof(t_token));
 	if (!lst)
 		return (NULL);
 	start = 0;
 	while (s[i])
 	{
-		while (s[i] && s[i] == space)
-			i++;
-		start = i; 
-		while (*s != space)
+		while (s[start] == space)
+			start++;
+		i = start;
+		while (s[i] != space)
 			i++;
 		if (s[i] != 0)
 			s[i] = '\0';
-		add_list()
-		while (*s && *s != space)
-			s++;
+		add_token(&lst, &s[start]);			// 함수안에서 return 시 lst 위치 확인해보기
+		start = i + 1;
+		i++;
 	}
-	strs[i] = 0;     
-	return (strs);
+	return (lst);
 }
+
+
+
+
 
 // int main()
 // {
