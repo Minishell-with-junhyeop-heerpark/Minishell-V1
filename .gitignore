@@ -1,3 +1,4 @@
 a.out
 .vscode
-parsing.h.gch
+*.h.gch
+*.dSYM
