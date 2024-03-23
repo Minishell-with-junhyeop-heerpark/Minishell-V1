@@ -1,51 +1,51 @@
-NAME = pipex
+NAME = minishell
+
+SRC_DIR = ./src
+BONUS_DIR = ./src_bonus
+
+SRC	= $(SRC_DIR)/cmd_list.c \
+		$(SRC_DIR)/error.c \
+		$(SRC_DIR)/main.c \
+		$(SRC_DIR)/parse.c \
+		$(SRC_DIR)/split_space.c \
+		$(SRC_DIR)/utils.c
+
 LIBDIR = ./libft/
 LIBNAME = ft
 LIB = $(LIBDIR)lib$(LIBNAME).a
-INCDIRS = ./
+INCDIRS = ./inc
 
-MAKE = make
+OBJS = $(SRC:.c=.o)
+OBJS_BONUS = $(SRC_BONUS:.c=.o)
+
 CC = cc
-AR = ar
+MAKE = make
+RM = rm -f
 CFLAGS = -Wall -Wextra -Werror $(foreach D, $(INCDIRS), -I$(D))
 ARFLAGS = rs
-
-SRCS = pipex_main.c pipex_heredoc.c pipex_utils.c
-SRCS_B = pipex_main_bonus.c pipex_heredoc_bonus.c pipex_utils_bonus.c
-
-OBJS = $(SRCS:c=o)
-OBJS_B = $(SRCS_B:c=o)
+READFLAGS = -lreadline -I/Users/junhyeop/.brew/opt/readline/include -L/Users/junhyeop/.brew/opt/readline/lib
 
 all: $(NAME)
-
-$(NAME): LAST_ALL
-
-bonus: LAST_BONUS
-
-LAST_ALL: $(OBJS) $(LIB)
-	rm -f LAST_BONUS
-	$(CC) -o $(NAME) $(OBJS) -L$(LIBDIR) -l$(LIBNAME)
-	touch $@
-
-LAST_BONUS: $(OBJS_B) $(LIB)
-	rm -f LAST_ALL
-	$(CC) -o $(NAME) $(OBJS_B) -L$(LIBDIR) -l$(LIBNAME)
-	touch $@
-
-$(LIB):
-	$(MAKE) -C $(LIBDIR) all
 
 %.o: %.c $(foreach D, $(INCDIRS), $(D)*.h)
 	$(CC) $(CFLAGS) -c -o $@ $<
 
+$(NAME): $(LIB) $(OBJS)
+		$(CC) -o $(NAME) $(READFLAGS) $(OBJS) -L$(LIBDIR) -l$(LIBNAME)
+
+$(LIB):
+	$(MAKE) -C $(LIBDIR) all
+	
 clean:
-	rm -f $(OBJS) $(OBJS_B) LAST_ALL LAST_BONUS
 	$(MAKE) -C $(LIBDIR) clean
+	${RM} $(SRC_DIR)/*.o 
 
 fclean: clean
-	rm -f $(NAME)
 	$(MAKE) -C $(LIBDIR) fclean
+	${RM} $(NAME) 
 
-re: fclean all
+re: fclean bonus
+
+bonus: $(NAME_BONUS)
 
 .PHONY: all clean fclean re bonus
