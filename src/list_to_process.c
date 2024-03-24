@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 02:15:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/03/24 15:26:53 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/03/24 23:31:41 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	set_process(t_process *process, char **path)
 	process->exec_path = exec_path;
 }
 
-t_process	*get_process(t_list2 *line, char **path)
+t_process	*get_process(t_list *line, char **path)
 {
 	t_process	*process;
 	t_token		*temp;

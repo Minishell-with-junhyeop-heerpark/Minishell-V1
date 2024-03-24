@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:11:25 by heerpark          #+#    #+#             */
-/*   Updated: 2024/03/24 22:51:30 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/03/24 23:56:11 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,14 @@ void	exe(t_head *head, char **envp)
 {
 	int			**pipes;
 
+	printf("exe start~\n");
+	printf("headsize: %d\n", head->size);
 	if (head->size < 1)
-		exit(EXIT_FAILURE);
+	{
+		// exit(EXIT_FAILURE);
+		printf("head size is 0\n");
+		return ;
+	}
 	else if (head->size == 1)
 	{
 		get_processes(head, envp);
@@ -127,6 +133,7 @@ void	exe(t_head *head, char **envp)
 		wait_process(head->size);
 	}
 	kill_heredoc(head, envp);
+	printf("exe end~\n");
 	return ;
 }
 //have to free malloced variable

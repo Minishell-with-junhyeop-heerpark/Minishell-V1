@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 17:06:55 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/03/17 04:22:05 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/03/24 23:40:24 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ size_t	ft_strlen(const char *s)
 	return ((size_t)n);
 }
 
-char	**freeall(char **strs)
+static char	**freeall(char **strs)
 {
 	int	i;
 
@@ -33,7 +33,7 @@ char	**freeall(char **strs)
 	return (NULL);
 }
 
-int	strcnt(char const *s, char c)
+static int	strcnt(char const *s, char c)
 {
 	int	n;
 
@@ -50,7 +50,7 @@ int	strcnt(char const *s, char c)
 	return (n);
 }
 
-char	*split_str(char const *s, char c)
+static char	*split_str(char const *s, char c)
 {
 	int		n;
 	int		i;

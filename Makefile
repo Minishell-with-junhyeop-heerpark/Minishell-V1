@@ -31,7 +31,9 @@ MAKE = make
 RM = rm -f
 CFLAGS = -Wall -Wextra -Werror $(foreach D, $(INCDIRS), -I$(D))
 ARFLAGS = rs
+
 READFLAGS = -lreadline -I/Users/junhyeop/.brew/opt/readline/include -L/Users/junhyeop/.brew/opt/readline/lib
+# READFLAGS = -lreadline -I/opt/homebrew/opt/readline/include -L/opt/homebrew/opt/readline/lib
 
 all: $(NAME)
 

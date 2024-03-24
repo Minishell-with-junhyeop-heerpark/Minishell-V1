@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_space.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 22:41:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/03/23 22:49:34 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/03/24 23:41:16 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,15 @@ void	ft_putstr_fd(char *s, int fd)
 	}
 }
 
-size_t	ft_strlen(const char *s)
-{
-	size_t	n;
+// size_t	ft_strlen(const char *s)
+// {
+// 	size_t	n;
 
-	n = 0;
-	while (s[n] != 0)
-		n++;
-	return ((size_t)n);
-}
+// 	n = 0;
+// 	while (s[n] != 0)
+// 		n++;
+// 	return ((size_t)n);
+// }
 
 char	**freeall(char **strs)
 {

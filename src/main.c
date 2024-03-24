@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:10:35 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/03/24 23:00:52 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/03/24 23:48:24 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void sig_handler(int signal)
     if (rl_on_new_line() == -1) // readline으로 설정한 문자열을 한 번 출력한다?
         exit(1);
     rl_replace_line("", 1); // 프롬프트에 이미 친 문자열을 싹 날려준다.
-    display();         // 프롬프트 커서가 움직이지 않게 해준다.
+    // display();         // 프롬프트 커서가 움직이지 않게 해준다.
 }
 
 void setting_signal()
