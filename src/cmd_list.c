@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 06:22:43 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/03/23 17:24:12 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/03/24 22:53:55 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,10 @@ t_token	*token_new(char *command, int flag)
 
 t_token	*make_token(char *command)
 {
-	int		i;
+	// int		i;
 	t_token	*token;
 	
-	i = 0;
+	// i = 0;
 	token = split_space(command, ' ');
 	return (token);
 }
