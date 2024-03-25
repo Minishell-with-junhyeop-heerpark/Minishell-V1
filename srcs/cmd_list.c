@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42.kr>          +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 06:22:43 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/03/24 22:53:55 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/03/25 13:32:45 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void	ft_lst_add(t_head *head, t_list *new)
 {
 	t_list	*tmp;
 
+	head->size += 1;
 	tmp = head->top;
 	if (tmp == NULL)
 	{

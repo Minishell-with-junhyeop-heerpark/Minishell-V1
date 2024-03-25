@@ -1,6 +1,6 @@
 NAME = minishell
 
-SRC_DIR = ./src
+SRC_DIR = ./srcs
 BONUS_DIR = ./src_bonus
 
 SRC	= $(SRC_DIR)/cmd_list.c \
