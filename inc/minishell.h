@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42.kr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:27:44 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/03/24 22:54:36 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/03/26 21:15:13 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,5 +144,9 @@ void		set_inout(t_process *process, int **pipes, int i, int close_sig);
 void		start_process(t_process **pss, char **envp);
 void		start_processes(t_process **pss, char **envp, int **pipes, int n);
 void		exe(t_head *head, char **envp);
+
+	//env.c
+int			is_builtin(char *cmd);
+void		run_builtin(char *cmd, char **envp);
 
 #endif
