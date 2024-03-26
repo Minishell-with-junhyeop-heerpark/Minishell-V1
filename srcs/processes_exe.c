@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   processes_exe.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42.kr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:11:25 by heerpark          #+#    #+#             */
-/*   Updated: 2024/03/24 23:56:11 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/03/26 16:20:15 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,17 +69,15 @@ void	start_process(t_process **pss, char **envp)
 {
 	pid_t	pid;
 
-	set_inout(pss[0], NULL, 0, 0);
 	pid = fork();
 	if (pid == -1)
 		perror_exit("start_process fork error");
 	else if (pid == 0)
 	{
+		set_inout(pss[0], NULL, 0, 0);
 		if (execve(pss[0]->exec_path, pss[0]->exec_cmd, envp) == -1)
 			perror_exit("execve error");
 	}
-	else
-		wait_process(1);
 }
 
 void	start_processes(t_process **pss, char **envp, int **pipes, int n)
@@ -112,18 +110,17 @@ void	exe(t_head *head, char **envp)
 {
 	int			**pipes;
 
-	printf("exe start~\n");
-	printf("headsize: %d\n", head->size);
+	printf("head size: %d\n", head->size);
 	if (head->size < 1)
 	{
 		// exit(EXIT_FAILURE);
-		printf("head size is 0\n");
 		return ;
 	}
 	else if (head->size == 1)
 	{
 		get_processes(head, envp);
 		start_process(head->processes, envp);
+		wait_process(head->size);
 	}
 	else
 	{
@@ -133,7 +130,7 @@ void	exe(t_head *head, char **envp)
 		wait_process(head->size);
 	}
 	kill_heredoc(head, envp);
-	printf("exe end~\n");
+	printf("exe end\n");
 	return ;
 }
 //have to free malloced variable

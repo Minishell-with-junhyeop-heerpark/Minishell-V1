@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42.kr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:10:35 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/03/24 23:48:24 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/03/26 16:16:43 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int main(int argc, char **argv, char **envp)
 	printf("Welcome to minishell!\n");
     while (1)
     {
+
         str = readline("minishell$ ");
         if (!str)
         {
@@ -77,6 +78,7 @@ int main(int argc, char **argv, char **envp)
 			exe(head, envp);
 			free_list(head);
             free(str);
+			break;
         }
     }
     /* 함수종료 */
