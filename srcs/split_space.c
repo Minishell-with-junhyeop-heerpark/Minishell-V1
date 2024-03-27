@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 22:41:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/03/25 13:39:39 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/03/27 22:39:36 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,13 +185,13 @@ t_token	*split_space(char *command, char space)	// pipe 단위로 나눈 것 -> 
 		start = i + 1;
 		i++;
 	}
-	t_token *tmp = lst;
-	while (tmp)
-	{
-		printf(".... %s\n", tmp->cmd);
-		tmp = tmp->next;
-	}
-	printf(".... |\n");
+	// t_token *tmp = lst;
+	// while (tmp)
+	// {
+	// 	printf(".... %s %d\n", tmp->cmd, tmp->redir_flag);
+	// 	tmp = tmp->next;
+	// }
+	// printf(".... |\n");
 	return (lst);
 }
 
