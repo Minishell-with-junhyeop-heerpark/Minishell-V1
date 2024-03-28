@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:55:49 by junhyeop          #+#    #+#             */
-/*   Updated: 2023/11/03 18:30:35 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/03/28 15:03:26 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,3 @@ void	*ft_calloc(size_t num, size_t size)
 	ft_bzero(mem, size * num);
 	return (mem);
 }
-
-// #include <stdio.h>
-// #include <stdlib.h>
-// int main(void) {
-// 	if(ft_calloc(2147483647, 2147483647) == NULL) {
-// 		printf("asdf");
-// 	}
-// }

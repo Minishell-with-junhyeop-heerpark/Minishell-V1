@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 13:13:59 by heerpark          #+#    #+#             */
-/*   Updated: 2024/03/26 21:05:14 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/03/28 14:32:48 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ void	wait_process(int child_num)
 			exit_status = WEXITSTATUS(status);
 			if (exit_status == EXIT_FAILURE)
 			{
-				perror_exit("child process exited with error");
+				// perror_exit("child process exited with error");
+				return ;
 			}
 		}
 		count++;

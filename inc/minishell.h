@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:27:44 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/03/26 21:15:13 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/03/28 14:57:48 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ void		kill_heredoc(t_head *head, char **envp);
 char		*make_infile(char *limiter);
 
 	//list_to_processes_utils
-void		fill_elem(t_token *temp, t_process *process, char *cmd, int flag);
+void		fill_elem(t_token *temp, t_process *process, char **cmd, int flag);
 void		set_fd(t_process *process, char *file_name, int redir_flag);
 int			get_redir_flag(char	*token);
 void		set_process(t_process *process, char **path);

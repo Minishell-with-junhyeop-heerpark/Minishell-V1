@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_to_process.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42.kr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 02:15:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/03/24 23:31:41 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/03/28 15:06:21 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	set_fd(t_process *process, char *file_name, int redir_flag)
 		perror_exit("set_fd");
 }
 
-void	fill_elem(t_token *temp, t_process *process, char *cmd, int flag)
+void	fill_elem(t_token *temp, t_process *process, char **cmd, int flag)
 {
 	char	*temp_str;
 	int		is_filename;
@@ -72,9 +72,9 @@ void	fill_elem(t_token *temp, t_process *process, char *cmd, int flag)
 		}
 		else if (temp->redir_flag == 0)
 		{
-			temp_str = ft_strjoin(cmd, temp->cmd);
-			free(cmd);
-			cmd = ft_strjoin(temp_str, " ");
+			temp_str = ft_strjoin(*cmd, temp->cmd);
+			free(*cmd);
+			*cmd = ft_strjoin(temp_str, " ");
 			free(temp_str);
 		}
 		else if (temp->redir_flag == 1)
@@ -125,8 +125,9 @@ t_process	*get_process(t_list *line, char **path)
 	cmd = ft_strdup("");
 	temp = line->token;
 	init_fd(process);
-	fill_elem(temp, process, cmd, 0);
+	fill_elem(temp, process, &cmd, 0);
 	process->cmd = cmd;
+	// printf("full cmd: %s\n", process->cmd);
 	set_process(process, path);
 	return (process);
 }
