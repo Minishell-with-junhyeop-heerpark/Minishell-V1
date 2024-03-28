@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:27:44 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/03/28 14:57:48 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/03/28 22:04:13 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ typedef struct s_token
 typedef struct s_list
 {
 	t_token			*token;
+	char			*key;
+	char			*value;
 	struct s_list	*next;
 	struct s_list	*prev;
 }	t_list;
@@ -69,13 +71,23 @@ typedef struct s_process
 	char	*builtin_cmds;
 }	t_process;
 
+typedef struct s_data
+{
+	char			**exec_rm_cmd;
+	char			*exec_rm_path;
+	t_list			*env;
+}	t_data;
+
 typedef struct s_head {
 	int				size;
 	char			**exec_rm_cmd;
 	char			*exec_rm_path;
 	struct s_list	*top;
+	t_data			*data;
 	t_process		**processes;
 }	t_head;
+
+
 
 //parsing func
 void		error_msg(int type);
@@ -145,8 +157,19 @@ void		start_process(t_process **pss, char **envp);
 void		start_processes(t_process **pss, char **envp, int **pipes, int n);
 void		exe(t_head *head, char **envp);
 
-	//env.c
-int			is_builtin(char *cmd);
-void		run_builtin(char *cmd, char **envp);
+	//builtin.c
+int			is_builtin(char **exec_cmd);
+void		run_builtin(char **exec_cmd, char **envp);
+
+	//envpwd.c
+void		env(char **envp);
+void		pwd(void);
+void		cd(char *dir);
+
+	//list_control.c
+t_list		*lstnew(char *key, char *value);
+void		lstadd_back(t_list **lst, t_list *new);
+char		*remove_node(t_list **lst, char *key);
+void		lst_clear(t_list **lst);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:11:25 by heerpark          #+#    #+#             */
-/*   Updated: 2024/03/26 21:06:13 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/03/28 20:16:52 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,20 @@ void	start_process(t_process **pss, char **envp)
 {
 	pid_t	pid;
 
+	if (ft_strncmp(pss[0]->exec_cmd[0], "cd", 3) == 0)
+	{
+		printf("zz\n");
+		cd(pss[0]->exec_cmd[1]);
+		return ;
+	}
 	pid = fork();
 	if (pid == -1)
 		perror_exit("start_process fork error");
 	else if (pid == 0)
 	{
 		set_inout(pss[0], NULL, 0, 0);
-		if (is_builtin(pss[0]->exec_cmd[0]))
-			run_builtin(pss[0]->exec_cmd[0], envp);
+		if (is_builtin(pss[0]->exec_cmd))
+			run_builtin(pss[0]->exec_cmd, envp);
 		else if (execve(pss[0]->exec_path, pss[0]->exec_cmd, envp) == -1)
 			perror_exit("execve error");
 	}
@@ -122,7 +128,8 @@ void	exe(t_head *head, char **envp)
 	{
 		get_processes(head, envp);
 		start_process(head->processes, envp);
-		wait_process(head->size);
+		if (ft_strncmp(head->processes[0]->exec_cmd[0], "cd", 3) != 0)
+			wait_process(head->size);
 	}
 	else
 	{

@@ -17,7 +17,9 @@ SRC	= $(SRC_DIR)/cmd_list.c \
 		$(SRC_DIR)/exe_utils.c \
 		$(SRC_DIR)/processes_exe.c \
 		$(SRC_DIR)/list_to_process.c \
-		$(SRC_DIR)/env.c \
+		$(SRC_DIR)/envpwdcd.c \
+		$(SRC_DIR)/builtin.c \
+		$(SRC_DIR)/list_control.c \
 
 LIBDIR = ./libft/
 LIBNAME = ft

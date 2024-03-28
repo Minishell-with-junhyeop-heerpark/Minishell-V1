@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 06:22:43 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/03/25 13:32:45 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/03/28 22:05:42 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ t_head	*init_head()
 	t_head	*head;
 
 	head = (t_head *)malloc(sizeof(t_head));
+	head->data = (t_data *)malloc(sizeof(t_data));
 	if (!head)
 		error_msg(1);
 	head->top = NULL;
