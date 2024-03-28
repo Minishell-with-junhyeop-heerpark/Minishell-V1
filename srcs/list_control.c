@@ -6,13 +6,13 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:40:07 by heerpark          #+#    #+#             */
-/*   Updated: 2024/03/28 22:03:43 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/03/29 00:35:18 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../inc/minishell.h"
 
-t_list	*lstnew(char *key, char *value)
+t_list	*lst_new(char *key, char *value)
 {
 	t_list	*new_node;
 
@@ -85,4 +85,13 @@ void	lst_clear(t_list **lst)
 		current = next;
 	}
 	*lst = NULL;
+}
+
+void	lst_print(t_list *head)
+{
+	while (head)
+	{
+		printf("%s = %s\n", head->key, head->value);
+		head = head->next;
+	}
 }
