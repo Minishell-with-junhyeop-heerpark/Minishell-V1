@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:10:29 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/03/26 21:24:32 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/03/28 17:45:37 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	parse(char *line, t_head *head)
 	start = 0;
 	while (1)
 	{
+		// echo '"asdfsdf" | cat'
 		flag.quote = quote_check(line[i], &flag);	// quote 여부 확인
 		flag.dquote = dquote_check(line[i], &flag); // dquote 여부 확인
 
@@ -70,6 +71,7 @@ void	parse(char *line, t_head *head)
 			if (line[i] == '\0')
 				flag.pipe = 0;	// 끝난 부분이 pipe가 아니라면
 			line[i] = '\0';		// 분리하기 쉽게 널 값으로 변환
+			printf("confirm %s\n", &line[start]);
 			add_cmd(head, &line[start], flag.pipe);
 			start = i + 1;
 			if (flag.pipe == 0)

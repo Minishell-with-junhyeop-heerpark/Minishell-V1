@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:10:35 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/03/26 21:25:46 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/03/28 16:15:24 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 void sig_handler(int signal)
 {
+	// ^C 출력할지말지
     if (signal == SIGINT)
     {
         //printf("\033[K"); 지워버리는 것을 원하지는 않았음.
@@ -44,6 +45,7 @@ int main(int argc, char **argv, char **envp)
     struct termios	term;
 	t_head			*head;
 
+	sig = -1;
     // 터미널 세팅
     tcgetattr(STDIN_FILENO, &term);
     term.c_lflag &= ~(ECHOCTL);
@@ -52,6 +54,7 @@ int main(int argc, char **argv, char **envp)
 	
     setting_signal();
 	head = init_head();
+	// head->error_no;
 	printf("Welcome to minishell!\n");
     while (1)
     {
@@ -79,6 +82,11 @@ int main(int argc, char **argv, char **envp)
 			free_list(head);
             free(str);
         }
+		// if (sig > 0)
+		// {
+		// 	strerror(sig);
+		// 	sig = -1;
+		// }
     }
     /* 함수종료 */
     return (0);

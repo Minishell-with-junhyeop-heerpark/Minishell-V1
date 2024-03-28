@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   processes_exe.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:11:25 by heerpark          #+#    #+#             */
-/*   Updated: 2024/03/26 21:06:13 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/03/28 15:34:15 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,11 @@ void	exe(t_head *head, char **envp)
 	else if (head->size == 1)
 	{
 		get_processes(head, envp);
+		
 		start_process(head->processes, envp);
+
 		wait_process(head->size);
+		
 	}
 	else
 	{
