@@ -6,11 +6,11 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 22:07:00 by heerpark          #+#    #+#             */
-/*   Updated: 2024/03/29 11:42:41 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/03/29 11:50:43 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "minishell.h"
 
 void	set_env(t_list **head, char **envp)
 {

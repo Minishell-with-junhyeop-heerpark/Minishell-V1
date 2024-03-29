@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:27:44 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/03/29 11:42:59 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/03/29 11:54:47 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,9 +126,9 @@ void		perror_exit(char *msg);
 
 	//pipe_control
 void		wait_process(int child_num);
-void		first_child(t_process *process, int **pipes, char **envp, int i);
-void		last_child(t_process *process, int **pipes, char **envp, int i);
-void		mid_child(t_process *process, int **pipes, char **envp, int i);
+void		first_child(t_head *head, int **pipes, char **envp, int i);
+void		last_child(t_head *head, int **pipes, char **envp, int i);
+void		mid_child(t_head *head, int **pipes, char **envp, int i);
 void		parent(int **pipes, int i);
 
 	//get_fd

@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:11:25 by heerpark          #+#    #+#             */
-/*   Updated: 2024/03/29 09:39:25 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/03/29 11:52:16 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,11 +102,11 @@ void	start_processes(t_head *head, char **envp, int **pipes, int n)
 		else if (pid == 0)
 		{
 			if (i == 0)
-				first_child(head->processes[i], pipes, envp, i);
+				first_child(head, pipes, envp, i);
 			else if (i == n - 1)
-				last_child(head->processes[i], pipes, envp, i);
+				last_child(head, pipes, envp, i);
 			else
-				mid_child(head->processes[i], pipes, envp, i);
+				mid_child(head, pipes, envp, i);
 		}
 		else
 			parent(pipes, i);
