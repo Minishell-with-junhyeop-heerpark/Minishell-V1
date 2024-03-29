@@ -6,13 +6,13 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 06:22:43 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/03/28 22:05:42 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/03/29 09:29:28 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_head	*init_head()
+t_head	*init_head(char **envp)
 {
 	t_head	*head;
 
@@ -22,6 +22,8 @@ t_head	*init_head()
 		error_msg(1);
 	head->top = NULL;
 	head->size = 0;
+	head->data->env = (t_list *)malloc(sizeof(t_list));
+	set_env(&(head->data->env), envp);
 	return (head);
 }
 

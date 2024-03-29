@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 15:11:29 by heerpark          #+#    #+#             */
-/*   Updated: 2024/03/28 19:32:34 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/03/29 09:41:28 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,9 @@ int	is_builtin(char **exec_cmd)
 		return (0);
 }
 
-void	run_builtin(char **exec_cmd, char **envp)
+void	run_builtin(t_head *head, char **exec_cmd) //env 내가만든 env로 대체
 {
+	// printf("%s\n" ,(exec_cmd[0]));
 	if (ft_strncmp(exec_cmd[0], "echo", 5) == 0)
 		return ;
 	else if (ft_strncmp(exec_cmd[0], "pwd", 4) == 0)
@@ -47,7 +48,7 @@ void	run_builtin(char **exec_cmd, char **envp)
 	else if (ft_strncmp(exec_cmd[0], "unset", 6) == 0)
 		return ;
 	else if (ft_strncmp(exec_cmd[0], "env", 4) == 0)
-		env(envp);
+		env(head);
 	else if (ft_strncmp(exec_cmd[0], "exit", 5) == 0)
 		return ;
 	else

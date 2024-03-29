@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 20:27:15 by heerpark          #+#    #+#             */
-/*   Updated: 2024/03/28 20:16:13 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/03/29 09:44:55 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,15 @@ void	pwd(void)
 	}
 }
 
-void	env(char **envp)
+void	env(t_head *head)
 {
-	int	i;
+	t_list	*first;
 
-	i = 0;
-	while (envp[i])
+	first = head->data->env;
+	while (first)
 	{
-		printf("%s\n", envp[i]);
-		i++;
+		ft_printf("%s=%s\n", first->key, first->value);
+		first = first->next;
 	}
 }
 

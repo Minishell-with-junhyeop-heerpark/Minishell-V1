@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:40:07 by heerpark          #+#    #+#             */
-/*   Updated: 2024/03/29 00:35:18 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/03/29 09:14:06 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	lst_print(t_list *head)
 {
 	while (head)
 	{
-		printf("%s = %s\n", head->key, head->value);
+		ft_printf("%s=%s\n", head->key, head->value);
 		head = head->next;
 	}
 }

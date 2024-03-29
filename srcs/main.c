@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:10:35 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/03/26 21:25:46 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/03/29 11:43:32 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int main(int argc, char **argv, char **envp)
     // 시그널 세팅
 	
     setting_signal();
-	head = init_head();
+	head = init_head(envp);
 	printf("Welcome to minishell!\n");
     while (1)
     {
@@ -79,6 +79,7 @@ int main(int argc, char **argv, char **envp)
 			free_list(head);
             free(str);
         }
+		printf("hello zz\n");
     }
     /* 함수종료 */
     return (0);

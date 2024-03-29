@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   env_control.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 22:07:00 by heerpark          #+#    #+#             */
-/*   Updated: 2024/03/28 22:32:30 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/03/29 11:42:41 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,61 @@ void	set_env(t_list **head, char **envp)
 				key = ft_substr(envp[n], 0, i);
 				value = ft_substr(envp[n], i + 1, 2147483647);
 				lstadd_back(head, lst_new(key, value));
-				// printf("%s = %s\n", key, value);
 			}
 			i++;
 		}
-		// printf("%s\n", envp[n]);
 		n++;
 	}
 }
 
-int	main(int argc, char **argv, char **envp)
+char	*get_envp_line(t_list *head)
 {
-	t_list	*head;
+	char	*temp2;
+	char	*temp;
+	char	*envp;
+	t_list	*node;
 
-	set_env(&head, envp);
-	lst_print(head);
+	node = head;
+	envp = ft_strdup("");
+	while (node)
+	{
+		temp = ft_strjoin(node->key, "=");
+		temp2 = ft_strjoin(temp, node->value);
+		free(temp);
+		temp = ft_strjoin(temp2, " ");
+		free(temp2);
+		temp2 = envp;
+		envp = ft_strjoin(envp, temp);
+		free(temp2);
+		free(temp);
+		node = node->next;
+	}
+	return (envp);
 }
+
+void	update_envp(t_head *head)
+{
+	char	*envp_line;
+
+	envp_line = get_envp_line(head->data->env);
+	free_splited(head->data->envp);
+	head->data->envp = ft_split(envp_line, ' ');
+	free(envp_line);
+
+	for (int i=0; head->data->envp[i]; i++)
+	{
+		printf("%s\n",head->data->envp[i]);
+	}
+}
+
+// int	main(int argc, char **argv, char **envp)
+// {
+// 	t_list	*head;
+// 	char	*envp_line;
+// 	char	**my_envp;
+
+// 	set_env(&head, envp);
+
+// 	envp_line = get_envp_line(head);
+// 	update_envp()
+// }
