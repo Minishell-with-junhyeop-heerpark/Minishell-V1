@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:10:35 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/03/28 16:15:24 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/03/31 20:01:40 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,7 @@ int main(int argc, char **argv, char **envp)
     // 시그널 세팅
 	
     setting_signal();
-	head = init_head();
-	// head->error_no;
+	head = init_head(envp);
 	printf("Welcome to minishell!\n");
     while (1)
     {
@@ -82,11 +81,7 @@ int main(int argc, char **argv, char **envp)
 			free_list(head);
             free(str);
         }
-		// if (sig > 0)
-		// {
-		// 	strerror(sig);
-		// 	sig = -1;
-		// }
+		printf("hello zz\n");
     }
     /* 함수종료 */
     return (0);

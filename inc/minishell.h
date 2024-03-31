@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:27:44 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/03/28 15:15:23 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/03/31 20:03:49 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ typedef struct s_token
 typedef struct s_list
 {
 	t_token			*token;
+	char			*key;
+	char			*value;
 	struct s_list	*next;
 	struct s_list	*prev;
 }	t_list;
@@ -71,15 +73,25 @@ typedef struct s_process
 	char	*builtin_cmds;
 }	t_process;
 
-typedef struct s_head { 
-	int				error_no;
+typedef struct s_data //heredoc 파일 경로 여기로 옮기기.
+{
+	char			**exec_rm_cmd;
+	char			*exec_rm_path;
+	char			**envp;
+	t_list			*env;
+}	t_data;
+
+typedef struct s_head {
 	int				size;
 	char			**exec_rm_cmd;
 	char			*exec_rm_path;
 	struct s_list	*top;
+	t_data			*data;
 	t_process		**processes;
 	
 }	t_head;
+
+
 
 //parsing func
 void		error_msg(int type);
@@ -88,7 +100,7 @@ void		add_cmd(t_head *head, char *line, int pipe_flag);
 void		add_token(t_token **lst, char *cmd);
 
 t_token		*make_token(char *command);
-t_head		*init_head(void);
+t_head		*init_head(char **envp);
 t_token		*token_new(char *command, int flag);
 
 t_list		*cmd_list_new(char *command);
@@ -99,8 +111,6 @@ char		**split_pipe(char const *s);
 t_token		*split_space(char *s, char space);	// pipe 단위로 나눈 것 -> 공백 단위로 나눔
 
 void		free_list(t_head *head);
-
-
 void		parse(char *str, t_head *head);
 
 //exe func
@@ -119,9 +129,9 @@ void		perror_exit(char *msg);
 
 	//pipe_control
 void		wait_process(int child_num);
-void		first_child(t_process *process, int **pipes, char **envp, int i);
-void		last_child(t_process *process, int **pipes, char **envp, int i);
-void		mid_child(t_process *process, int **pipes, char **envp, int i);
+void		first_child(t_head *head, int **pipes, char **envp, int i);
+void		last_child(t_head *head, int **pipes, char **envp, int i);
+void		mid_child(t_head *head, int **pipes, char **envp, int i);
 void		parent(int **pipes, int i);
 
 	//get_fd
@@ -136,7 +146,7 @@ void		kill_heredoc(t_head *head, char **envp);
 char		*make_infile(char *limiter);
 
 	//list_to_processes_utils
-void		fill_elem(t_token *temp, t_process *process, char *cmd, int flag);
+void		fill_elem(t_token *temp, t_process *process, char **cmd, int flag);
 void		set_fd(t_process *process, char *file_name, int redir_flag);
 int			get_redir_flag(char	*token);
 void		set_process(t_process *process, char **path);
@@ -145,12 +155,29 @@ t_process	*get_process(t_list *line, char **path);
 	//processes_exe
 void		get_processes(t_head *head, char **envp);
 void		set_inout(t_process *process, int **pipes, int i, int close_sig);
-void		start_process(t_process **pss, char **envp);
-void		start_processes(t_process **pss, char **envp, int **pipes, int n);
+void		start_process(t_head *head, char **envp);
+void		start_processes(t_head *head, char **envp, int **pipes, int n);
 void		exe(t_head *head, char **envp);
 
-	//env.c
-int			is_builtin(char *cmd);
-void		run_builtin(char *cmd, char **envp);
+	//builtin.c
+int			is_builtin(char **exec_cmd);
+void		run_builtin(t_head *head, char **exec_cmd);
+
+	//envpwd.c
+void		env(t_head *head);
+void		pwd(void);
+void		cd(char *dir);
+
+	//list_control.c
+t_list		*lst_new(char *key, char *value);
+void		lstadd_back(t_list **lst, t_list *new);
+char		*remove_node(t_list **lst, char *key);
+void		lst_clear(t_list **lst);
+void		lst_print(t_list *head);
+
+	//env_control.c
+void		set_env(t_list **head, char **envp);
+char		*get_envp_line(t_list *head);
+void		update_envp(t_head *head);
 
 #endif

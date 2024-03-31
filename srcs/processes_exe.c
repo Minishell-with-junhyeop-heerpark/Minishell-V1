@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:11:25 by heerpark          #+#    #+#             */
-/*   Updated: 2024/03/28 15:34:15 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/03/31 20:11:24 by heerpark        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,24 +65,30 @@ void	set_inout(t_process *process, int **pipes, int i, int close_sig)
 	}
 }
 
-void	start_process(t_process **pss, char **envp)
+void	start_process(t_head *head, char **envp)
 {
 	pid_t	pid;
 
+	if (ft_strncmp(head->processes[0]->exec_cmd[0], "cd", 3) == 0)
+	{
+		cd(head->processes[0]->exec_cmd[1]);
+		return ;
+	}
 	pid = fork();
 	if (pid == -1)
 		perror_exit("start_process fork error");
 	else if (pid == 0)
 	{
-		set_inout(pss[0], NULL, 0, 0);
-		if (is_builtin(pss[0]->exec_cmd[0]))
-			run_builtin(pss[0]->exec_cmd[0], envp);
-		else if (execve(pss[0]->exec_path, pss[0]->exec_cmd, envp) == -1)
+		set_inout(head->processes[0], NULL, 0, 0);
+		if (is_builtin(head->processes[0]->exec_cmd))
+			run_builtin(head, head->processes[0]->exec_cmd);
+		else if (execve(head->processes[0]->exec_path, \
+		head->processes[0]->exec_cmd, envp) == -1)
 			perror_exit("execve error");
 	}
 }
 
-void	start_processes(t_process **pss, char **envp, int **pipes, int n)
+void	start_processes(t_head *head, char **envp, int **pipes, int n)
 {
 	int		i;
 	pid_t	pid;
@@ -96,11 +102,11 @@ void	start_processes(t_process **pss, char **envp, int **pipes, int n)
 		else if (pid == 0)
 		{
 			if (i == 0)
-				first_child(pss[i], pipes, envp, i);
+				first_child(head, pipes, envp, i);
 			else if (i == n - 1)
-				last_child(pss[i], pipes, envp, i);
+				last_child(head, pipes, envp, i);
 			else
-				mid_child(pss[i], pipes, envp, i);
+				mid_child(head, pipes, envp, i);
 		}
 		else
 			parent(pipes, i);
@@ -121,17 +127,15 @@ void	exe(t_head *head, char **envp)
 	else if (head->size == 1)
 	{
 		get_processes(head, envp);
-		
-		start_process(head->processes, envp);
-
-		wait_process(head->size);
-		
+		start_process(head, envp);
+		if (ft_strncmp(head->processes[0]->exec_cmd[0], "cd", 3) != 0)
+			wait_process(head->size);
 	}
 	else
 	{
 		pipes = make_pipe(head->size - 1);
 		get_processes(head, envp);
-		start_processes(head->processes, envp, pipes, head->size);
+		start_processes(head, envp, pipes, head->size);
 		wait_process(head->size);
 	}
 	kill_heredoc(head, envp);

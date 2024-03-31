@@ -3,47 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_control.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 13:13:59 by heerpark          #+#    #+#             */
-/*   Updated: 2024/03/26 21:05:14 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/03/31 20:04:33 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	first_child(t_process *process, int **pipes, char **envp, int i)
+void	first_child(t_head *head, int **pipes, char **envp, int i)
 {
 	close(pipes[i][0]);
 	dup2(pipes[i][1], STDOUT_FILENO);
-	set_inout(process, pipes, i, 1);
-	if (is_builtin(process->exec_cmd[0]))
-		run_builtin(process->exec_cmd[0], envp);
-	else if (execve(process->exec_path, process->exec_cmd, envp) == -1)
+	set_inout(head->processes[i], pipes, i, 1);
+	if (is_builtin(head->processes[i]->exec_cmd))
+		run_builtin(head, head->processes[i]->exec_cmd);
+	else if (execve(head->processes[i]->exec_path, head->processes[i]->exec_cmd, envp) == -1)
 		perror_exit("execve error");
 }
 
-void	last_child(t_process *process, int **pipes, char **envp, int i)
+void	last_child(t_head *head, int **pipes, char **envp, int i)
 {
 	close(pipes[i - 1][1]);
 	dup2(pipes[i - 1][0], STDIN_FILENO);
-	set_inout(process, pipes, i, 0);
-	if (is_builtin(process->exec_cmd[0]))
-		run_builtin(process->exec_cmd[0], envp);
-	else if (execve(process->exec_path, process->exec_cmd, envp) == -1)
+	set_inout(head->processes[i], pipes, i, 0);
+	if (is_builtin(head->processes[i]->exec_cmd))
+		run_builtin(head, head->processes[i]->exec_cmd);
+	else if (execve(head->processes[i]->exec_path, head->processes[i]->exec_cmd, envp) == -1)
 		perror_exit("execve error");
 }
 
-void	mid_child(t_process *process, int **pipes, char **envp, int i)
+void	mid_child(t_head *head, int **pipes, char **envp, int i)
 {
 	close(pipes[i][0]);
 	close(pipes[i - 1][1]);
 	dup2(pipes[i - 1][0], STDIN_FILENO);
 	dup2(pipes[i][1], STDOUT_FILENO);
-	set_inout(process, pipes, i, 1);
-	if (is_builtin(process->exec_cmd[0]))
-		run_builtin(process->exec_cmd[0], envp);
-	else if (execve(process->exec_path, process->exec_cmd, envp) == -1)
+	set_inout(head->processes[i], pipes, i, 1);
+	if (is_builtin(head->processes[i]->exec_cmd))
+		run_builtin(head, head->processes[i]->exec_cmd);
+	else if (execve(head->processes[i]->exec_path, head->processes[i]->exec_cmd, envp) == -1)
 		perror_exit("execve error");
 }
 
@@ -74,9 +74,12 @@ void	wait_process(int child_num)
 			exit_status = WEXITSTATUS(status);
 			if (exit_status == EXIT_FAILURE)
 			{
-				perror_exit("child process exited with error");
+				// perror_exit("child head->processes[i] exited with error");
+				return ;
 			}
 		}
 		count++;
 	}
 }
+
+// WTERMSIG(status)

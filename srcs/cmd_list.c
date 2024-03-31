@@ -5,22 +5,27 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/17 06:22:43 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/03/28 14:35:12 by junhyeop         ###   ########.fr       */
+/*   Created: 2024/03/31 20:00:39 by junhyeop          #+#    #+#             */
+/*   Updated: 2024/03/31 20:00:40 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
+
 #include "minishell.h"
 
-t_head	*init_head()
+t_head	*init_head(char **envp)
 {
 	t_head	*head;
 
 	head = (t_head *)malloc(sizeof(t_head));
+	head->data = (t_data *)malloc(sizeof(t_data));
 	if (!head)
 		error_msg(1);
 	head->top = NULL;
 	head->size = 0;
+	head->data->env = (t_list *)malloc(sizeof(t_list));
+	set_env(&(head->data->env), envp);
 	return (head);
 }
 
