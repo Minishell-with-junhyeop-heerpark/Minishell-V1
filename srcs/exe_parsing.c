@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   exe_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42.kr>          +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 22:43:50 by heerpark          #+#    #+#             */
-/*   Updated: 2024/03/24 16:55:13 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/03/28 15:55:33 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,12 @@ void	make_path(char ***res, char **path, char **cmds, int count)
 		free(exec_path);
 		path_idx++;
 	}
-	if (path_idx != -1)
-		perror_exit("command not found");
+	// if (path_idx != -1)
+	// {
+	// 		sig = 1;
+	// 		reutrn (sig)
+	// 	// perror_exit("command not found");
+	// }
 }
 
 void	find_valid_path(char ***res, char **path, char **cmds, int n)

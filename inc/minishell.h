@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:27:44 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/03/26 21:15:13 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/03/28 15:15:23 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 # include <readline/history.h>
 # include <unistd.h>
 # include <termios.h>
+
+int	sig;
 
 typedef struct s_flag
 {
@@ -69,12 +71,14 @@ typedef struct s_process
 	char	*builtin_cmds;
 }	t_process;
 
-typedef struct s_head {
+typedef struct s_head { 
+	int				error_no;
 	int				size;
 	char			**exec_rm_cmd;
 	char			*exec_rm_path;
 	struct s_list	*top;
 	t_process		**processes;
+	
 }	t_head;
 
 //parsing func
