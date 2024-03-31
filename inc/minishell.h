@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:27:44 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/03/29 11:54:47 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/03/31 19:13:24 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,7 @@ void		run_builtin(t_head *head, char **exec_cmd);
 void		env(t_head *head);
 void		pwd(void);
 void		cd(char *dir);
+void		unset(t_head *head, char *key);
 
 	//list_control.c
 t_list		*lst_new(char *key, char *value);

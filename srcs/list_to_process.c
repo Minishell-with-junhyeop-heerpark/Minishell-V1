@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 02:15:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/03/28 15:06:21 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/03/31 20:31:41 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,10 @@ void	set_process(t_process *process, char **path)
 
 	i = 0;
 	exec_cmd = ft_split(process->cmd, ' ');
+	process->exec_cmd = exec_cmd;
+	// printf("%s\n%s\n", process->exec_cmd[0], process->exec_cmd[1]);
+	if (is_builtin(exec_cmd))
+		return ;
 	while (path[i])
 	{
 		test_path = ft_strjoin(path[i], "/");
@@ -111,7 +115,7 @@ void	set_process(t_process *process, char **path)
 	}
 	if (i != -1)
 		perror_exit("set_process");
-	process->exec_cmd = exec_cmd;
+	// process->exec_cmd = exec_cmd;
 	process->exec_path = exec_path;
 }
 

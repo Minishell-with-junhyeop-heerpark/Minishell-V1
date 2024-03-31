@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 13:13:59 by heerpark          #+#    #+#             */
-/*   Updated: 2024/03/29 11:48:05 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/03/31 11:13:41 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	parent(int **pipes, int i)
 	}
 }
 
-void	wait_head(int child_num)
+void	wait_process(int child_num)
 {
 	int	count;
 	int	status;

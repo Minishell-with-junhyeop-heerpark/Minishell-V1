@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:10:35 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/03/29 11:43:32 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/03/31 19:43:01 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void sig_handler(int signal)
         //printf("\033[K"); 지워버리는 것을 원하지는 않았음.
         printf("minishell$ \n");
     }
-
+ 
     if (rl_on_new_line() == -1) // readline으로 설정한 문자열을 한 번 출력한다?
         exit(1);
     rl_replace_line("", 1); // 프롬프트에 이미 친 문자열을 싹 날려준다.
@@ -79,7 +79,6 @@ int main(int argc, char **argv, char **envp)
 			free_list(head);
             free(str);
         }
-		printf("hello zz\n");
     }
     /* 함수종료 */
     return (0);

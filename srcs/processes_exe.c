@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:11:25 by heerpark          #+#    #+#             */
-/*   Updated: 2024/03/29 11:52:16 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/03/31 20:34:33 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,16 @@ void	start_process(t_head *head, char **envp)
 {
 	pid_t	pid;
 
+	// printf("input cmd: %s\n", head->processes[0]->exec_cmd[1]);
 	if (ft_strncmp(head->processes[0]->exec_cmd[0], "cd", 3) == 0)
 	{
 		cd(head->processes[0]->exec_cmd[1]);
+		return ;
+	}
+	if (ft_strncmp(head->processes[0]->exec_cmd[0], "unset", 6) == 0)
+	{
+		printf("hello\n");
+		unset(head, head->processes[0]->exec_cmd[1]);
 		return ;
 	}
 	pid = fork();
