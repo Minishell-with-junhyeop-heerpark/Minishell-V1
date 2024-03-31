@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:58:53 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/03/23 17:22:19 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/03/31 17:51:38 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int		ft_toupper(int c);
 int		ft_tolower(int c);
 int		ft_strcmp(const char *s1, const char *s2);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
+void	my_strjoin(char **s1, char *s2);
 void	ft_striteri(char *s, void (*f)(unsigned int, char*));
 void	ft_bzero(void *s, size_t n);
 void	ft_putchar_fd(char c, int fd);
