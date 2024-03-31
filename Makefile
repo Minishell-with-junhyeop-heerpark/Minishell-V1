@@ -57,8 +57,6 @@ fclean: clean
 	$(MAKE) -C $(LIBDIR) fclean
 	${RM} $(NAME) 
 
-re: fclean bonus
-
-bonus: $(NAME_BONUS)
+re: fclean all
 
 .PHONY: all clean fclean re bonus
