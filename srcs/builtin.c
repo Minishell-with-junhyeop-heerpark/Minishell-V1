@@ -6,13 +6,13 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 15:11:29 by heerpark          #+#    #+#             */
-/*   Updated: 2024/03/31 19:13:49 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/04/04 20:31:32 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// echo pwd cd export unset env ex
+// echo pwd cd export unset env exit
 
 int	is_builtin(char **exec_cmd)
 {
@@ -53,5 +53,5 @@ void	run_builtin(t_head *head, char **exec_cmd) //env 내가만든 env로 대체
 		return ;
 	else
 		printf("it is not built in exec_cmd\n");
-	exit(0);
+	// exit(0);
 }

@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 20:27:15 by heerpark          #+#    #+#             */
-/*   Updated: 2024/03/31 20:35:34 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/04/04 20:34:06 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	env(t_head *head)
 {
 	t_list	*first;
 
-	first = head->data->env;
+	first = head->data->env->next;
 	while (first)
 	{
 		ft_printf("%s=%s\n", first->key, first->value);
@@ -41,9 +41,7 @@ void	env(t_head *head)
 
 void	unset(t_head *head, char *key)
 {
-	(void)head;
-	printf("key:%s", key);
-	// remove_node(&(head->data->env), key);
+	remove_node(&(head->data->env->next), key);
 }
 
 void	cd(char *dir)

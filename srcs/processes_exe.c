@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:11:25 by heerpark          #+#    #+#             */
-/*   Updated: 2024/04/04 15:20:44 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/04/04 21:51:03 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,24 +41,28 @@ void	set_inout(t_process *process, int **pipes, int i, int close_sig)
 {
 	if (process->re_outfile_fd > 0)
 	{
+		printf("1\n");
 		dup2(process->re_outfile_fd, STDOUT_FILENO);
 		if (close_sig)
 			close(pipes[i][1]);
 	}
 	if (process->re_append_fd > 0)
 	{
+		printf("2\n");
 		dup2(process->re_append_fd, STDOUT_FILENO);
 		if (close_sig)
 			close(pipes[i][1]);
 	}
 	if (process->re_infile_fd > 0)
 	{
+		printf("3\n");
 		dup2(process->re_infile_fd, STDIN_FILENO);
 		if (close_sig)
 			close(pipes[i][0]);
 	}
 	if (process->heredoc_fd > 0)
 	{
+		printf("4\n");
 		dup2(process->heredoc_fd, STDIN_FILENO);
 		if (close_sig)
 			close(pipes[i][0]);
@@ -70,15 +74,23 @@ void	start_process(t_head *head, char **envp)
 	pid_t	pid;
 
 	// printf("input cmd: %s\n", head->processes[0]->exec_cmd[1]);
-	if (ft_strncmp(head->processes[0]->exec_cmd[0], "cd", 3) == 0)
+	// if (ft_strncmp(head->processes[0]->exec_cmd[0], "cd", 3) == 0)
+	// {
+	// 	cd(head->processes[0]->exec_cmd[1]);
+	// 	return ;
+	// }
+	// if (ft_strncmp(head->processes[0]->exec_cmd[0], "unset", 6) == 0)
+	// {
+	// 	printf("hello\n");
+	// 	unset(head, head->processes[0]->exec_cmd[1]);
+	// 	return ;
+	// }
+	if (is_builtin(head->processes[0]->exec_cmd))
 	{
-		cd(head->processes[0]->exec_cmd[1]);
-		return ;
-	}
-	if (ft_strncmp(head->processes[0]->exec_cmd[0], "unset", 6) == 0)
-	{
-		printf("hello\n");
-		unset(head, head->processes[0]->exec_cmd[1]);
+		set_inout(head->processes[0], NULL, 0, 0);
+		run_builtin(head, head->processes[0]->exec_cmd);
+		dup2(head->data->original_stdout, STDOUT_FILENO);
+		dup2(head->data->original_stdin, STDIN_FILENO);
 		return ;
 	}
 	pid = fork();
@@ -87,9 +99,7 @@ void	start_process(t_head *head, char **envp)
 	else if (pid == 0)
 	{
 		set_inout(head->processes[0], NULL, 0, 0);
-		if (is_builtin(head->processes[0]->exec_cmd))
-			run_builtin(head, head->processes[0]->exec_cmd);
-		else if (execve(head->processes[0]->exec_path, \
+		if (execve(head->processes[0]->exec_path, \
 		head->processes[0]->exec_cmd, envp) == -1)
 			perror_exit("execve error");
 	}
@@ -116,7 +126,10 @@ void	start_processes(t_head *head, char **envp, int **pipes, int n)
 				mid_child(head, pipes, envp, i);
 		}
 		else
+		{
+			close_all_pipes(pipes, 1);
 			parent(pipes, i);
+		}
 		i++;
 	}
 }
@@ -135,7 +148,7 @@ void	exe(t_head *head, char **envp)
 	{
 		get_processes(head, envp);
 		start_process(head, envp);
-		if (ft_strncmp(head->processes[0]->exec_cmd[0], "cd", 3) != 0)
+		if (!is_builtin(head->processes[0]->exec_cmd))
 			wait_process(head->size);
 	}
 	else

@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:27:44 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/04/04 15:20:07 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/04/04 21:51:39 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ typedef struct s_data //heredoc 파일 경로 여기로 옮기기.
 {
 	char			**exec_rm_cmd;
 	char			*exec_rm_path;
+	int				original_stdin;
+	int				original_stdout;
 	char			**envp;
 	t_list			*env;
 }	t_data;
@@ -133,6 +135,7 @@ void		first_child(t_head *head, int **pipes, char **envp, int i);
 void		last_child(t_head *head, int **pipes, char **envp, int i);
 void		mid_child(t_head *head, int **pipes, char **envp, int i);
 void		parent(int **pipes, int i);
+void		close_all_pipes(int **pipes, int n);
 
 	//get_fd
 int			get_infile(char	*file_name);
