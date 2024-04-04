@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 22:41:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/03/31 19:32:30 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/04/04 14:39:18 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,7 +253,6 @@ char	*make_cmd(char *cmd, t_split_var *v, char q)
 	
 	s = v->start;
 	i = set_len(cmd, v->i, q);
-	printf("\ns, i : %d %d\n ",s, i);
 	if (i == -1)
 		error_msg(2);
 	if (i - s <= 1)
@@ -273,7 +272,6 @@ char	*make_cmd(char *cmd, t_split_var *v, char q)
 		s++;
 	}
 	p_cmd[ind] = 0;
-	printf("\nstr: %s\n", p_cmd);
 	v->i = i + 1;
 	v->start = i + 1;
 	return (p_cmd);
@@ -300,11 +298,9 @@ t_token	*split_space(char *cmd, char space)	// pipe 단위로 나눈 것 -> 공�
 					v.backup = make_cmd(cmd, &v, cmd[v.i]);
 				else
 					my_strjoin(&v.backup, make_cmd(cmd, &v, cmd[v.i]));
-				printf("\nbackup : %s\n", v.backup);
 			}
 			else
 				v.i++;
-			printf("\n\nc: %c\n\n", cmd[v.i]);
 		}
 		if (cmd[v.i] == '\0')
 			v.flag = 1;				// 마지막이라면 종료!
@@ -318,7 +314,6 @@ t_token	*split_space(char *cmd, char space)	// pipe 단위로 나눈 것 -> 공�
 		v.backup = NULL;
 		v.i++;
 		v.start = v.i;
-		printf("\nafter : %s\n\n", &cmd[v.start]);
 	}
 
 	t_token *tmp = v.lst;
