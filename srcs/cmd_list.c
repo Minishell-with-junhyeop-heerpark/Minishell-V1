@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/17 06:22:43 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/03/29 09:29:28 by heerpark         ###   ########.fr       */
+/*   Created: 2024/03/31 20:00:39 by junhyeop          #+#    #+#             */
+/*   Updated: 2024/03/31 20:00:40 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #include "minishell.h"
 

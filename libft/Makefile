@@ -44,7 +44,8 @@ SRCS = ft_memset.c \
 		ft_putendl_fd.c \
 		ft_putnbr_fd.c \
 		ft_strdup.c \
-		ft_striteri.c
+		ft_striteri.c \
+		my_strjoin.c
 
 SRCS_FTPF = ft_printf.c ft_itoa_hex.c ft_itoa.c printf_option.c printf_option_2.c printf_utils.c 
 SRCS_GNL = get_next_line.c get_next_line_utils.c

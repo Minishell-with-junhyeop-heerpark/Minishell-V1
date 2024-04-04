@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:27:44 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/03/31 19:13:24 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/04/04 15:20:07 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 # include <readline/history.h>
 # include <unistd.h>
 # include <termios.h>
+
+int	sig;
 
 typedef struct s_flag
 {
@@ -86,6 +88,7 @@ typedef struct s_head {
 	struct s_list	*top;
 	t_data			*data;
 	t_process		**processes;
+	
 }	t_head;
 
 

@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 22:41:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/03/27 22:39:36 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/03/31 19:32:30 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,39 +160,175 @@ void	add_token(t_token **lst, char *cmd)
 // input : echo ls >a
 // output : echo, ls, >, a
 
-t_token	*split_space(char *command, char space)	// pipe 단위로 나눈 것 -> 공백 단위로 나눔
-{
+typedef struct s_split_var {
 	t_token	*lst;
+	char	*backup;
 	int		i;
 	int		flag;
 	int		start;
+	int		quote;
+	int		dquote;
+}	t_split_var;
 
-	i = 0;
-	lst = NULL;
-	flag = 0;
-	start = 0;
-	while (flag == 0 && command[i]) 			// space 기준으로 나눔!
+
+int	s_quote_check(char c, t_split_var *flag)
+{
+	if (c == '\'')
 	{
-		while (command[start] == space)			// 앞에 공백 지움!
-			start++;
-		i = start;
-		while (command[i] != space && command[i] != '\0')
-			i++;
-		if (command[i] == '\0')					// 마지막이라면 종료!
-			flag = 1;
-		command[i] = '\0';						// 분리하기 쉽게 분기지점에 널값을 넣어주었음
-		add_token(&lst, &command[start]);			// redir 기준으로 다시 나눔!
-		start = i + 1;
+		flag->quote = 1;
+		flag->dquote = 0;
+	}
+	else if (c == '\"')
+	{
+		flag->quote = 0;
+		flag->dquote = 1;
+	}
+	else
+		return (0);
+	return (1);
+}
+
+
+int	s_dquote_check(char c, t_split_var *flag)
+{
+	if (flag->dquote == 1)
+		return (1);
+	if (c == '\"' && flag->dquote == 0)
+	{
+		flag->dquote = 1;
+		return (1);
+	}
+	if ((c == '\"') && flag->dquote == 1)
+	{
+		flag->dquote = 0;
+		return (0);
+	}
+	return (flag->dquote);
+}
+
+int	set_len(char *str, int i, char q)
+{
+	i++;
+	while(str[i])
+	{
+		if (str[i] == q)
+			return (i);
 		i++;
 	}
-	// t_token *tmp = lst;
-	// while (tmp)
-	// {
-	// 	printf(".... %s %d\n", tmp->cmd, tmp->redir_flag);
-	// 	tmp = tmp->next;
-	// }
-	// printf(".... |\n");
-	return (lst);
+	return (-1);
+}
+
+// 여기가 문제!!!
+void	add_token_qutoe(t_token **lst, char *cmd)
+{
+	ft_token_add(lst, token_new(cmd, 0));
+}
+
+void	task_dquote(char *cmd, t_split_var *flag)
+{
+	int	i;
+
+	i = 0;
+	while(cmd[i] && s_dquote_check(cmd[i], flag))
+		i++;
+	flag->i += i;
+}
+
+void	task_quote(char *cmd, t_split_var *flag)
+{
+	int	i;
+
+	i = 0;
+	while(cmd[i] && s_quote_check(cmd[i], flag))
+		i++;
+	flag->i += i;
+}
+
+char	*make_cmd(char *cmd, t_split_var *v, char q)
+{
+	char	*p_cmd;
+	int	i;
+	int	s;
+	int	ind;
+	
+	s = v->start;
+	i = set_len(cmd, v->i, q);
+	printf("\ns, i : %d %d\n ",s, i);
+	if (i == -1)
+		error_msg(2);
+	if (i - s <= 1)
+	{
+		v->i = i + 1;
+		v->start = i + 1;
+		return (NULL);
+	}
+	ind = 0;
+	p_cmd = (char *)malloc(sizeof(char) * (i - s - 2) + 1);
+	if (!p_cmd)
+		error_msg(1);
+	while (s < i)
+	{
+		if (cmd[s] != q)
+			p_cmd[ind++] = cmd[s];
+		s++;
+	}
+	p_cmd[ind] = 0;
+	printf("\nstr: %s\n", p_cmd);
+	v->i = i + 1;
+	v->start = i + 1;
+	return (p_cmd);
+}
+
+t_token	*split_space(char *cmd, char space)	// pipe 단위로 나눈 것 -> 공백 단위로 나눔
+{
+	t_split_var	v;
+
+	v = (t_split_var){NULL, NULL, 0, 0, 0, 0, 0};
+	while (v.flag == 0 && cmd[v.i]) 			// space 기준으로 나눔!
+	{
+		v.dquote = 0;
+		v.quote = 0;
+		while (cmd[v.start] == space)			// 앞에 공백 지움!
+			v.start++;
+		v.i = v.start;
+
+		while (cmd[v.i] != space && cmd[v.i])	// 문자들을 넘기는데 quote 있으면 무시하고 다넘김!!!
+		{
+			if (s_quote_check(cmd[v.i], &v))
+			{
+				if (!v.backup)
+					v.backup = make_cmd(cmd, &v, cmd[v.i]);
+				else
+					my_strjoin(&v.backup, make_cmd(cmd, &v, cmd[v.i]));
+				printf("\nbackup : %s\n", v.backup);
+			}
+			else
+				v.i++;
+			printf("\n\nc: %c\n\n", cmd[v.i]);
+		}
+		if (cmd[v.i] == '\0')
+			v.flag = 1;				// 마지막이라면 종료!
+		cmd[v.i] = '\0';						// 분리하기 쉽게 분기지점에 널값을 넣어주었음
+		if (v.i > v.start && v.backup)
+			v.backup = ft_strjoin(v.backup, &cmd[v.start]);
+		if (!v.backup)
+			add_token(&v.lst, &cmd[v.start]);			// redir 기준으로 다시 나눔!
+		else
+			add_token_qutoe(&v.lst, v.backup);
+		v.backup = NULL;
+		v.i++;
+		v.start = v.i;
+		printf("\nafter : %s\n\n", &cmd[v.start]);
+	}
+
+	t_token *tmp = v.lst;
+	while (tmp)
+	{
+		printf(".... %s %d\n", tmp->cmd, tmp->redir_flag);
+		tmp = tmp->next;
+	}
+	printf(".... |\n");
+	return (v.lst);
 }
 
 

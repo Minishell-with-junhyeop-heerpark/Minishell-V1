@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:10:35 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/03/31 19:43:01 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/04/04 15:20:22 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 void sig_handler(int signal)
 {
+	// ^C 출력할지말지
     if (signal == SIGINT)
     {
         //printf("\033[K"); 지워버리는 것을 원하지는 않았음.
@@ -44,6 +45,7 @@ int main(int argc, char **argv, char **envp)
     struct termios	term;
 	t_head			*head;
 
+	sig = -1;
     // 터미널 세팅
     tcgetattr(STDIN_FILENO, &term);
     term.c_lflag &= ~(ECHOCTL);
