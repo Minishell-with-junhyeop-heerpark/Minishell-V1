@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:11:25 by heerpark          #+#    #+#             */
-/*   Updated: 2024/04/04 22:02:05 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/04/04 22:13:59 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,13 @@ void	start_process(t_head *head, char **envp)
 		run_builtin(head, head->processes[0]->exec_cmd);
 		dup2(head->data->original_stdout, STDOUT_FILENO);
 		dup2(head->data->original_stdin, STDIN_FILENO);
+		return ;
+	}
+	if (ft_strncmp(head->processes[0]->exec_cmd[0], ".", 1) == 0)
+	{
+		if (execve(head->processes[0]->exec_cmd[0], \
+		head->processes[0]->exec_cmd, envp) == -1)
+			perror_exit("execve error");
 		return ;
 	}
 	pid = fork();

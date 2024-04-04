@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 02:15:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/04/04 15:20:18 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/04/04 22:11:51 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,10 @@ void	set_process(t_process *process, char **path)
 	// printf("%s\n%s\n", process->exec_cmd[0], process->exec_cmd[1]);
 	if (is_builtin(exec_cmd))
 		return ;
+	if (ft_strncmp(exec_cmd[0], ".", 1) == 0)
+	{
+		return ;
+	}
 	while (path[i])
 	{
 		test_path = ft_strjoin(path[i], "/");
