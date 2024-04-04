@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 15:11:29 by heerpark          #+#    #+#             */
-/*   Updated: 2024/03/29 09:41:28 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/04/04 15:50:27 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	run_builtin(t_head *head, char **exec_cmd) //env 내가만든 env로 대체
 {
 	// printf("%s\n" ,(exec_cmd[0]));
 	if (ft_strncmp(exec_cmd[0], "echo", 5) == 0)
-		return ;
+		ft_echo(exec_cmd) ;
 	else if (ft_strncmp(exec_cmd[0], "pwd", 4) == 0)
 		pwd();
 	else if (ft_strncmp(exec_cmd[0], "cd", 3) == 0)

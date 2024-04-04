@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:27:44 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/03/31 20:03:49 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/04/04 15:51:02 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,10 +163,11 @@ void		exe(t_head *head, char **envp);
 int			is_builtin(char **exec_cmd);
 void		run_builtin(t_head *head, char **exec_cmd);
 
-	//envpwd.c
+	//envpwd.c ft_echo.c
 void		env(t_head *head);
 void		pwd(void);
 void		cd(char *dir);
+void		ft_echo(char **exec_cmd);
 
 	//list_control.c
 t_list		*lst_new(char *key, char *value);
