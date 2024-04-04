@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 13:13:59 by heerpark          #+#    #+#             */
-/*   Updated: 2024/04/04 21:52:38 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/04/04 22:02:17 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	first_child(t_head *head, int **pipes, char **envp, int i)
 	if (is_builtin(head->processes[i]->exec_cmd))
 	{
 		run_builtin(head, head->processes[i]->exec_cmd);
-		close_all_pipes(pipes, 1);
+		// close_all_pipes(pipes, 1);
 		exit(1);
 	}
 	else if (execve(head->processes[i]->exec_path, head->processes[i]->exec_cmd, envp) == -1)
@@ -48,7 +48,7 @@ void	last_child(t_head *head, int **pipes, char **envp, int i)
 	if (is_builtin(head->processes[i]->exec_cmd))
 	{
 		run_builtin(head, head->processes[i]->exec_cmd);
-		close_all_pipes(pipes, 1);
+		// close_all_pipes(pipes, 1);
 		exit(1);
 	}
 	else if (execve(head->processes[i]->exec_path, head->processes[i]->exec_cmd, envp) == -1)
@@ -65,7 +65,7 @@ void	mid_child(t_head *head, int **pipes, char **envp, int i)
 	if (is_builtin(head->processes[i]->exec_cmd))
 	{
 		run_builtin(head, head->processes[i]->exec_cmd);
-		close_all_pipes(pipes, 1);
+		// close_all_pipes(pipes, 1);
 		exit(1);
 	}
 	else if (execve(head->processes[i]->exec_path, head->processes[i]->exec_cmd, envp) == -1)
@@ -92,7 +92,7 @@ void	wait_process(int child_num)
 	while (count < child_num)
 	{
 		pid = wait(&status);
-		printf("process end\n");
+		printf("process end: %d\n", pid);
 		if (pid == -1)
 		{
 			perror_exit("wait error");
