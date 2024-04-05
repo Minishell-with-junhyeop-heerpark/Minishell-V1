@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:11:25 by heerpark          #+#    #+#             */
-/*   Updated: 2024/04/05 17:45:55 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/04/05 20:14:57 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ void	start_process(t_head *head, char **envp)
 			perror_exit("file exe execve error");
 		return ;
 	}
-	printf("hi\n");
 	pid = fork();
 	if (pid == -1)
 		perror_exit("start_process fork error");
@@ -119,6 +118,7 @@ void	start_processes(t_head *head, char **envp, int **pipes, int n)
 		}
 		else
 		{
+			printf("%d번째 자식 pid: %d\n", i + 1, pid);
 			// close_all_pipes(pipes, 1);
 			parent(pipes, i);
 		}
@@ -146,6 +146,7 @@ void	exe(t_head *head, char **envp)
 	else
 	{
 		pipes = make_pipe(head->size - 1);
+		// close_all_pipes(pipes, head->size - 1);
 		get_processes(head, envp);
 		start_processes(head, envp, pipes, head->size);
 		wait_process(head->size);

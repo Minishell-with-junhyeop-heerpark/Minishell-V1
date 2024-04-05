@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:27:44 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/04/05 16:31:33 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/04/05 20:17:35 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ typedef struct s_head {
 	struct s_list	*top;
 	t_data			*data;
 	t_process		**processes;
-	
 }	t_head;
 
 
