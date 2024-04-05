@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 13:13:59 by heerpark          #+#    #+#             */
-/*   Updated: 2024/04/04 22:06:45 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/04/05 17:22:50 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,15 @@ void	first_child(t_head *head, int **pipes, char **envp, int i)
 		// close_all_pipes(pipes, 1);
 		exit(1);
 	}
-	else if (execve(head->processes[i]->exec_path, head->processes[i]->exec_cmd, envp) == -1)
+	if (is_filepath(head->processes[i]->exec_cmd))
+	{
+		if (execve(head->processes[i]->exec_cmd[0], \
+		head->processes[i]->exec_cmd, envp) == -1)
+			perror_exit("file exe execve error");
+		return ;
+	}
+	if (execve(head->processes[i]->exec_path, \
+	head->processes[i]->exec_cmd, envp) == -1)
 		perror_exit("execve error");
 }
 
@@ -51,7 +59,15 @@ void	last_child(t_head *head, int **pipes, char **envp, int i)
 		// close_all_pipes(pipes, 1);
 		exit(1);
 	}
-	else if (execve(head->processes[i]->exec_path, head->processes[i]->exec_cmd, envp) == -1)
+	if (is_filepath(head->processes[i]->exec_cmd))
+	{
+		if (execve(head->processes[i]->exec_cmd[0], \
+		head->processes[i]->exec_cmd, envp) == -1)
+			perror_exit("file exe execve error");
+		return ;
+	}
+	if (execve(head->processes[i]->exec_path, \
+	head->processes[i]->exec_cmd, envp) == -1)
 		perror_exit("execve error");
 }
 
@@ -68,7 +84,15 @@ void	mid_child(t_head *head, int **pipes, char **envp, int i)
 		// close_all_pipes(pipes, 1);
 		exit(1);
 	}
-	else if (execve(head->processes[i]->exec_path, head->processes[i]->exec_cmd, envp) == -1)
+	if (is_filepath(head->processes[i]->exec_cmd))
+	{
+		if (execve(head->processes[i]->exec_cmd[0], \
+		head->processes[i]->exec_cmd, envp) == -1)
+			perror_exit("file exe execve error");
+		return ;
+	}
+	if (execve(head->processes[i]->exec_path, \
+	head->processes[i]->exec_cmd, envp) == -1)
 		perror_exit("execve error");
 }
 

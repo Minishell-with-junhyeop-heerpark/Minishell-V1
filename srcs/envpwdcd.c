@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 20:27:15 by heerpark          #+#    #+#             */
-/*   Updated: 2024/04/04 20:34:06 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/04/05 17:50:46 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ void	pwd(void)
 
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 	{
-		write(1, cwd, ft_strlen(cwd));
+		ft_printf("%s\n", cwd);
 	}
 	else
 	{
-		perror_exit("getcwd() error");
+		perror_exit("pwd() error");
 	}
 }
 

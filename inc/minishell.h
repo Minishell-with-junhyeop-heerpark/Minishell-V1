@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:27:44 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/04/04 21:51:39 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/04/05 16:31:33 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,5 +183,10 @@ void		lst_print(t_list *head);
 void		set_env(t_list **head, char **envp);
 char		*get_envp_line(t_list *head);
 void		update_envp(t_head *head);
+
+	//file_exe.c
+int			is_filepath(char **exec_cmd);
+char		*get_pwd(void);
+void		add_desktoppath(char **exec_cmd);
 
 #endif

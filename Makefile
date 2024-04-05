@@ -21,6 +21,7 @@ SRC	= $(SRC_DIR)/cmd_list.c \
 		$(SRC_DIR)/builtin.c \
 		$(SRC_DIR)/list_control.c \
 		$(SRC_DIR)/env_control.c \
+		$(SRC_DIR)/file_exe.c \
 
 LIBDIR = ./libft/
 LIBNAME = ft
