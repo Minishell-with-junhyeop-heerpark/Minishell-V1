@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:27:44 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/04/06 14:28:48 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/04/06 21:18:30 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_token
 {
 	char			*cmd;
 	int				redir_flag;
+	int				dquote_flag;
 	struct s_token	*next;
 	struct s_token	*prev;
 }	t_token;
@@ -106,7 +107,7 @@ void		add_token(t_token **lst, char *cmd);
 
 t_token		*make_token(char *command);
 t_head		*init_head(char **envp);
-t_token		*token_new(char *command, int flag);
+t_token		*token_new(char *command, int flag, int dquote_flag);
 
 t_list		*cmd_list_new(char *command);
 void		ft_lst_add(t_head *head, t_list *new);
@@ -174,6 +175,7 @@ void		env(t_head *head);
 void		pwd(void);
 void		cd(char *dir);
 void		unset(t_head *head, char *key);
+void		ft_echo(char **exec_cmd);
 
 	//list_control.c
 t_list		*lst_new(char *key, char *value);
@@ -191,5 +193,15 @@ void		update_envp(t_head *head);
 int			is_filepath(char **exec_cmd);
 char		*get_pwd(void);
 void		add_desktoppath(char **exec_cmd);
+
+	// signal.c
+void	sig_handler(int signo);
+void	set_signal();
+void	temi_print_off();
+void	temi_print_on();
+void	set_signal_heredoc(void);
+void	do_sigint_heredoc(int signum);
+void	exit_signal();
+
 
 #endif

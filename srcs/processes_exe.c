@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   processes_exe.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:11:25 by heerpark          #+#    #+#             */
-/*   Updated: 2024/04/05 20:14:57 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/04/06 19:54:45 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ void	start_process(t_head *head, char **envp)
 		perror_exit("start_process fork error");
 	else if (pid == 0)
 	{
+		temi_print_on();
 		set_inout(head->processes[0], NULL, 0, 0);
 		if (execve(head->processes[0]->exec_path, \
 		head->processes[0]->exec_cmd, envp) == -1)
@@ -153,6 +154,8 @@ void	exe(t_head *head, char **envp)
 	}
 	kill_heredoc(head, envp);
 	printf("exe end\n");
+	set_signal();
+
 	return ;
 }
 //have to free malloced variable

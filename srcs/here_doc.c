@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 16:08:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/03/31 11:42:27 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/04/06 19:54:26 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ char	*make_infile(char *limiter)
 	if (temp_fd == -1)
 		perror_exit("make_infile open error");
 	cmp_limiter = ft_strjoin(limiter, "\n");
+	set_signal_heredoc();
 	while (1)
 	{
 		temp = get_next_line(0);
@@ -56,6 +57,7 @@ char	*make_infile(char *limiter)
 		write(temp_fd, temp, ft_strlen(temp));
 		free(temp);
 	}
+	set_signal();
 	close(temp_fd);
 	free(cmp_limiter);
 	return (file_name);

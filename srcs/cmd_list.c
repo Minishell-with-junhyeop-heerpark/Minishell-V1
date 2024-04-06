@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 20:00:39 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/04/04 21:40:21 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/04/06 20:10:35 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ t_list	*cmd_list_new(char *command)
 	return (newnode);
 }
 
-t_token	*token_new(char *command, int flag)
+t_token	*token_new(char *command, int flag, int dquote_flag)
 {
 	t_token	*new;
 
@@ -68,6 +68,7 @@ t_token	*token_new(char *command, int flag)
 	new->next = NULL;
 	new->cmd = command;
 	new->redir_flag = flag;
+	new->dquote_flag = dquote_flag;
 	return (new);
 }
 
