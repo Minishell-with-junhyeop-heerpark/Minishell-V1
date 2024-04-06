@@ -17,49 +17,30 @@
 //     return (0);
 // }
 
-#include "inc/minishell.h"
+#include <stdio.h>
+#include <unistd.h>
 
-char	*get_pwd(void)
+// char	*get_pwd(void)
+// {
+// 	char	*cwd;
+
+// 	cwd = (char *)malloc(sizeof(char) * 1024);
+// 	if (getcwd(cwd, 1024) == NULL)
+// 		perror_exit("getpwd() error");
+// 	return (cwd);
+// }
+
+void	cd(char *dir)
 {
-	char	*cwd;
-
-	cwd = (char *)malloc(sizeof(char) * 1024);
-	if (getcwd(cwd, 1024) == NULL)
-		perror_exit("getpwd() error");
-	return (cwd);
-}
-
-void	add_desktoppath(void)
-{
-	char	*now_path;
-	char	*desktop_path;
-	char	*res;
-	char	*path = "~/hello/world";
-	int		i;
-
-	now_path = get_pwd();
-	desktop_path = (char *)malloc(sizeof(char) * 100);
-	printf("get success: %s\n", now_path);
-	i = 0;
-	while (now_path[i])
-	{
-		if (now_path[i] == '/')
-		{
-			if (strncmp(&now_path[i], "/Desktop/", 9) == 0)
-				break ;
-		}
-		i++;
-	}
-	ft_strlcpy(desktop_path, now_path, i + 9);
-	printf("desktop_path: %s\n", desktop_path);
-	res = ft_strjoin(desktop_path, ++path);
-	printf("res: %s\n", res);
+	printf("im in cd, dir: %s\n", dir);
+	if (chdir(dir) == -1)
+		perror("cd");
 }
 
 int  main() {
     // char *const argv[] = {"co_minishell/minishell", NULL};
     // char *const envp[] = {NULL};
     // execve("co_minishell/minishell", argv, envp);
-	add_desktoppath();
+	cd("~");
     return 0;
 }

@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:10:35 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/04/06 15:12:08 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/04/06 17:26:30 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ int main(int argc, char **argv, char **envp)
     {
 
         str = readline("minishell$ ");
-		printf("input!!\n");
         if (!str)
         {
             //  minishell$ exit

@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 02:15:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/04/05 16:57:28 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/04/06 16:42:11 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	fill_elem(t_token *temp, t_process *process, char **cmd, int flag)
 	}
 }
 
-void	set_process(t_process *process, char **path)
+void	set_process(t_head *head, t_process *process, char **path)
 {
 	char	**exec_cmd;
 	char	*exec_path;
@@ -102,7 +102,7 @@ void	set_process(t_process *process, char **path)
 	if (is_filepath(exec_cmd))
 	{
 		if (ft_strncmp(exec_cmd[0], "~", 1) == 0)
-			add_desktoppath(exec_cmd);
+			add_desktoppath(head, exec_cmd);
 		return ;
 	}
 	while (path[i])
@@ -125,7 +125,7 @@ void	set_process(t_process *process, char **path)
 	process->exec_path = exec_path;
 }
 
-t_process	*get_process(t_list *line, char **path)
+t_process	*get_process(t_head *head, t_list *line, char **path)
 {
 	t_process	*process;
 	t_token		*temp;
@@ -137,6 +137,6 @@ t_process	*get_process(t_list *line, char **path)
 	init_fd(process);
 	fill_elem(temp, process, &cmd, 0);
 	process->cmd = cmd;
-	set_process(process, path);
+	set_process(head, process, path);
 	return (process);
 }

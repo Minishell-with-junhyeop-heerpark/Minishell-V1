@@ -6,13 +6,31 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 20:00:39 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/04/04 21:40:21 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/04/06 17:26:06 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 
 #include "minishell.h"
+
+void	set_home(t_head *head)
+{
+	t_list	*node;
+	char	*home;
+
+	node = head->data->env->next;
+	while (node)
+	{
+		if (ft_strncmp(node->key, "HOME", 5) == 0)
+		{
+			home = ft_strdup(node->value);
+			head->data->home = home;
+			break ;
+		}
+		node = node->next;
+	}
+}
 
 t_head	*init_head(char **envp)
 {
@@ -28,6 +46,7 @@ t_head	*init_head(char **envp)
 	head->data->original_stdout = dup(STDOUT_FILENO);
 	head->data->env = (t_list *)malloc(sizeof(t_list));
 	set_env(&(head->data->env), envp);
+	set_home(head);
 	return (head);
 }
 

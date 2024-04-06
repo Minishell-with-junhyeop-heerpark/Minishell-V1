@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:27:44 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/04/06 15:13:10 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/04/06 17:34:57 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_token
 {
 	char			*cmd;
 	int				redir_flag;
+	int				replace_flag;
 	struct s_token	*next;
 	struct s_token	*prev;
 }	t_token;
@@ -84,6 +85,7 @@ typedef struct s_data //heredoc 파일 경로 여기로 옮기기.
 	int				original_stdin;
 	int				original_stdout;
 	char			**envp;
+	char			*home;
 	t_list			*env;
 }	t_data;
 
@@ -155,8 +157,8 @@ char		*make_infile(char *limiter);
 void		fill_elem(t_token *temp, t_process *process, char **cmd, int flag);
 void		set_fd(t_process *process, char *file_name, int redir_flag);
 int			get_redir_flag(char	*token);
-void		set_process(t_process *process, char **path);
-t_process	*get_process(t_list *line, char **path);
+void		set_process(t_head *head, t_process *process, char **path);
+t_process	*get_process(t_head *head, t_list *line, char **path);
 
 	//processes_exe
 void		get_processes(t_head *head, char **envp);
@@ -190,7 +192,7 @@ void		update_envp(t_head *head);
 	//file_exe.c
 int			is_filepath(char **exec_cmd);
 char		*get_pwd(void);
-void		add_desktoppath(char **exec_cmd);
+void		add_desktoppath(t_head *head, char **exec_cmd);
 
 	//ft_echo.c
 void		ft_echo(char **exec_cmd);
