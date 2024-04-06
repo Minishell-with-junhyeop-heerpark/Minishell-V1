@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:27:44 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/04/06 14:28:48 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/04/06 15:13:10 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,5 +191,8 @@ void		update_envp(t_head *head);
 int			is_filepath(char **exec_cmd);
 char		*get_pwd(void);
 void		add_desktoppath(char **exec_cmd);
+
+	//ft_echo.c
+void		ft_echo(char **exec_cmd);
 
 #endif

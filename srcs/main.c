@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:10:35 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/04/06 14:29:11 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/04/06 15:12:08 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 void	sig_handler(int signo)
 {
 	// ^C 출력할지말지
-    if (signal == SIGINT)
+    if (signo == SIGINT)
     {
         //printf("\033[K"); 지워버리는 것을 원하지는 않았음.
         printf("minishell$ \n");
