@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:27:44 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/04/04 15:51:02 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/04/04 22:45:42 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,10 @@
 # include <readline/history.h>
 # include <unistd.h>
 # include <termios.h>
+
+# define STDIN 			0
+# define STDOUT 		1
+# define STDERR 		2
 
 int	sig;
 
