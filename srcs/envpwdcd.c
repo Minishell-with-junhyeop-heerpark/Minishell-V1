@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 20:27:15 by heerpark          #+#    #+#             */
-/*   Updated: 2024/04/05 19:56:20 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/04/06 21:39:16 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,16 @@ void	unset(t_head *head, char *key)
 	remove_node(&(head->data->env->next), key);
 }
 
-void	cd(char *dir)
+void	cd(t_head *head, char *dir)
 {
-	printf("im in cd, dir: %s\n", dir);
-	if (chdir(dir) == -1)
-		perror_exit("cd");
+	if (dir == NULL)
+	{
+		if (chdir(head->data->home) == -1)
+			perror_exit("cd");
+	}
+	else
+	{
+		if (chdir(dir) == -1)
+			perror_exit("cd");
+	}
 }

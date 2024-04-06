@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:27:44 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/04/06 18:37:13 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/04/06 22:14:34 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ typedef struct s_process
 	char	*exec_path;
 	char	**exec_cmd;
 	char	*builtin_cmds;
+	t_list	*env;
 }	t_process;
 
 typedef struct s_data //heredoc 파일 경로 여기로 옮기기.
@@ -172,7 +173,7 @@ void		run_builtin(t_head *head, char **exec_cmd);
 	//envpwd.c ft_echo.c
 void		env(t_head *head);
 void		pwd(void);
-void		cd(char *dir);
+void		cd(t_head *head, char *dir);
 void		unset(t_head *head, char *key);
 
 	//list_control.c
@@ -181,6 +182,7 @@ void		lstadd_back(t_list **lst, t_list *new);
 char		*remove_node(t_list **lst, char *key);
 void		lst_clear(t_list **lst);
 void		lst_print(t_list *head);
+void		get_node_value(t_list *env, t_token *token);
 
 	//env_control.c
 void		set_env(t_list **head, char **envp);

@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 15:11:29 by heerpark          #+#    #+#             */
-/*   Updated: 2024/04/06 18:58:57 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/04/06 21:24:53 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	run_builtin(t_head *head, char **exec_cmd) //env 내가만든 env로 대체
 	else if (ft_strncmp(exec_cmd[0], "pwd", 4) == 0)
 		pwd();
 	else if (ft_strncmp(exec_cmd[0], "cd", 3) == 0)
-		cd(exec_cmd[1]);
+		cd(head, exec_cmd[1]);
 	else if (ft_strncmp(exec_cmd[0], "export", 7) == 0)
 		return ;
 	else if (ft_strncmp(exec_cmd[0], "unset", 6) == 0)

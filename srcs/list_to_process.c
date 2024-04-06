@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 02:15:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/04/06 18:46:17 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/04/06 22:14:22 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,10 @@ void	fill_elem(t_token *temp, t_process *process, char **cmd, int flag)
 		}
 		else if (temp->redir_flag == 0)
 		{
+			if (ft_strncmp(temp->cmd, "$", 1) == 0)
+			{
+				get_node_value(process->env, temp);
+			}
 			temp_str = ft_strjoin(*cmd, temp->cmd);
 			free(*cmd);
 			*cmd = ft_strjoin(temp_str, " ");
@@ -95,11 +99,16 @@ void	set_process(t_head *head, t_process *process, char **path)
 
 	i = 0;
 	exec_cmd = ft_split(process->cmd, ' ');
+	if (exec_cmd[0] == NULL)
+	{
+		unlink(process->heredoc_filename);
+		perror_exit("no cmd");
+	}
 	process->exec_cmd = exec_cmd;
 	// printf("%s\n%s\n", process->exec_cmd[0], process->exec_cmd[1]);
 	if (is_builtin(exec_cmd))
 	{
-		if (ft_strncmp(exec_cmd[1], "~", 1) == 0)
+		if (exec_cmd[1] && ft_strncmp(exec_cmd[1], "~", 1) == 0)
 		{
 			if (ft_strncmp(exec_cmd[1], "~/", 2) == 0)
 				add_homepath(head, &exec_cmd[1], 0);
@@ -141,11 +150,13 @@ t_process	*get_process(t_head *head, t_list *line, char **path)
 	char		*cmd;
 
 	process = (t_process *)malloc(sizeof(t_process));
+	process->env = head->data->env;
 	cmd = ft_strdup("");
 	temp = line->token;
 	init_fd(process);
 	fill_elem(temp, process, &cmd, 0);
 	process->cmd = cmd;
 	set_process(head, process, path);
+	printf("set_process end\n");
 	return (process);
 }

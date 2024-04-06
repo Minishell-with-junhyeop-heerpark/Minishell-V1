@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:11:25 by heerpark          #+#    #+#             */
-/*   Updated: 2024/04/06 16:43:17 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/04/06 22:16:15 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@ void	get_processes(t_head *head, char **envp)
 	node = head->top;
 	path = ft_split(get_envpath(envp), ':');
 	if (!path)
+	{
 		perror_exit("get_processes-split");
+	}
 	i = 0;
 	while (node)
 	{

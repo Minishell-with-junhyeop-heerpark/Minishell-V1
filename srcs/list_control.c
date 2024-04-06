@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:40:07 by heerpark          #+#    #+#             */
-/*   Updated: 2024/04/04 20:42:58 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/04/06 22:26:27 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,28 @@ char	*remove_node(t_list **lst, char *key)
 	free(current->value);
 	free(current);
 	return (0);
+}
+
+void	get_node_value(t_list *env, t_token *token)
+{
+	t_list	*temp;
+	char	*res;
+
+	temp = env->next;
+	while (temp)
+	{
+		if (ft_strncmp(temp->key, (token->cmd + 1), \
+		ft_strlen(temp->key) + 1) == 0)
+		{
+			res = ft_strdup(temp->value);
+			free(token->cmd);
+			token->cmd = res;
+			return ;
+		}
+		temp = temp->next;
+	}
+	free(token->cmd);
+	token->cmd = ft_strdup("");
 }
 
 void	lst_clear(t_list **lst)
