@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 20:00:39 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/03/31 20:00:40 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/04/04 21:40:21 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ t_head	*init_head(char **envp)
 		error_msg(1);
 	head->top = NULL;
 	head->size = 0;
+	head->data->original_stdin = dup(STDOUT_FILENO);
+	head->data->original_stdout = dup(STDOUT_FILENO);
 	head->data->env = (t_list *)malloc(sizeof(t_list));
 	set_env(&(head->data->env), envp);
 	return (head);

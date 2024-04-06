@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:10:35 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/04/04 22:48:09 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/04/06 14:29:11 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,52 +15,17 @@
 
 void	sig_handler(int signo)
 {
-	pid_t	pid;
-	int		status;
-
-	pid = waitpid(-1, &status, WNOHANG);
-	//-1 : 자식 프로세스를 기다림.
-	//status : 자식 프로세스가 종료되면 자식 pid값이 할당 됨.
-	//WNOHANG : 자식 프로세스가 종료되지 않아서 pid를 회수할 수 없는 경우 반환값으로 0을 받음.
-	if (signo == SIGINT){
-		if (pid == -1)
-		//pid == -1 : 자식 프로세스가 없는 경우
-		{
-		rl_on_new_line();//개행을 실행하기 위한 엔터 역할
-		rl_redisplay();// 입력받은 것 다시 출력
-		ft_putstr_fd("  \n",STDOUT);//개행
-		rl_on_new_line();//개행을 실행하기 위한 엔터 역할
-		// readline 다시 실행하는 코드
-		rl_replace_line("", 0);//buffer초기화
-		rl_redisplay();//실행
-		}
-		else
-			ft_putstr_fd("\n",STDOUT);//다시출력해서 커서가 글자의 끝에 있음.
-	}
-	else if(signo == SIGQUIT)
-	{
-		if (pid == -1) //ok.
-		{
-		rl_on_new_line();//입력 받은 것 종료
-		rl_redisplay();// 입력받은 것 다시 출력
-		ft_putstr_fd("  \b\b",STDOUT);
-		}
-		else
-			ft_putstr_fd("Quit: 3\n",STDOUT);//다시출력해서 커서가 글자의 끝에 있음.
-	}
-
-	
-	// // ^C 출력할지말지
-    // if (signal == SIGINT)
-    // {
-    //     //printf("\033[K"); 지워버리는 것을 원하지는 않았음.
-    //     printf("minishell$ \n");
-    // }
-
-    // if (rl_on_new_line() == -1) // readline으로 설정한 문자열을 한 번 출력한다?
-    //     exit(1);
-    // rl_replace_line("", 1); // 프롬프트에 이미 친 문자열을 싹 날려준다.
-    // // display();         // 프롬프트 커서가 움직이지 않게 해준다.
+	// ^C 출력할지말지
+    if (signal == SIGINT)
+    {
+        //printf("\033[K"); 지워버리는 것을 원하지는 않았음.
+        printf("minishell$ \n");
+    }
+ 
+    if (rl_on_new_line() == -1) // readline으로 설정한 문자열을 한 번 출력한다?
+        exit(1);
+    rl_replace_line("", 1); // 프롬프트에 이미 친 문자열을 싹 날려준다.
+    // display();         // 프롬프트 커서가 움직이지 않게 해준다.
 }
 
 void setting_signal()
@@ -98,6 +63,7 @@ int main(int argc, char **argv, char **envp)
     {
 
         str = readline("minishell$ ");
+		printf("input!!\n");
         if (!str)
         {
             //  minishell$ exit

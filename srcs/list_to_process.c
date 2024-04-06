@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_to_process.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 02:15:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/03/31 20:11:47 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/04/05 16:57:28 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,16 @@ void	set_process(t_process *process, char **path)
 
 	i = 0;
 	exec_cmd = ft_split(process->cmd, ' ');
+	process->exec_cmd = exec_cmd;
+	// printf("%s\n%s\n", process->exec_cmd[0], process->exec_cmd[1]);
+	if (is_builtin(exec_cmd))
+		return ;
+	if (is_filepath(exec_cmd))
+	{
+		if (ft_strncmp(exec_cmd[0], "~", 1) == 0)
+			add_desktoppath(exec_cmd);
+		return ;
+	}
 	while (path[i])
 	{
 		test_path = ft_strjoin(path[i], "/");
@@ -111,7 +121,7 @@ void	set_process(t_process *process, char **path)
 	}
 	if (i != -1)
 		perror_exit("set_process");
-	process->exec_cmd = exec_cmd;
+	// process->exec_cmd = exec_cmd;
 	process->exec_path = exec_path;
 }
 
@@ -127,7 +137,6 @@ t_process	*get_process(t_list *line, char **path)
 	init_fd(process);
 	fill_elem(temp, process, &cmd, 0);
 	process->cmd = cmd;
-	// printf("full cmd: %s\n", process->cmd);
 	set_process(process, path);
 	return (process);
 }

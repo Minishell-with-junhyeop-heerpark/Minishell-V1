@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:27:44 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/04/04 22:45:42 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/04/06 14:28:48 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ typedef struct s_data //heredoc 파일 경로 여기로 옮기기.
 {
 	char			**exec_rm_cmd;
 	char			*exec_rm_path;
+	int				original_stdin;
+	int				original_stdout;
 	char			**envp;
 	t_list			*env;
 }	t_data;
@@ -92,7 +94,6 @@ typedef struct s_head {
 	struct s_list	*top;
 	t_data			*data;
 	t_process		**processes;
-	
 }	t_head;
 
 
@@ -137,6 +138,7 @@ void		first_child(t_head *head, int **pipes, char **envp, int i);
 void		last_child(t_head *head, int **pipes, char **envp, int i);
 void		mid_child(t_head *head, int **pipes, char **envp, int i);
 void		parent(int **pipes, int i);
+void		close_all_pipes(int **pipes, int n);
 
 	//get_fd
 int			get_infile(char	*file_name);
@@ -171,7 +173,7 @@ void		run_builtin(t_head *head, char **exec_cmd);
 void		env(t_head *head);
 void		pwd(void);
 void		cd(char *dir);
-void		ft_echo(char **exec_cmd);
+void		unset(t_head *head, char *key);
 
 	//list_control.c
 t_list		*lst_new(char *key, char *value);
@@ -184,5 +186,10 @@ void		lst_print(t_list *head);
 void		set_env(t_list **head, char **envp);
 char		*get_envp_line(t_list *head);
 void		update_envp(t_head *head);
+
+	//file_exe.c
+int			is_filepath(char **exec_cmd);
+char		*get_pwd(void);
+void		add_desktoppath(char **exec_cmd);
 
 #endif

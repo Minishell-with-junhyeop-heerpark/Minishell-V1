@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   processes_exe.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:11:25 by heerpark          #+#    #+#             */
-/*   Updated: 2024/03/31 20:11:24 by heerpark        ###   ########.fr       */
+/*   Updated: 2024/04/05 20:14:57 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,19 @@ void	start_process(t_head *head, char **envp)
 {
 	pid_t	pid;
 
-	if (ft_strncmp(head->processes[0]->exec_cmd[0], "cd", 3) == 0)
+	if (is_builtin(head->processes[0]->exec_cmd))
 	{
-		cd(head->processes[0]->exec_cmd[1]);
+		set_inout(head->processes[0], NULL, 0, 0);
+		run_builtin(head, head->processes[0]->exec_cmd);
+		dup2(head->data->original_stdout, STDOUT_FILENO);
+		dup2(head->data->original_stdin, STDIN_FILENO);
+		return ;
+	}
+	if (is_filepath(head->processes[0]->exec_cmd))
+	{
+		if (execve(head->processes[0]->exec_cmd[0], \
+		head->processes[0]->exec_cmd, envp) == -1)
+			perror_exit("file exe execve error");
 		return ;
 	}
 	pid = fork();
@@ -80,9 +90,7 @@ void	start_process(t_head *head, char **envp)
 	else if (pid == 0)
 	{
 		set_inout(head->processes[0], NULL, 0, 0);
-		if (is_builtin(head->processes[0]->exec_cmd))
-			run_builtin(head, head->processes[0]->exec_cmd);
-		else if (execve(head->processes[0]->exec_path, \
+		if (execve(head->processes[0]->exec_path, \
 		head->processes[0]->exec_cmd, envp) == -1)
 			perror_exit("execve error");
 	}
@@ -109,7 +117,11 @@ void	start_processes(t_head *head, char **envp, int **pipes, int n)
 				mid_child(head, pipes, envp, i);
 		}
 		else
+		{
+			printf("%d번째 자식 pid: %d\n", i + 1, pid);
+			// close_all_pipes(pipes, 1);
 			parent(pipes, i);
+		}
 		i++;
 	}
 }
@@ -128,12 +140,13 @@ void	exe(t_head *head, char **envp)
 	{
 		get_processes(head, envp);
 		start_process(head, envp);
-		if (ft_strncmp(head->processes[0]->exec_cmd[0], "cd", 3) != 0)
+		if (!is_builtin(head->processes[0]->exec_cmd))
 			wait_process(head->size);
 	}
 	else
 	{
 		pipes = make_pipe(head->size - 1);
+		// close_all_pipes(pipes, head->size - 1);
 		get_processes(head, envp);
 		start_processes(head, envp, pipes, head->size);
 		wait_process(head->size);

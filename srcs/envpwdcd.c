@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 20:27:15 by heerpark          #+#    #+#             */
-/*   Updated: 2024/03/29 09:44:55 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/04/05 19:56:20 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ void	pwd(void)
 
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 	{
-		write(1, cwd, ft_strlen(cwd));
+		printf("%s\n", cwd);
 	}
 	else
 	{
-		perror_exit("getcwd() error");
+		perror_exit("pwd() error");
 	}
 }
 
@@ -31,12 +31,17 @@ void	env(t_head *head)
 {
 	t_list	*first;
 
-	first = head->data->env;
+	first = head->data->env->next;
 	while (first)
 	{
 		ft_printf("%s=%s\n", first->key, first->value);
 		first = first->next;
 	}
+}
+
+void	unset(t_head *head, char *key)
+{
+	remove_node(&(head->data->env->next), key);
 }
 
 void	cd(char *dir)
