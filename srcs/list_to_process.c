@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 02:15:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/04/06 16:17:20 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/04/06 22:34:55 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,10 @@ void	fill_elem(t_token *temp, t_process *process, char **cmd, int flag)
 		}
 		else if (temp->redir_flag == 0)
 		{
+			if (ft_strncmp(temp->cmd, "$", 1) == 0)
+			{
+				get_node_value(process->env, temp);
+			}
 			temp_str = ft_strjoin(*cmd, temp->cmd);
 			free(*cmd);
 			*cmd = ft_strjoin(temp_str, " ");
@@ -86,7 +90,7 @@ void	fill_elem(t_token *temp, t_process *process, char **cmd, int flag)
 	}
 }
 
-void	set_process(t_process *process, char **path)
+void	set_process(t_head *head, t_process *process, char **path)
 {
 	char	**exec_cmd;
 	char	*exec_path;
@@ -95,15 +99,29 @@ void	set_process(t_process *process, char **path)
 
 	i = 0;
 	exec_cmd = ft_split(process->cmd, ' ');
+	if (exec_cmd[0] == NULL)
+	{
+		unlink(process->heredoc_filename);
+		perror_exit("no cmd");
+	}
 	process->exec_cmd = exec_cmd;
 	// printf("%s\n%s\n", process->exec_cmd[0], process->exec_cmd[1]);
 	if (is_builtin(exec_cmd))
+	{
+		if (exec_cmd[1] && ft_strncmp(exec_cmd[1], "~", 1) == 0)
+		{
+			if (ft_strncmp(exec_cmd[1], "~/", 2) == 0)
+				add_homepath(head, &exec_cmd[1], 0);
+			else
+				add_homepath(head, &exec_cmd[1], 1);
+		}
 		return ;
+	}
 	if (is_filepath(exec_cmd))
 	{
 		printf("im in file_path\n");
 		if (ft_strncmp(exec_cmd[0], "~", 1) == 0)
-			add_desktoppath(exec_cmd);
+			add_homepath(head, &exec_cmd[0], 0);
 		return ;
 	}
 	while (path[i])
@@ -126,18 +144,20 @@ void	set_process(t_process *process, char **path)
 	process->exec_path = exec_path;
 }
 
-t_process	*get_process(t_list *line, char **path)
+t_process	*get_process(t_head *head, t_list *line, char **path)
 {
 	t_process	*process;
 	t_token		*temp;
 	char		*cmd;
 
 	process = (t_process *)malloc(sizeof(t_process));
+	process->env = head->data->env;
 	cmd = ft_strdup("");
 	temp = line->token;
 	init_fd(process);
 	fill_elem(temp, process, &cmd, 0);
 	process->cmd = cmd;
-	set_process(process, path);
+	set_process(head, process, path);
+	printf("set_process end\n");
 	return (process);
 }

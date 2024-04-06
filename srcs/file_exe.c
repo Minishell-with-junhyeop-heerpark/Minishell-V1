@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 14:28:58 by heerpark          #+#    #+#             */
-/*   Updated: 2024/04/06 18:08:57 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/04/06 22:34:48 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,29 +34,21 @@ char	*get_pwd(void)
 	return (cwd);
 }
 
-void	add_desktoppath(char **exec_cmd)
+// if only_home is true, whole path is replaced with home_path, 
+// otherwise first ~ is replaced with home_path
+void	add_homepath(t_head *head, char **exec_cmd, int only_home)
 {
-	char	*now_path;
-	char	*desktop_path;
 	char	*res;
-	int		i;
 
-	now_path = get_pwd();
-	desktop_path = (char *)malloc(sizeof(char) * 100);
-	i = 0;
-	while (now_path[i])
+	if (only_home)
 	{
-		if (now_path[i] == '/')
-		{
-			if (strncmp(&now_path[i], "/Desktop/", 9) == 0)
-				break ;
-		}
-		i++;
+		free(*exec_cmd);
+		*exec_cmd = head->data->home;
 	}
-	ft_strlcpy(desktop_path, now_path, i + 1);
-	free(now_path);
-	res = ft_strjoin(desktop_path, exec_cmd[0] + 1);
-	free(exec_cmd[0]);
-	free(desktop_path);
-	exec_cmd[0] = res;
+	else
+	{
+		res = ft_strjoin(head->data->home, *exec_cmd + 1);
+		free(*exec_cmd);
+		*exec_cmd = res;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:11:25 by heerpark          #+#    #+#             */
-/*   Updated: 2024/04/06 19:54:45 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/04/06 22:36:03 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,13 @@ void	get_processes(t_head *head, char **envp)
 	node = head->top;
 	path = ft_split(get_envpath(envp), ':');
 	if (!path)
+	{
 		perror_exit("get_processes-split");
+	}
 	i = 0;
 	while (node)
 	{
-		processes[i] = get_process(node, path);
+		processes[i] = get_process(head, node, path);
 		node = node->next;
 		i++;
 	}
@@ -79,10 +81,11 @@ void	start_process(t_head *head, char **envp)
 	}
 	if (is_filepath(head->processes[0]->exec_cmd))
 	{
+		set_inout(head->processes[0], NULL, 0, 0);
 		if (execve(head->processes[0]->exec_cmd[0], \
 		head->processes[0]->exec_cmd, envp) == -1)
 			perror_exit("file exe execve error");
-		return ;
+		// return ;
 	}
 	pid = fork();
 	if (pid == -1)

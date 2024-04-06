@@ -25,7 +25,6 @@ SRC	= $(SRC_DIR)/cmd_list.c \
 		$(SRC_DIR)/ft_echo.c \
 		$(SRC_DIR)/signal.c
 
-
 LIBDIR = ./libft/
 LIBNAME = ft
 LIB = $(LIBDIR)lib$(LIBNAME).a

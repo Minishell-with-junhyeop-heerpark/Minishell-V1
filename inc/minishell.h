@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:27:44 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/04/06 21:18:30 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/04/06 22:33:50 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct s_token
 {
 	char			*cmd;
 	int				redir_flag;
-	int				dquote_flag;
+	int				replace_flag;
 	struct s_token	*next;
 	struct s_token	*prev;
 }	t_token;
@@ -76,6 +76,7 @@ typedef struct s_process
 	char	*exec_path;
 	char	**exec_cmd;
 	char	*builtin_cmds;
+	t_list	*env;
 }	t_process;
 
 typedef struct s_data //heredoc 파일 경로 여기로 옮기기.
@@ -85,6 +86,7 @@ typedef struct s_data //heredoc 파일 경로 여기로 옮기기.
 	int				original_stdin;
 	int				original_stdout;
 	char			**envp;
+	char			*home;
 	t_list			*env;
 }	t_data;
 
@@ -96,8 +98,6 @@ typedef struct s_head {
 	t_data			*data;
 	t_process		**processes;
 }	t_head;
-
-
 
 //parsing func
 void		error_msg(int type);
@@ -156,8 +156,8 @@ char		*make_infile(char *limiter);
 void		fill_elem(t_token *temp, t_process *process, char **cmd, int flag);
 void		set_fd(t_process *process, char *file_name, int redir_flag);
 int			get_redir_flag(char	*token);
-void		set_process(t_process *process, char **path);
-t_process	*get_process(t_list *line, char **path);
+void		set_process(t_head *head, t_process *process, char **path);
+t_process	*get_process(t_head *head, t_list *line, char **path);
 
 	//processes_exe
 void		get_processes(t_head *head, char **envp);
@@ -173,7 +173,7 @@ void		run_builtin(t_head *head, char **exec_cmd);
 	//envpwd.c ft_echo.c
 void		env(t_head *head);
 void		pwd(void);
-void		cd(char *dir);
+void		cd(t_head *head, char *dir);
 void		unset(t_head *head, char *key);
 void		ft_echo(char **exec_cmd);
 
@@ -183,6 +183,7 @@ void		lstadd_back(t_list **lst, t_list *new);
 char		*remove_node(t_list **lst, char *key);
 void		lst_clear(t_list **lst);
 void		lst_print(t_list *head);
+void		get_node_value(t_list *env, t_token *token);
 
 	//env_control.c
 void		set_env(t_list **head, char **envp);
@@ -192,7 +193,10 @@ void		update_envp(t_head *head);
 	//file_exe.c
 int			is_filepath(char **exec_cmd);
 char		*get_pwd(void);
-void		add_desktoppath(char **exec_cmd);
+void		add_homepath(t_head *head, char **exec_cmd, int only_home);
+
+	//ft_echo.c
+void		ft_echo(char **exec_cmd);
 
 	// signal.c
 void	sig_handler(int signo);
