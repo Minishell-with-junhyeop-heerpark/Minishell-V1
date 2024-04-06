@@ -34,13 +34,16 @@ void	cd(char *dir)
 {
 	printf("im in cd, dir: %s\n", dir);
 	if (chdir(dir) == -1)
+	{
+		printf(("error\n"));
 		perror("cd");
+	}
 }
 
 int  main() {
     // char *const argv[] = {"co_minishell/minishell", NULL};
     // char *const envp[] = {NULL};
     // execve("co_minishell/minishell", argv, envp);
-	cd("~");
+	cd("/Users/heerpark");
     return 0;
 }

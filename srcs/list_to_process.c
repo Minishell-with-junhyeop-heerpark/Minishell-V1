@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 02:15:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/04/06 16:42:11 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/04/06 18:46:17 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,11 +98,20 @@ void	set_process(t_head *head, t_process *process, char **path)
 	process->exec_cmd = exec_cmd;
 	// printf("%s\n%s\n", process->exec_cmd[0], process->exec_cmd[1]);
 	if (is_builtin(exec_cmd))
+	{
+		if (ft_strncmp(exec_cmd[1], "~", 1) == 0)
+		{
+			if (ft_strncmp(exec_cmd[1], "~/", 2) == 0)
+				add_homepath(head, &exec_cmd[1], 0);
+			else
+				add_homepath(head, &exec_cmd[1], 1);
+		}
 		return ;
+	}
 	if (is_filepath(exec_cmd))
 	{
 		if (ft_strncmp(exec_cmd[0], "~", 1) == 0)
-			add_desktoppath(head, exec_cmd);
+			add_homepath(head, &exec_cmd[0], 0);
 		return ;
 	}
 	while (path[i])

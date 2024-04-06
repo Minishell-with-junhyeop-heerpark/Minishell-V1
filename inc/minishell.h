@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:27:44 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/04/06 17:34:57 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/04/06 18:37:13 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,6 @@ typedef struct s_head {
 	t_data			*data;
 	t_process		**processes;
 }	t_head;
-
-
 
 //parsing func
 void		error_msg(int type);
@@ -192,7 +190,7 @@ void		update_envp(t_head *head);
 	//file_exe.c
 int			is_filepath(char **exec_cmd);
 char		*get_pwd(void);
-void		add_desktoppath(t_head *head, char **exec_cmd);
+void		add_homepath(t_head *head, char **exec_cmd, int only_home);
 
 	//ft_echo.c
 void		ft_echo(char **exec_cmd);

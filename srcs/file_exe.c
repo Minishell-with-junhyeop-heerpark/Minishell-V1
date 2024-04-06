@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 14:28:58 by heerpark          #+#    #+#             */
-/*   Updated: 2024/04/06 17:35:39 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/04/06 18:40:28 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,21 @@ char	*get_pwd(void)
 	return (cwd);
 }
 
-void	add_desktoppath(t_head *head, char **exec_cmd)
+// if only_home is true, whole path is replaced with home_path, 
+// otherwise first ~ is replaced with home_path
+void	add_homepath(t_head *head, char **exec_cmd, int only_home)
 {
 	char	*res;
 
-	res = ft_strjoin(head->data->home, exec_cmd[0] + 1);
-	free(exec_cmd[0]);
-	exec_cmd[0] = res;
+	if (only_home)
+	{
+		free(*exec_cmd);
+		*exec_cmd = head->data->home;
+	}
+	else
+	{
+		res = ft_strjoin(head->data->home, *exec_cmd + 1);
+		free(*exec_cmd);
+		*exec_cmd = res;
+	}
 }
