@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 20:00:39 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/04/06 22:34:18 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/04/06 22:36:53 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ t_token	*token_new(char *command, int flag, int dquote_flag)
 	new->next = NULL;
 	new->cmd = command;
 	new->redir_flag = flag;
-	new->dquote_flag = dquote_flag;
+	new->replace_flag = dquote_flag;
 	return (new);
 }
 
