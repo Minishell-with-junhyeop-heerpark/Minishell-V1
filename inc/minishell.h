@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/04/28 15:32:16 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/04/28 22:29:27 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_token
 	char			*cmd;
 	int				redir_flag;
 	int				replace_flag;
+	int				quote_flag;
 	struct s_token	*next;
 	struct s_token	*prev;
 }	t_token;
