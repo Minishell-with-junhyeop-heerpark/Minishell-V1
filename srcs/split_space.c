@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_space.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 22:41:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/04/06 15:41:16 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/04/06 22:33:33 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,14 +121,14 @@ int	add_token_ext(t_token **lst, char *cmd, int *i, int *s)
 {
 	if (is_redir(cmd[*i]) && *i > *s)
 	{
-		ft_token_add(lst, token_new(ft_strndup(&cmd[*s], *i - *s), 0)); // rediction 이전까지
+		ft_token_add(lst, token_new(ft_strndup(&cmd[*s], *i - *s), 0, 0)); // rediction 이전까지
 		*s = *i;
 	}
 	if (is_redir(cmd[*i]) && *i <= *s)
 	{
 		while (is_redir(cmd[*i]))									// redir 모두 넘김
 			*i += 1;
-		ft_token_add(lst, token_new(ft_strndup(&cmd[*s], *i - *s), 1)); 	// redir 끝날때까지
+		ft_token_add(lst, token_new(ft_strndup(&cmd[*s], *i - *s), 1, 0)); 	// redir 끝날때까지
 		*s = *i;
 		return (0);
 	}
@@ -145,7 +145,7 @@ void	add_token(t_token **lst, char *cmd)
 	s = 0;
 	if (!check_redir(cmd))
 	{
-		ft_token_add(lst, token_new(ft_strdup(cmd), 0));
+		ft_token_add(lst, token_new(ft_strdup(cmd), 0, 0));
 		return ;
 	}
 	while (cmd[i])
@@ -154,7 +154,7 @@ void	add_token(t_token **lst, char *cmd)
 			i++;
 	}
 	if (i > s)
-		ft_token_add(lst, token_new(ft_strndup(&cmd[s], i - s), 0));
+		ft_token_add(lst, token_new(ft_strndup(&cmd[s], i - s), 0, 0));
 }
 
 // input : echo ls >a
@@ -219,9 +219,9 @@ int	set_len(char *str, int i, char q)
 }
 
 // 여기가 문제!!!
-void	add_token_qutoe(t_token **lst, char *cmd)
+void	add_token_qutoe(t_token **lst, char *cmd, int dquote_flag)
 {
-	ft_token_add(lst, token_new(cmd, 0));
+	ft_token_add(lst, token_new(cmd, 0, dquote_flag));		
 }
 
 void	task_dquote(char *cmd, t_split_var *flag)
@@ -314,7 +314,7 @@ t_token	*split_space(char *cmd, char space)	// pipe 단위로 나눈 것 -> 공�
 		if (!v.backup)
 			add_token(&v.lst, &cmd[v.start]);			// redir 기준으로 다시 나눔!
 		else
-			add_token_qutoe(&v.lst, v.backup);
+			add_token_qutoe(&v.lst, v.backup, v.dquote);
 		v.backup = NULL;
 		v.i++;
 		v.start = v.i;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_to_process.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 02:15:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/04/06 22:14:22 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/04/06 22:34:55 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ void	set_process(t_head *head, t_process *process, char **path)
 	}
 	if (is_filepath(exec_cmd))
 	{
+		printf("im in file_path\n");
 		if (ft_strncmp(exec_cmd[0], "~", 1) == 0)
 			add_homepath(head, &exec_cmd[0], 0);
 		return ;

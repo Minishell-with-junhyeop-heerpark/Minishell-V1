@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:11:25 by heerpark          #+#    #+#             */
-/*   Updated: 2024/04/28 21:31:10 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/04/28 22:20:17 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ void	start_process(t_head *head, char **envp)
 		perror_exit("start_process fork error");
 	else if (pid == 0)
 	{
+		temi_print_on();
 		set_inout(head->processes[0], NULL, 0, 0);
 		if (is_builtin(head->processes[0]->exec_cmd))
 		{
@@ -141,6 +142,7 @@ void	start_processes(t_head *head, char **envp, int **pipes, int n)
 			perror_exit("fork error");
 		else if (pid == 0)
 		{
+			temi_print_on();
 			if (i == 0)
 				first_child(head, pipes, envp, i);
 			else if (i == n - 1)
@@ -187,6 +189,8 @@ void	exe(t_head *head, char **envp)
 	}
 	kill_heredoc(head, envp);
 	printf("exe end\n");
+	set_signal();
+
 	return ;
 }
 //have to free malloced variable

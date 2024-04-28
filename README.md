@@ -15,3 +15,7 @@ kill heredoc 실행 경로, 명령어 t_data 내의 변수로 변경.
 
 <pipe, fd>
 프로세스 종료 후에 모든 파이프, 모든 fd 닫아주기. !!!!!
+
+<temi>
+자식프로세스에서 ctrl-c 받는거 처리할라면 temi 켜놔야함.
+heredoc수정할때도 추가하면 좋을듯 

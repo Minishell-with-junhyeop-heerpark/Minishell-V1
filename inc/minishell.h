@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/16 17:27:44 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/04/06 22:14:34 by heerpark         ###   ########.fr       */
+/*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
+/*   Updated: 2024/04/28 15:32:16 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void		add_token(t_token **lst, char *cmd);
 
 t_token		*make_token(char *command);
 t_head		*init_head(char **envp);
-t_token		*token_new(char *command, int flag);
+t_token		*token_new(char *command, int flag, int dquote_flag);
 
 t_list		*cmd_list_new(char *command);
 void		ft_lst_add(t_head *head, t_list *new);
@@ -175,6 +175,7 @@ void		env(t_head *head);
 void		pwd(void);
 void		cd(t_head *head, char *dir);
 void		unset(t_head *head, char *key);
+void		ft_echo(char **exec_cmd);
 
 	//list_control.c
 t_list		*lst_new(char *key, char *value);
@@ -196,5 +197,17 @@ void		add_homepath(t_head *head, char **exec_cmd, int only_home);
 
 	//ft_echo.c
 void		ft_echo(char **exec_cmd);
+
+	// signal.c
+void	sig_handler(int signo);
+void	set_signal();
+void	temi_print_off();
+void	temi_print_on();
+void	set_signal_heredoc(void);
+void	do_sigint_heredoc(int signum);
+void	exit_signal();
+
+// ft_exit.c
+int	ft_exit(char **exec_cmd);
 
 #endif

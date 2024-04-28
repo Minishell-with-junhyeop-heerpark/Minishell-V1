@@ -50,7 +50,7 @@ t_token	*token_new(char *command, int flag)
 	return (new);
 }
 
-void	ft_token_add(t_token **lst, t_token *new)
+void	ft_token_add(t_token **lst, t_token *new, int quote_flag)
 {
 	t_token	*tmp;
 
