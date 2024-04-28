@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:11:25 by heerpark          #+#    #+#             */
-/*   Updated: 2024/04/28 22:20:17 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/04/29 01:20:07 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,10 +99,19 @@ void	set_inout(t_process *process, int **pipes, int i, int close_sig)
 // 	}
 // }
 
-void	start_process(t_head *head, char **envp)
+// is exit 만들어서 따로 빼자 ..
+void	start_process(t_head *head, char **envp) 
 {
 	pid_t	pid;
 
+	if (is_exit(head->processes[0]->exec_cmd))
+	{
+		set_inout(head->processes[0], NULL, 0, 0);
+		run_builtin(head, head->processes[0]->exec_cmd);
+		dup2(head->data->original_stdout, STDOUT_FILENO);
+		dup2(head->data->original_stdin, STDIN_FILENO);
+		return ;
+	}
 	pid = fork();
 	if (pid == -1)
 		perror_exit("start_process fork error");
@@ -143,7 +152,7 @@ void	start_processes(t_head *head, char **envp, int **pipes, int n)
 		else if (pid == 0)
 		{
 			temi_print_on();
-			if (i == 0)
+			if (i == 0) 
 				first_child(head, pipes, envp, i);
 			else if (i == n - 1)
 				last_child(head, pipes, envp, i);
@@ -174,9 +183,8 @@ void	exe(t_head *head, char **envp)
 	{
 		get_processes(head, envp);
 		start_process(head, envp);
-		// if (!is_builtin(head->processes[0]->exec_cmd))
-		// 	wait_process(head->size);
-		wait_process(head->size);
+		if (!is_exit(head->processes[0]->exec_cmd))
+			wait_process(head->size);
 	}
 	else
 	{

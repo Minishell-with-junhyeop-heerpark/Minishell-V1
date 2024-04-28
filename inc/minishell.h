@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/04/28 15:32:16 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/04/29 01:17:35 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,6 +169,7 @@ void		exe(t_head *head, char **envp);
 	//builtin.c
 int			is_builtin(char **exec_cmd);
 void		run_builtin(t_head *head, char **exec_cmd);
+int			is_exit(char **exec_cmd);
 
 	//envpwd.c ft_echo.c
 void		env(t_head *head);
