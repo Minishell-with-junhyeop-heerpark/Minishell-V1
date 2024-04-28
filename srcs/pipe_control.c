@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 13:13:59 by heerpark          #+#    #+#             */
-/*   Updated: 2024/04/05 20:06:02 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/04/29 01:55:15 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,6 @@ void	wait_process(int child_num)
 	int	count;
 	int	status;
 	int	pid;
-	int	exit_status;
 
 	count = 0;
 	while (count < child_num)
@@ -118,18 +117,17 @@ void	wait_process(int child_num)
 		{
 			perror_exit("wait error");
 		}
-		else if (WIFEXITED(status))
+		if (WIFEXITED(status))
 		{
-			exit_status = WEXITSTATUS(status);
-			if (exit_status == EXIT_FAILURE)
-			{
-				perror_exit("child head->processes[i] exited with error");
-				return ;
-			}
+			sig = WEXITSTATUS(status);
+			printf("error code %d\n", sig);
+		}
+		if (WIFSIGNALED(status))
+		{
+			sig = WTERMSIG(status);
+			printf("sig error code %d\n", sig);
 		}
 		count++;
 	}
 	printf("wait end\n");
 }
-
-// WTERMSIG(status)
