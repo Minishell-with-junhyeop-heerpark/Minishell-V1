@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/04/10 14:46:38 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/04/28 22:29:27 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_token
 	char			*cmd;
 	int				redir_flag;
 	int				replace_flag;
+	int				quote_flag;
 	struct s_token	*next;
 	struct s_token	*prev;
 }	t_token;
@@ -207,5 +208,7 @@ void	set_signal_heredoc(void);
 void	do_sigint_heredoc(int signum);
 void	exit_signal();
 
+// ft_exit.c
+int	ft_exit(char **exec_cmd);
 
 #endif

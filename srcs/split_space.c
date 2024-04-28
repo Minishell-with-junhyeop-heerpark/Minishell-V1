@@ -6,12 +6,31 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 22:41:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/04/06 22:33:33 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/04/28 22:35:03 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// void	task_dquote(char *cmd, t_split_var *flag)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while(cmd[i] && s_dquote_check(cmd[i], flag))
+// 		i++;
+// 	flag->i += i;
+// }
+
+// void	task_quote(char *cmd, t_split_var *flag)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while(cmd[i] && s_quote_check(cmd[i], flag))
+// 		i++;
+// 	flag->i += i;
+// }
 void	ft_putstr_fd(char *s, int fd)
 {
 	if (!s || fd < 0)
@@ -206,9 +225,55 @@ int	s_dquote_check(char c, t_split_var *flag)
 	return (flag->dquote);
 }
 
+// int	env_pars_check(char *str)
+// {
+// 	if (str[0] == '$')
+// 	{
+// 		if (str[1] == '\"' || str[1] == '\0')
+// 			return (0);
+// 		return (1);
+// 	}
+// 	return (0);
+// }
+
+// char	*getkey(char *str)
+// {
+// 	char	*dest;
+// 	int		n;
+// 	int 	i;
+
+// 	n = 0;
+// 	i = 0;
+// 	while (str[n] != '=')
+// 		n++;
+// 	dest = (char *)malloc(sizeof(char) * i + 1);
+// 	while (i < n)
+// 	{
+// 		dest[i] = str[i];
+// 		i++;
+// 	}
+// 	dest[i] = 0;
+// 	return (dest);
+// }
+
+// char	*env_find_value(char *key, t_list *envp)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	printf("envp key : %s\n", envp->key);
+// 	while (envp != NULL)
+// 	{
+// 		if (ft_strcmp(envp->key, key))
+// 			return (envp->value);
+// 		envp = envp->next;
+// 	}
+// 	return (NULL);
+// }
+
 int	set_len(char *str, int i, char q)
 {
-	i++;
+	i++;	// 하나 넘기고
 	while(str[i])
 	{
 		if (str[i] == q)
@@ -218,43 +283,23 @@ int	set_len(char *str, int i, char q)
 	return (-1);
 }
 
-// 여기가 문제!!!
-void	add_token_qutoe(t_token **lst, char *cmd, int dquote_flag)
+void	add_token_qutoe(t_token **lst, char *cmd, int quote_flag)
 {
-	ft_token_add(lst, token_new(cmd, 0, dquote_flag));		
-}
-
-void	task_dquote(char *cmd, t_split_var *flag)
-{
-	int	i;
-
-	i = 0;
-	while(cmd[i] && s_dquote_check(cmd[i], flag))
-		i++;
-	flag->i += i;
-}
-
-void	task_quote(char *cmd, t_split_var *flag)
-{
-	int	i;
-
-	i = 0;
-	while(cmd[i] && s_quote_check(cmd[i], flag))
-		i++;
-	flag->i += i;
+	ft_token_add(lst, token_new(cmd, 0, quote_flag));		
 }
 
 char	*make_cmd(char *cmd, t_split_var *v, char q)
 {
 	char	*p_cmd;
-	int	i;
-	int	s;
-	int	ind;
+	int		i;
+	int		s;
+	int		ind;
 	
 	s = v->start;
 	i = set_len(cmd, v->i, q);
 	// printf("\ns, i : %d %d\n ",s, i);
-	if (i == -1)
+
+	if (i == -1) // if don't finish quote then error
 		error_msg(2);
 	if (i - s <= 1)
 	{
@@ -294,7 +339,7 @@ t_token	*split_space(char *cmd, char space)	// pipe 단위로 나눈 것 -> 공�
 
 		while (cmd[v.i] != space && cmd[v.i])	// 문자들을 넘기는데 quote 있으면 무시하고 다넘김!!!
 		{
-			if (s_quote_check(cmd[v.i], &v))
+			if (s_quote_check(cmd[v.i], &v))	// 현재 문자가 quote라면 조건문 들어감 
 			{
 				if (!v.backup)
 					v.backup = make_cmd(cmd, &v, cmd[v.i]);
@@ -314,7 +359,7 @@ t_token	*split_space(char *cmd, char space)	// pipe 단위로 나눈 것 -> 공�
 		if (!v.backup)
 			add_token(&v.lst, &cmd[v.start]);			// redir 기준으로 다시 나눔!
 		else
-			add_token_qutoe(&v.lst, v.backup, v.dquote);
+			add_token_qutoe(&v.lst, v.backup, v.quote);
 		v.backup = NULL;
 		v.i++;
 		v.start = v.i;
