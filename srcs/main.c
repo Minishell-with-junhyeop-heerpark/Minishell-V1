@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:10:35 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/04/06 17:26:30 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/04/28 20:22:23 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int main(int argc, char **argv, char **envp)
             // printf("%s\n", str);
 			exe(head, envp);
 			free_list(head);
-            free(str);
+            free(str); 
         }
     }
     /* 함수종료 */

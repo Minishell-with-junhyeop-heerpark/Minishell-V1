@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:11:25 by heerpark          #+#    #+#             */
-/*   Updated: 2024/04/06 22:16:15 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/04/28 21:31:10 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,32 +67,61 @@ void	set_inout(t_process *process, int **pipes, int i, int close_sig)
 	}
 }
 
+// void	start_process(t_head *head, char **envp)
+// {
+// 	pid_t	pid;
+
+// 	if (is_builtin(head->processes[0]->exec_cmd))
+// 	{
+// 		set_inout(head->processes[0], NULL, 0, 0);
+// 		run_builtin(head, head->processes[0]->exec_cmd);
+// 		dup2(head->data->original_stdout, STDOUT_FILENO);
+// 		dup2(head->data->original_stdin, STDIN_FILENO);
+// 		return ;
+// 	}
+// 	if (is_filepath(head->processes[0]->exec_cmd))
+// 	{
+// 		set_inout(head->processes[0], NULL, 0, 0);
+// 		if (execve(head->processes[0]->exec_cmd[0], \
+// 		head->processes[0]->exec_cmd, envp) == -1)
+// 			perror_exit("file exe execve error");
+// 		// return ;
+// 	}
+// 	pid = fork();
+// 	if (pid == -1)
+// 		perror_exit("start_process fork error");
+// 	else if (pid == 0)
+// 	{
+// 		set_inout(head->processes[0], NULL, 0, 0);
+// 		if (execve(head->processes[0]->exec_path, \
+// 		head->processes[0]->exec_cmd, envp) == -1)
+// 			perror_exit("execve error");
+// 	}
+// }
+
 void	start_process(t_head *head, char **envp)
 {
 	pid_t	pid;
 
-	if (is_builtin(head->processes[0]->exec_cmd))
-	{
-		set_inout(head->processes[0], NULL, 0, 0);
-		run_builtin(head, head->processes[0]->exec_cmd);
-		dup2(head->data->original_stdout, STDOUT_FILENO);
-		dup2(head->data->original_stdin, STDIN_FILENO);
-		return ;
-	}
-	if (is_filepath(head->processes[0]->exec_cmd))
-	{
-		set_inout(head->processes[0], NULL, 0, 0);
-		if (execve(head->processes[0]->exec_cmd[0], \
-		head->processes[0]->exec_cmd, envp) == -1)
-			perror_exit("file exe execve error");
-		// return ;
-	}
 	pid = fork();
 	if (pid == -1)
 		perror_exit("start_process fork error");
 	else if (pid == 0)
 	{
 		set_inout(head->processes[0], NULL, 0, 0);
+		if (is_builtin(head->processes[0]->exec_cmd))
+		{
+			run_builtin(head, head->processes[0]->exec_cmd);
+			dup2(head->data->original_stdout, STDOUT_FILENO);
+			dup2(head->data->original_stdin, STDIN_FILENO);
+			exit(0);
+		}
+		if (is_filepath(head->processes[0]->exec_cmd))
+		{
+			if (execve(head->processes[0]->exec_cmd[0], \
+			head->processes[0]->exec_cmd, envp) == -1)
+				perror_exit("file exe execve error");
+		}
 		if (execve(head->processes[0]->exec_path, \
 		head->processes[0]->exec_cmd, envp) == -1)
 			perror_exit("execve error");
@@ -143,14 +172,16 @@ void	exe(t_head *head, char **envp)
 	{
 		get_processes(head, envp);
 		start_process(head, envp);
-		if (!is_builtin(head->processes[0]->exec_cmd))
-			wait_process(head->size);
+		// if (!is_builtin(head->processes[0]->exec_cmd))
+		// 	wait_process(head->size);
+		wait_process(head->size);
 	}
 	else
 	{
 		pipes = make_pipe(head->size - 1);
 		// close_all_pipes(pipes, head->size - 1);
 		get_processes(head, envp);
+		printf("----------------minishell print----------------\n");
 		start_processes(head, envp, pipes, head->size);
 		wait_process(head->size);
 	}
