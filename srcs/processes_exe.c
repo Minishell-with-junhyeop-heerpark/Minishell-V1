@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   processes_exe.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:11:25 by heerpark          #+#    #+#             */
-/*   Updated: 2024/04/29 02:11:10 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/01 21:40:07 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,11 @@ void	exe(t_head *head, char **envp)
 	else if (head->size == 1)
 	{
 		get_processes(head, envp);
+		if (head->get_error)
+		{
+			kill_heredoc(head, envp);
+			return ;
+		}
 		start_process(head, envp);
 		if (!is_exit(head->processes[0]->exec_cmd))
 			wait_process(head->size);
@@ -191,6 +196,11 @@ void	exe(t_head *head, char **envp)
 		pipes = make_pipe(head->size - 1);
 		// close_all_pipes(pipes, head->size - 1);
 		get_processes(head, envp);
+		if (head->get_error)
+		{
+			kill_heredoc(head, envp);
+			return ;
+		}
 		printf("----------------minishell print----------------\n");
 		start_processes(head, envp, pipes, head->size);
 		wait_process(head->size);

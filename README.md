@@ -23,3 +23,9 @@ heredoc수정할때도 추가하면 좋을듯
 
 <pipe, fd>
 프로세스 종료 후에 모든 파이프, 모든 fd 닫아주기. !!!!!
+
+
+<note book compile>
+For compilers to find readline you may need to set:
+  export LDFLAGS="-L/opt/homebrew/opt/readline/lib"
+  export CPPFLAGS="-I/opt/homebrew/opt/readline/include"

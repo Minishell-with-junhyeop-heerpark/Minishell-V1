@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/04/29 01:17:35 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/01 21:16:10 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ typedef struct s_data //heredoc 파일 경로 여기로 옮기기.
 
 typedef struct s_head {
 	int				size;
+	int				get_error;
 	char			**exec_rm_cmd;
 	char			*exec_rm_path;
 	struct s_list	*top;
