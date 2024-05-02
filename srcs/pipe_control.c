@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_control.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 13:13:59 by heerpark          #+#    #+#             */
-/*   Updated: 2024/04/29 02:00:39 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/02 19:22:36 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,13 +119,13 @@ void	wait_process(int child_num)
 		}
 		if (WIFEXITED(status))
 		{
-			sig = WEXITSTATUS(status);
-			printf("error code %d\n", sig);
+			g_exit_status = WEXITSTATUS(status);
+			printf("error code %d\n", g_exit_status);
 		}
 		if (WIFSIGNALED(status))
 		{
-			sig = WTERMSIG(status);
-			printf("sig error code %d\n", sig);
+			g_exit_status = WTERMSIG(status);
+			printf("g_exit_status error code %d\n", g_exit_status);
 		}
 		count++;
 	}
