@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   processes_exe.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42.kr>          +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:11:25 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/01 21:40:07 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/02 19:31:18 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ void	exe(t_head *head, char **envp)
 {
 	int			**pipes;
 
-	printf("head size: %d\n", head->size);
+	// printf("head size: %d\n", head->size);
 	if (head->size < 1)
 	{
 		// exit(EXIT_FAILURE);

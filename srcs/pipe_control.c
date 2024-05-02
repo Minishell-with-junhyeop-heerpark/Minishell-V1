@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 13:13:59 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/02 19:22:36 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/02 19:31:37 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void	wait_process(int child_num)
 	while (count < child_num)
 	{
 		pid = wait(&status);
-		printf("process end: %d\n", pid);
+		printf("\n\nprocess end: %d\n", pid);
 		if (pid == -1)
 		{
 			perror_exit("wait error");
