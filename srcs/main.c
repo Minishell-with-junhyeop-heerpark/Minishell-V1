@@ -13,6 +13,7 @@
 #include "minishell.h"
 // gcc testsignal.c -lreadline -L/Users/sham/.brew/opt/readline/lib -I/Users/sham/.brew/opt/readline/include
 
+
 int	check_white_space(char *str)
 {
 	int	i;
@@ -31,12 +32,11 @@ int main(int argc, char **argv, char **envp)
 {
 	(void)argc;
 	(void)argv;
-	(void)envp;
 
     char			*str;
 	t_head			*head;
 
-	sig = -1;
+	g_exit_status = -1;
     set_signal();
 	head = init_head(envp);
 	ft_printf("Welcome to minishell!\n");

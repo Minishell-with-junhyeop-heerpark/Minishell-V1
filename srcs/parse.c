@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:10:29 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/04/06 15:41:06 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/04/28 22:29:15 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ void	parse(char *line, t_head *head)
 		// echo '"asdfsdf" | cat'
 		flag.quote = quote_check(line[i], &flag);	// quote 여부 확인
 		flag.dquote = dquote_check(line[i], &flag); // dquote 여부 확인
-
 		// 분기해야할 때 quote 확인
 		if (line[i] == '\0' || (line[i] == '|' && (flag.quote == 0 && flag.dquote == 0)))
 		{

@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/01 21:16:10 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/02 17:29:18 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 # define STDOUT 		1
 # define STDERR 		2
 
-int	sig;
+int g_exit_status;
 
 typedef struct s_flag
 {
@@ -51,6 +51,7 @@ typedef struct s_token
 	char			*cmd;
 	int				redir_flag;
 	int				replace_flag;
+	int				quote_flag;
 	struct s_token	*next;
 	struct s_token	*prev;
 }	t_token;

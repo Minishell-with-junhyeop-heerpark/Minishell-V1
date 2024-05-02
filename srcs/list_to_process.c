@@ -57,6 +57,157 @@ void	set_fd(t_process *process, char *file_name, int redir_flag)
 		perror_exit("set_fd");
 }
 
+///////////////////////////////////////////////////////////
+/* junhyeop */
+
+/* 파싱할때 $도 분할해서 파싱하기로 바꾸기 */
+
+char	*getkey(char *str)
+{
+	char	*dest;
+	int		n;
+	int 	i;
+
+	n = 0;
+	i = 0;
+	while (str[n] && str[n] != ' ' && str[n] != '$')
+		n++;
+	dest = (char *)malloc(sizeof(char) * n + 1);
+	while (i < n)
+	{
+		dest[i] = str[i];
+		i++;
+	}
+	dest[i] = 0;
+	return (dest);
+}
+
+char	*env_find_value(char *key, t_list *envp)
+{
+	int	i;
+
+	i = 0;
+	while (envp)
+	{
+		if (ft_strcmp(envp->key, key) == 0)
+			return (ft_strdup(envp->value));
+		envp = envp->next;
+	}
+	return (ft_strdup(""));
+}
+
+void	replace_value(char *new_cmd, int *ind, char *value)
+{
+	int i;
+
+	i = 0;
+	while (value[i])
+	{
+		new_cmd[*ind] = value[i];
+		*ind += 1;
+		i++;
+	}
+}
+
+char	*replace_cmd(char *cmd, char *key, char *value, int *ind)
+{
+	int		i;
+	int		j;
+	char	*new_cmd;
+
+	i = 0;
+	j = 0;
+	new_cmd = (char *)malloc(sizeof(char) * (ft_strlen(cmd) - (ft_strlen(key) + 1) + ft_strlen(value) + 1));
+
+	while (i < *ind)
+		new_cmd[j++] = cmd[i++];
+	
+	replace_value(new_cmd, &j, value);
+	i += ft_strlen(key) + 1;
+
+	while (cmd[i])
+		new_cmd[j++] = cmd[i++];
+		
+	new_cmd[j] = 0;
+	return (new_cmd);
+}
+
+char	*apply_env(char *cmd, t_list *env, int *ind)
+{
+	char	*changed;
+	char	*key;
+	char	*value;
+
+	printf("cmd : %s\n", cmd);
+	key = getkey(&cmd[*ind + 1]);	// 하나 지나서 보내기 $HOME 이면 H부터!
+	value = env_find_value(key, env);
+	printf("key : %s\nvalue: %s\n", key, value);
+	if (!value)
+		error_msg(1);
+	changed = replace_cmd(cmd, key, value, ind);
+	*ind = *ind + ft_strlen(value);
+	printf("ind : %d\n", *ind);
+	free(key);
+	free(value);
+	free(cmd);
+	return (changed);
+}
+
+//"   $HOME" -> $HOME
+char	*apply_exit_status(char *cmd, int *ind)
+{
+	char	*changed;
+	char	*str_exit;
+	int		i;
+	int		j;
+	int		k;
+	
+	i = 0;
+	j = 0;
+	k = 0;
+	str_exit = ft_itoa(g_exit_status);
+	changed = (char *)malloc(sizeof(char) * (ft_strlen(str_exit) + ft_strlen(cmd) - 2 ) + 1); // -2는 $? 를 치환하기 때문이다
+	while (i < *ind)
+		changed[i++] = cmd[j++];
+	while (str_exit[k])
+		changed[i++] = str_exit[k++];
+	j += 2;
+	while (cmd[j])
+		changed[i++] = cmd[j++];
+	changed[i] = 0;
+	free(cmd);
+	free(str_exit);
+	*ind = *ind + 2;
+	return(changed);
+}
+
+
+void	check_env(t_token *token, t_process *process)
+{
+	t_list	*env;
+	char	*cmd;
+	int		i;
+
+	i = 0;
+	cmd = token->cmd;
+	env = process->env->next;
+	while (cmd[i] != 0)
+	{
+		if (cmd[i] == '$' && cmd[i + 1] == '?')
+		{
+			cmd = apply_exit_status(cmd, &i);
+			token->cmd = cmd;
+		}
+		else if (cmd[i] == '$' && cmd[i + 1] && cmd[i + 1] != '\"')
+		{
+			cmd = apply_env(token->cmd, env, &i);
+			token->cmd = cmd;
+		}
+		else
+			i++;
+	}
+}
+// "echo $HOME BB"
 void	fill_elem(t_token *temp, t_process *process, char **cmd, int flag)
 {
 	char	*temp_str;
@@ -70,12 +221,16 @@ void	fill_elem(t_token *temp, t_process *process, char **cmd, int flag)
 			set_fd(process, temp->cmd, flag);
 			is_filename = 0;
 		}
-		else if (temp->redir_flag == 0)
+		else if (temp->redir_flag == 0 && temp->quote_flag == 0)
 		{
-			if (ft_strncmp(temp->cmd, "$", 1) == 0)
-			{
-				get_node_value(process->env, temp);
-			}
+			check_env(temp, process);
+			temp_str = ft_strjoin(*cmd, temp->cmd);
+			free(*cmd);
+			*cmd = ft_strjoin(temp_str, " ");
+			free(temp_str);
+		}
+		else if (temp->redir_flag == 0 && temp->quote_flag == 1)
+		{
 			temp_str = ft_strjoin(*cmd, temp->cmd);
 			free(*cmd);
 			*cmd = ft_strjoin(temp_str, " ");
@@ -89,6 +244,9 @@ void	fill_elem(t_token *temp, t_process *process, char **cmd, int flag)
 		temp = temp->next;
 	}
 }
+
+//////////////////////////////////////////////////////////////////////
+
 
 void	set_process(t_head *head, t_process *process, char **path)
 {

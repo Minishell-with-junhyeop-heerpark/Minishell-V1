@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 20:00:39 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/04/28 21:43:33 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/04/28 22:28:47 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ t_head	*init_head(char **envp)
 // 	return (head);
 // }
 
-
 t_list	*cmd_list_new(char *command)
 {
 	t_list	*newnode;
@@ -74,7 +73,7 @@ t_list	*cmd_list_new(char *command)
 	return (newnode);
 }
 
-t_token	*token_new(char *command, int flag, int dquote_flag)
+t_token	*token_new(char *command, int flag, int quote_flag)
 {
 	t_token	*new;
 
@@ -85,7 +84,7 @@ t_token	*token_new(char *command, int flag, int dquote_flag)
 	new->next = NULL;
 	new->cmd = command;
 	new->redir_flag = flag;
-	new->replace_flag = dquote_flag;
+	new->quote_flag = quote_flag;
 	return (new);
 }
 
