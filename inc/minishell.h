@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/04/28 22:29:27 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/02 17:29:18 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 # define STDOUT 		1
 # define STDERR 		2
 
-int	sig;
+int g_exit_status;;
 
 typedef struct s_flag
 {

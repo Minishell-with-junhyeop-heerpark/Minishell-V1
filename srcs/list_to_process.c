@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 02:15:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/04/28 23:00:48 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/02 17:59:32 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ void	set_fd(t_process *process, char *file_name, int redir_flag)
 ///////////////////////////////////////////////////////////
 /* junhyeop */
 
+/* 파싱할때 $도 분할해서 파싱하기로 바꾸기 */
+
 char	*getkey(char *str)
 {
 	char	*dest;
@@ -68,9 +70,9 @@ char	*getkey(char *str)
 
 	n = 0;
 	i = 0;
-	while (str[n] != ' ')
+	while (str[n] && str[n] != ' ' && str[n] != '$')
 		n++;
-	dest = (char *)malloc(sizeof(char) * i + 1);
+	dest = (char *)malloc(sizeof(char) * n + 1);
 	while (i < n)
 	{
 		dest[i] = str[i];
@@ -88,10 +90,7 @@ char	*env_find_value(char *key, t_list *envp)
 	while (envp)
 	{
 		if (ft_strcmp(envp->key, key) == 0)
-		{
-			printf("envp value : %s\n", envp->value);
-			return (envp->value);
-		}
+			return (ft_strdup(envp->value));
 		envp = envp->next;
 	}
 	return (ft_strdup(""));
@@ -110,7 +109,7 @@ void	replace_value(char *new_cmd, int *ind, char *value)
 	}
 }
 
-char	*replace_cmd(char *cmd, char *key, char *value)
+char	*replace_cmd(char *cmd, char *key, char *value, int *ind)
 {
 	int		i;
 	int		j;
@@ -118,38 +117,70 @@ char	*replace_cmd(char *cmd, char *key, char *value)
 
 	i = 0;
 	j = 0;
-	new_cmd = (char *)malloc(sizeof(char) * \
-		(ft_strlen(cmd) - (ft_strlen(key) + 1) + ft_strlen(value) + 1));
+	new_cmd = (char *)malloc(sizeof(char) * (ft_strlen(cmd) - (ft_strlen(key) + 1) + ft_strlen(value) + 1));
+
+	while (i < *ind)
+		new_cmd[j++] = cmd[i++];
+	
+	replace_value(new_cmd, &j, value);
+	i += ft_strlen(key) + 1;
+
 	while (cmd[i])
-	{
-		if (cmd[i] == '$')
-		{
-			replace_value(new_cmd, &j, value);
-			i += ft_strlen(key) + 1;
-		}
-		else
-			new_cmd[j++] = cmd[i++];
-	}
+		new_cmd[j++] = cmd[i++];
+		
 	new_cmd[j] = 0;
 	return (new_cmd);
 }
 
-char	*apply_env(char *cmd, t_list *env, int ind)
+char	*apply_env(char *cmd, t_list *env, int *ind)
 {
 	char	*changed;
 	char	*key;
 	char	*value;
 
-	key = getkey(&cmd[ind + 1]);	// $ 넘겨서 보내기
+	printf("cmd : %s\n", cmd);
+	key = getkey(&cmd[*ind + 1]);	// 하나 지나서 보내기 $HOME 이면 H부터!
 	value = env_find_value(key, env);
+	printf("key : %s\nvalue: %s\n", key, value);
 	if (!value)
 		error_msg(1);
-	changed = replace_cmd(cmd, key, value);
+	changed = replace_cmd(cmd, key, value, ind);
+	*ind = *ind + ft_strlen(value);
+	printf("ind : %d\n", *ind);
 	free(key);
 	free(value);
 	free(cmd);
 	return (changed);
 }
+
+//"   $HOME" -> $HOME
+char	*apply_exit_status(char *cmd, int *ind)
+{
+	char	*changed;
+	char	*str_exit;
+	int		i;
+	int		j;
+	int		k;
+	
+	i = 0;
+	j = 0;
+	k = 0;
+	str_exit = ft_itoa(g_exit_status);
+	changed = (char *)malloc(sizeof(char) * (ft_strlen(str_exit) + ft_strlen(cmd) - 2 ) + 1); // -2는 $? 를 치환하기 때문이다
+	while (i < *ind)
+		changed[i++] = cmd[j++];
+	while (str_exit[k])
+		changed[i++] = str_exit[k++];
+	j += 2;
+	while (cmd[j])
+		changed[i++] = cmd[j++];
+	changed[i] = 0;
+	free(cmd);
+	free(str_exit);
+	*ind = *ind + 2;
+	return(changed);
+}
+
 
 void	check_env(t_token *token, t_process *process)
 {
@@ -162,25 +193,29 @@ void	check_env(t_token *token, t_process *process)
 	env = process->env->next;
 	while (cmd[i] != 0)
 	{
-		if (cmd[i] == '$')
-			cmd = apply_env(cmd, env, i);
-		i++;
+		if (cmd[i] == '$' && cmd[i + 1] == '?')
+		{
+			cmd = apply_exit_status(cmd, &i);
+			token->cmd = cmd;
+		}
+		else if (cmd[i] == '$' && cmd[i + 1] && cmd[i + 1] != '\"')
+		{
+			cmd = apply_env(token->cmd, env, &i);
+			token->cmd = cmd;
+		}
+		else
+			i++;
 	}
-	token->cmd = cmd;
-	printf("cmd -> %s\n", cmd);
 }
-
+// "echo $HOME BB"
 void	fill_elem(t_token *temp, t_process *process, char **cmd, int flag)
 {
-	(void)cmd;
-
 	char	*temp_str;
 	int		is_filename;
 
 	is_filename = 0;
 	while (temp)
 	{
-		printf("flag -  > %d\n",temp->quote_flag);
 		if (is_filename == 1)
 		{
 			set_fd(process, temp->cmd, flag);
@@ -189,11 +224,6 @@ void	fill_elem(t_token *temp, t_process *process, char **cmd, int flag)
 		else if (temp->redir_flag == 0 && temp->quote_flag == 0)
 		{
 			check_env(temp, process);
-			// if (ft_strncmp(temp->cmd, "$", 1) == 0)
-			// {
-			// 	get_node_value(process->env, temp);
-			// }
-			printf("check env\n\n");
 			temp_str = ft_strjoin(*cmd, temp->cmd);
 			free(*cmd);
 			*cmd = ft_strjoin(temp_str, " ");
