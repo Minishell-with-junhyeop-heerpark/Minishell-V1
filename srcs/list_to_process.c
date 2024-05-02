@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_to_process.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42.kr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 02:15:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/01 21:39:30 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/02 21:31:18 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,9 +244,6 @@ void	fill_elem(t_token *temp, t_process *process, char **cmd, int flag)
 		temp = temp->next;
 	}
 }
-
-//////////////////////////////////////////////////////////////////////
-
 
 void	set_process(t_head *head, t_process *process, char **path)
 {
