@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
 /*   Updated: 2024/05/02 17:29:18 by junhyeop         ###   ########.fr       */
@@ -36,7 +36,7 @@
 # define STDOUT 		1
 # define STDERR 		2
 
-int g_exit_status;;
+int g_exit_status;
 
 typedef struct s_flag
 {
@@ -93,6 +93,7 @@ typedef struct s_data //heredoc 파일 경로 여기로 옮기기.
 
 typedef struct s_head {
 	int				size;
+	int				get_error;
 	char			**exec_rm_cmd;
 	char			*exec_rm_path;
 	struct s_list	*top;
@@ -170,6 +171,7 @@ void		exe(t_head *head, char **envp);
 	//builtin.c
 int			is_builtin(char **exec_cmd);
 void		run_builtin(t_head *head, char **exec_cmd);
+int			is_exit(char **exec_cmd);
 
 	//envpwd.c ft_echo.c
 void		env(t_head *head);

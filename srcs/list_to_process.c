@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_to_process.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 02:15:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/02 17:59:32 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/01 21:39:30 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -297,8 +297,12 @@ void	set_process(t_head *head, t_process *process, char **path)
 		i++;
 	}
 	if (i != -1)
-		perror_exit("set_process");
-	// process->exec_cmd = exec_cmd;
+	{
+		ft_printf("bash: %s: command not found\n", exec_cmd[0]);
+		head->get_error = 1;
+	}
+	else
+		head->get_error = 0;
 	process->exec_path = exec_path;
 }
 
