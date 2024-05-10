@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 02:15:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/02 21:31:18 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/03 03:33:49 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,10 +138,10 @@ char	*apply_env(char *cmd, t_list *env, int *ind)
 	char	*key;
 	char	*value;
 
-	printf("cmd : %s\n", cmd);
+	// printf("cmd : %s\n", cmd);
 	key = getkey(&cmd[*ind + 1]);	// 하나 지나서 보내기 $HOME 이면 H부터!
 	value = env_find_value(key, env);
-	printf("key : %s\nvalue: %s\n", key, value);
+	// printf("key : %s\nvalue: %s\n", key, value);
 	if (!value)
 		error_msg(1);
 	changed = replace_cmd(cmd, key, value, ind);

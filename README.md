@@ -46,4 +46,4 @@ if (exec_cmd[0] == NULL)
 # 루틴
 1. whonang으로 자식프로세스 대기중인거 체크하기.
 2. heredoc 자식 프로세스에서 받고 처리하기
-3. 코드 구조랑 norm 맞추면서 leak처리하기.
+3. 코드 구조랑 norm 맞추면서 leak, fd 처리하기.

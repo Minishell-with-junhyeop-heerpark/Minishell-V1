@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_control.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 13:13:59 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/02 19:31:37 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/03 03:38:32 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void	wait_process(int child_num)
 	while (count < child_num)
 	{
 		pid = wait(&status);
-		printf("\n\nprocess end: %d\n", pid);
+		printf("process end: %d\n", pid);
 		if (pid == -1)
 		{
 			perror_exit("wait error");
@@ -129,5 +129,5 @@ void	wait_process(int child_num)
 		}
 		count++;
 	}
-	printf("wait end\n");
+	printf("wait all process\n");
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   processes_exe.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:11:25 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/02 19:31:18 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/03 03:34:41 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,7 @@ void	exe(t_head *head, char **envp)
 			kill_heredoc(head, envp);
 			return ;
 		}
+		printf("----------------minishell print----------------\n");
 		start_process(head, envp);
 		if (!is_exit(head->processes[0]->exec_cmd))
 			wait_process(head->size);
