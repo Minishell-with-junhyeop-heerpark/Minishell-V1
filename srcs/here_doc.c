@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 16:08:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/11 12:42:12 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/11 16:03:45 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void	make_infile(char *limiter, char *file_name)
 	temp_fd = open(file_name, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (temp_fd == -1)
 		perror_exit("make_infile open error");
-	cmp_limiter = ft_strjoin(limiter, "\n");
 	set_signal_heredoc();
+	cmp_limiter = ft_strjoin(limiter, "\n");
 	while (1)
 	{
 		temp = get_next_line(0);
@@ -55,9 +55,11 @@ void	make_infile(char *limiter, char *file_name)
 		write(temp_fd, temp, ft_strlen(temp));
 		free(temp);
 	}
-	set_signal();
 	close(temp_fd);
 	free(cmp_limiter);
+	// g_exit_status = 1;
+	set_signal();
+	printf("hi\n");
 	exit(0);
 }
 

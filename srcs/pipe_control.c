@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 13:13:59 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/02 19:31:37 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/11 15:59:43 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,13 @@ void	parent(int **pipes, int i)
 	}
 }
 
+int	make_exit_status(int statloc)
+{
+	if ((statloc & 255) == 0)
+		return ((statloc >> 8) & 255);
+	return ((statloc & 127) + 128);
+}
+
 void	wait_process(int child_num)
 {
 	int	count;
@@ -111,23 +118,28 @@ void	wait_process(int child_num)
 	count = 0;
 	while (count < child_num)
 	{
+		printf("before status:  %d\n\n",status);
 		pid = wait(&status);
+		status = make_exit_status(status);
 		printf("\n\nprocess end: %d\n", pid);
+		printf("after status:  %d\n\n",status);
+		printf("wifsig : %d\n\n", WIFSIGNALED(status));
 		if (pid == -1)
 		{
 			perror_exit("wait error");
 		}
-		if (WIFEXITED(status))
-		{
-			g_exit_status = WEXITSTATUS(status);
-			printf("error code %d\n", g_exit_status);
-		}
-		if (WIFSIGNALED(status))
+		else if (WIFSIGNALED(status))
 		{
 			g_exit_status = WTERMSIG(status);
 			printf("g_exit_status error code %d\n", g_exit_status);
+		}
+		else if (WIFEXITED(status))
+		{
+			g_exit_status = WEXITSTATUS(status);
+			printf("error code %d\n", g_exit_status);
 		}
 		count++;
 	}
 	printf("wait end\n");
 }
+
