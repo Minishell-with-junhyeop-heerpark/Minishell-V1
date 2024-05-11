@@ -6,31 +6,12 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 22:41:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/04/28 22:35:03 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/11 17:46:00 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// void	task_dquote(char *cmd, t_split_var *flag)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while(cmd[i] && s_dquote_check(cmd[i], flag))
-// 		i++;
-// 	flag->i += i;
-// }
-
-// void	task_quote(char *cmd, t_split_var *flag)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while(cmd[i] && s_quote_check(cmd[i], flag))
-// 		i++;
-// 	flag->i += i;
-// }
 void	ft_putstr_fd(char *s, int fd)
 {
 	if (!s || fd < 0)
@@ -41,16 +22,6 @@ void	ft_putstr_fd(char *s, int fd)
 		s++;
 	}
 }
-
-// size_t	ft_strlen(const char *s)
-// {
-// 	size_t	n;
-
-// 	n = 0;
-// 	while (s[n] != 0)
-// 		n++;
-// 	return ((size_t)n);
-// }
 
 char	**freeall(char **strs)
 {
@@ -83,8 +54,6 @@ int	strcnt(char const *s, char c)
 		}
 		s++;
 	}
-	// if (pipe_flag) 마지막에 파이프가 오는 경우!
-	// 	input_cmd()
 	return (n + 1);
 }
 
@@ -112,84 +81,6 @@ char	*split_str(char const *s, char c)
 	return (str);
 }
 
-// a>b 일때는?
-
-int	is_redir(char cmd)
-{
-	if (cmd == '<' || cmd == '>')
-		return (1);
-	return (0);
-}
-
-int	check_redir(char *cmd)
-{
-	int	i;
-
-	i = 0;
-	while (cmd[i])
-	{
-		if (is_redir(cmd[i]))
-			return (1);
-		i++;
-	}
-	return (0);
-}
-// >a, b>c
-// redir 기준으로 한번 더 나눔
-int	add_token_ext(t_token **lst, char *cmd, int *i, int *s)
-{
-	if (is_redir(cmd[*i]) && *i > *s)
-	{
-		ft_token_add(lst, token_new(ft_strndup(&cmd[*s], *i - *s), 0, 0)); // rediction 이전까지
-		*s = *i;
-	}
-	if (is_redir(cmd[*i]) && *i <= *s)
-	{
-		while (is_redir(cmd[*i]))									// redir 모두 넘김
-			*i += 1;
-		ft_token_add(lst, token_new(ft_strndup(&cmd[*s], *i - *s), 1, 0)); 	// redir 끝날때까지
-		*s = *i;
-		return (0);
-	}
-	return (1);
-}
-
-void	add_token(t_token **lst, char *cmd)
-{
-	int		s;
-	int		i;
-	
-	// printf(".... %s\n",cmd);
-	i = 0;
-	s = 0;
-	if (!check_redir(cmd))
-	{
-		ft_token_add(lst, token_new(ft_strdup(cmd), 0, 0));
-		return ;
-	}
-	while (cmd[i])
-	{
-		if (add_token_ext(lst, cmd, &i, &s))
-			i++;
-	}
-	if (i > s)
-		ft_token_add(lst, token_new(ft_strndup(&cmd[s], i - s), 0, 0));
-}
-
-// input : echo ls >a
-// output : echo, ls, >, a
-
-typedef struct s_split_var {
-	t_token	*lst;
-	char	*backup;
-	int		i;
-	int		flag;
-	int		start;
-	int		quote;
-	int		dquote;
-}	t_split_var;
-
-
 int	s_quote_check(char c, t_split_var *flag)
 {
 	if (c == '\'')
@@ -206,7 +97,6 @@ int	s_quote_check(char c, t_split_var *flag)
 		return (0);
 	return (1);
 }
-
 
 int	s_dquote_check(char c, t_split_var *flag)
 {
@@ -225,56 +115,10 @@ int	s_dquote_check(char c, t_split_var *flag)
 	return (flag->dquote);
 }
 
-// int	env_pars_check(char *str)
-// {
-// 	if (str[0] == '$')
-// 	{
-// 		if (str[1] == '\"' || str[1] == '\0')
-// 			return (0);
-// 		return (1);
-// 	}
-// 	return (0);
-// }
-
-// char	*getkey(char *str)
-// {
-// 	char	*dest;
-// 	int		n;
-// 	int 	i;
-
-// 	n = 0;
-// 	i = 0;
-// 	while (str[n] != '=')
-// 		n++;
-// 	dest = (char *)malloc(sizeof(char) * i + 1);
-// 	while (i < n)
-// 	{
-// 		dest[i] = str[i];
-// 		i++;
-// 	}
-// 	dest[i] = 0;
-// 	return (dest);
-// }
-
-// char	*env_find_value(char *key, t_list *envp)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	printf("envp key : %s\n", envp->key);
-// 	while (envp != NULL)
-// 	{
-// 		if (ft_strcmp(envp->key, key))
-// 			return (envp->value);
-// 		envp = envp->next;
-// 	}
-// 	return (NULL);
-// }
-
 int	set_len(char *str, int i, char q)
 {
-	i++;	// 하나 넘기고
-	while(str[i])
+	i++;
+	while (str[i])
 	{
 		if (str[i] == q)
 			return (i);
@@ -283,23 +127,16 @@ int	set_len(char *str, int i, char q)
 	return (-1);
 }
 
-void	add_token_qutoe(t_token **lst, char *cmd, int quote_flag)
-{
-	ft_token_add(lst, token_new(cmd, 0, quote_flag));		
-}
-
 char	*make_cmd(char *cmd, t_split_var *v, char q)
 {
 	char	*p_cmd;
 	int		i;
 	int		s;
 	int		ind;
-	
+
 	s = v->start;
 	i = set_len(cmd, v->i, q);
-	// printf("\ns, i : %d %d\n ",s, i);
-
-	if (i == -1) // if don't finish quote then error
+	if (i == -1)
 		error_msg(2);
 	if (i - s <= 1)
 	{
@@ -318,75 +155,52 @@ char	*make_cmd(char *cmd, t_split_var *v, char q)
 		s++;
 	}
 	p_cmd[ind] = 0;
-	// printf("\nstr: %s\n", p_cmd);
 	v->i = i + 1;
 	v->start = i + 1;
 	return (p_cmd);
 }
 
-t_token	*split_space(char *cmd, char space)	// pipe 단위로 나눈 것 -> 공백 단위로 나눔
+void	split_space_ext(t_split_var *v, char *cmd)
+{
+	if (cmd[v->i] == '\0')
+		v->flag = 1;
+	cmd[v->i] = '\0';
+	if (v->i > v->start && v->backup)
+		v->backup = ft_strjoin(v->backup, &cmd[v->start]);
+	if (!v->backup)
+		add_token(&v->lst, &cmd[v->start]);
+	else
+		ft_token_add(&v->lst, token_new(cmd, 0, v->quote));
+	v->backup = NULL;
+	v->i++;
+	v->start = v->i;
+}
+
+t_token	*split_space(char *cmd, char space)
 {
 	t_split_var	v;
 
 	v = (t_split_var){NULL, NULL, 0, 0, 0, 0, 0};
-	while (v.flag == 0 && cmd[v.i]) 			// space 기준으로 나눔!
+	while (v.flag == 0 && cmd[v.i])
 	{
 		v.dquote = 0;
 		v.quote = 0;
-		while (cmd[v.start] == space)			// 앞에 공백 지움!
+		while (cmd[v.start] == space)
 			v.start++;
 		v.i = v.start;
-
-		while (cmd[v.i] != space && cmd[v.i])	// 문자들을 넘기는데 quote 있으면 무시하고 다넘김!!!
+		while (cmd[v.i] != space && cmd[v.i])
 		{
-			if (s_quote_check(cmd[v.i], &v))	// 현재 문자가 quote라면 조건문 들어감 
+			if (s_quote_check(cmd[v.i], &v))
 			{
 				if (!v.backup)
 					v.backup = make_cmd(cmd, &v, cmd[v.i]);
 				else
 					my_strjoin(&v.backup, make_cmd(cmd, &v, cmd[v.i]));
-				// printf("\nbackup : %s\n", v.backup);
 			}
 			else
 				v.i++;
-			// printf("\n\nc: %c\n\n", cmd[v.i]);
 		}
-		if (cmd[v.i] == '\0')
-			v.flag = 1;				// 마지막이라면 종료!
-		cmd[v.i] = '\0';						// 분리하기 쉽게 분기지점에 널값을 넣어주었음
-		if (v.i > v.start && v.backup)
-			v.backup = ft_strjoin(v.backup, &cmd[v.start]);
-		if (!v.backup)
-			add_token(&v.lst, &cmd[v.start]);			// redir 기준으로 다시 나눔!
-		else
-			add_token_qutoe(&v.lst, v.backup, v.quote);
-		v.backup = NULL;
-		v.i++;
-		v.start = v.i;
-		// printf("\nafter : %s\n\n", &cmd[v.start]);
+		split_space_ext(&v, cmd);
 	}
-
-	t_token *tmp = v.lst;
-	while (tmp)
-	{
-		printf(".... %s %d\n", tmp->cmd, tmp->redir_flag);
-		tmp = tmp->next;
-	}
-	printf(".... |\n");
 	return (v.lst);
 }
-
-
-
-
-
-
-// int main()
-// {
-// 	char **str = my_split("sdjkfl | lksadfj | sdklf");
-// 	while (*str)
-// 	{
-// 		printf("%s\n", *str);
-// 		str++;
-// 	}
-// }

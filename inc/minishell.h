@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/11 12:44:35 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/11 17:27:50 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,5 +214,15 @@ void	exit_signal();
 
 // ft_exit.c
 int	ft_exit(char **exec_cmd);
+
+typedef struct s_split_var {
+	t_token	*lst;
+	char	*backup;
+	int		i;
+	int		flag;
+	int		start;
+	int		quote;
+	int		dquote;
+}	t_split_var;
 
 #endif

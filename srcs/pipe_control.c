@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 13:13:59 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/11 15:59:43 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/11 21:13:41 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,8 +118,8 @@ void	wait_process(int child_num)
 	count = 0;
 	while (count < child_num)
 	{
-		printf("before status:  %d\n\n",status);
 		pid = wait(&status);
+		printf("\n\nbefore status: %d\n\n", status);
 		status = make_exit_status(status);
 		printf("\n\nprocess end: %d\n", pid);
 		printf("after status:  %d\n\n",status);
@@ -130,7 +130,7 @@ void	wait_process(int child_num)
 		}
 		else if (WIFSIGNALED(status))
 		{
-			g_exit_status = WTERMSIG(status);
+			g_exit_status = status;
 			printf("g_exit_status error code %d\n", g_exit_status);
 		}
 		else if (WIFEXITED(status))
