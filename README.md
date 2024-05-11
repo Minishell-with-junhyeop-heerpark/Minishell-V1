@@ -11,7 +11,7 @@ echo hi$?hi 는 중간에 에러코드로 치환되는데 echo hi$PATHhi는 hihi
 
 참고: https://tempdev.tistory.com/42
 
-<process>
+<process> - CLEAR
 echo ehco a | ./minishell 에서 파이프 이후 프로세스 실행되는거 종료하기.
 -> wait pid로 숫자 계속 세면서 stop되어있으면 kill을 줘야하나...?
 
@@ -29,3 +29,8 @@ heredoc수정할때도 추가하면 좋을듯
 For compilers to find readline you may need to set:
   export LDFLAGS="-L/opt/homebrew/opt/readline/lib"
   export CPPFLAGS="-I/opt/homebrew/opt/readline/include"
+
+<heredoc>
+cat << end | cat << quit
+이런식으로 입력할 때 파이프로 넘어온 내용보다 자식프레스의 heredoc의 내용이 우선시되어 출력됨.
+확인해보자.
