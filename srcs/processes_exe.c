@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:11:25 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/03 03:34:41 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/11 21:08:06 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,7 @@ void	get_processes(t_head *head, char **envp)
 	node = head->top;
 	path = ft_split(get_envpath(envp), ':');
 	if (!path)
-	{
 		perror_exit("get_processes-split");
-	}
 	i = 0;
 	while (node)
 	{
@@ -39,7 +37,7 @@ void	get_processes(t_head *head, char **envp)
 	return ;
 }
 
-void	set_inout(t_process *process, int **pipes, int i, int close_sig)
+void	 set_inout(t_process *process, int **pipes, int i, int close_sig)
 {
 	if (process->re_outfile_fd > 0)
 	{
@@ -132,9 +130,14 @@ void	start_process(t_head *head, char **envp)
 			head->processes[0]->exec_cmd, envp) == -1)
 				perror_exit("file exe execve error");
 		}
-		if (execve(head->processes[0]->exec_path, \
-		head->processes[0]->exec_cmd, envp) == -1)
-			perror_exit("execve error");
+		printf("\nzzzzzzzzzzz\n");
+		int sig = execve(head->processes[0]->exec_path, \
+		head->processes[0]->exec_cmd, envp);
+		// if (execve(head->processes[0]->exec_path, \
+		// head->processes[0]->exec_cmd, envp) == -1)
+		// 	perror_exit("execve error");
+		printf("sigggggg %d\n\n", sig);
+		
 	}
 }
 
@@ -173,10 +176,11 @@ void	exe(t_head *head, char **envp)
 {
 	int			**pipes;
 
-	// printf("head size: %d\n", head->size);
+	printf("head size: %d\n", head->size);
 	if (head->size < 1)
 	{
 		// exit(EXIT_FAILURE);
+		// head size 0인 경우는 이미 준형이 파싱에서 걸러지는듯?
 		return ;
 	}
 	else if (head->size == 1)

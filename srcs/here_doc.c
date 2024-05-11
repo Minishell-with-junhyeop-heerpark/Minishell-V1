@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 16:08:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/11 12:42:12 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/11 20:59:23 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,26 +38,28 @@ void	make_infile(char *limiter, char *file_name)
 {
 	int		temp_fd;
 	char	*temp;
-	char	*cmp_limiter;
+	char	*real_temp;
 
 	temp_fd = open(file_name, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (temp_fd == -1)
 		perror_exit("make_infile open error");
-	cmp_limiter = ft_strjoin(limiter, "\n");
 	set_signal_heredoc();
 	while (1)
 	{
-		temp = get_next_line(0);
-		if (ft_strncmp(temp, cmp_limiter, ft_strlen(cmp_limiter)) == 0)
+		temp = readline("");
+		printf("temp %s**, cmp_limiter %s** \n\n", temp, limiter);
+		if (ft_strncmp(temp, limiter, ft_strlen(limiter)) == 0 || temp == NULL)
 		{
 			break ;
 		}
-		write(temp_fd, temp, ft_strlen(temp));
+		real_temp = ft_strjoin(temp, "\n");
+		write(temp_fd, real_temp, ft_strlen(real_temp));
 		free(temp);
+		free(real_temp);
 	}
 	set_signal();
 	close(temp_fd);
-	free(cmp_limiter);
+	// free(cmp_limiter);
 	exit(0);
 }
 

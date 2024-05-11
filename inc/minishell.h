@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/11 12:44:35 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/11 21:09:46 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,5 +214,9 @@ void	exit_signal();
 
 // ft_exit.c
 int	ft_exit(char **exec_cmd);
+
+
+void	set_signal_origin(void);
+
 
 #endif

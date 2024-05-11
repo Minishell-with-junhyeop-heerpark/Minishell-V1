@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 13:13:59 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/03 03:38:32 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/11 21:04:05 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ void	wait_process(int child_num)
 		}
 		if (WIFEXITED(status))
 		{
+			
 			g_exit_status = WEXITSTATUS(status);
 			printf("error code %d\n", g_exit_status);
 		}
