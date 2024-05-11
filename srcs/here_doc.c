@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 16:08:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/04/06 19:54:26 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/11 12:42:12 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,12 @@ char	*get_temp_name(void)
 	}
 }
 
-char	*make_infile(char *limiter)
+void	make_infile(char *limiter, char *file_name)
 {
 	int		temp_fd;
 	char	*temp;
 	char	*cmp_limiter;
-	char	*file_name;
 
-	file_name = get_temp_name();
 	temp_fd = open(file_name, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (temp_fd == -1)
 		perror_exit("make_infile open error");
@@ -60,7 +58,20 @@ char	*make_infile(char *limiter)
 	set_signal();
 	close(temp_fd);
 	free(cmp_limiter);
-	return (file_name);
+	exit(0);
+}
+
+void	make_temp(char *limiter, char *file_name)
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == -1)
+		perror_exit("fork error");
+	else if (pid == 0)
+		make_infile(limiter, file_name);
+	else
+		wait_process(1);
 }
 
 void	set_rm_path(t_head *head, char **envp)

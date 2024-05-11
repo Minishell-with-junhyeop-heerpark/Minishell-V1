@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42.kr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/02 17:29:18 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/11 12:44:35 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,9 @@ void		init_fd(t_process *process);
 
 	//here_doc
 void		kill_heredoc(t_head *head, char **envp);
-char		*make_infile(char *limiter);
+char		*get_temp_name(void);
+void		make_infile(char *limiter, char *file_name);
+void		make_temp(char *limiter, char *file_name);
 
 	//list_to_processes_utils
 void		fill_elem(t_token *temp, t_process *process, char **cmd, int flag);
