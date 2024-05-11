@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 16:08:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/11 21:45:28 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/11 23:13:29 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,32 +34,51 @@ char	*get_temp_name(void)
 	}
 }
 
+char	*my_stradd(char *dest, char *src)
+{
+	int		i;
+	char	*str;
+	char	*sstr;
+
+	i = 0;
+	str = ft_strjoin(dest, src);
+	free(dest);
+	free(src);
+	sstr = ft_strjoin(str, "\n");
+	free(str);
+	return (sstr);
+}
+
 void	make_infile(char *limiter, char *file_name)
 {
 	int		temp_fd;
 	char	*temp;
-	char	*cmp_limiter;
+	char	*real_temp;
 
 	temp_fd = open(file_name, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (temp_fd == -1)
 		perror_exit("make_infile open error");
 	set_signal_heredoc();
-	cmp_limiter = ft_strjoin(limiter, "\n");
+	real_temp = ft_strdup("");
 	while (1)
 	{
-		temp = get_next_line(0);
-		if (ft_strncmp(temp, cmp_limiter, ft_strlen(cmp_limiter)) == 0)
+		temp = readline("> ");
+		printf("\ntemp : %s\n", temp);
+		if (temp == NULL || ft_strncmp(temp, limiter, ft_strlen(limiter)) == 0)
 		{
+			write(1, "hihi\n\n", 6);
+			printf("\n\nrealtemp: %s", real_temp);
 			break ;
 		}
-		write(temp_fd, temp, ft_strlen(temp));
-		free(temp);
+		real_temp = my_stradd(real_temp, temp);
+		
+		printf("\n\nrealtemp: %s\n", real_temp);
 	}
-	close(temp_fd);
-	free(cmp_limiter);
-	// g_exit_status = 1;
+	printf("\n\nrealtemp: %s", real_temp);
+	free(real_temp);
 	set_signal();
-	printf("hi\n");
+	close(temp_fd);
+	// free(cmp_limiter);
 	exit(0);
 }
 
