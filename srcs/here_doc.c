@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 16:08:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/11 21:57:22 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/11 22:17:44 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	make_infile(char *limiter, char *file_name)
 	{
 		temp = readline("");
 		printf("temp %s**, cmp_limiter %s** \n\n", temp, limiter);
-		if (ft_strncmp(temp, limiter, ft_strlen(limiter)) == 0 || temp == NULL)
+		if (temp == NULL || ft_strncmp(temp, limiter, ft_strlen(limiter)) == 0)
 		{
 			break ;
 		}

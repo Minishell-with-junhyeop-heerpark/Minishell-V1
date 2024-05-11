@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/05/11 21:09:46 by heerpark         ###   ########.fr       */
-=======
-/*   Updated: 2024/05/11 17:27:50 by junhyeop         ###   ########.fr       */
->>>>>>> origin/pjh-norm
+/*   Updated: 2024/05/11 21:58:56 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

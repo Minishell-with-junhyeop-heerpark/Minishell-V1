@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 13:13:59 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/11 21:57:47 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/11 22:04:57 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,13 +128,7 @@ void	wait_process(int child_num)
 		{
 			perror_exit("wait error");
 		}
-		if (WIFEXITED(status))
-		{
-			
-			g_exit_status = WEXITSTATUS(status);
-			printf("error code %d\n", g_exit_status);
-		}
-		if (WIFSIGNALED(status))
+		else if (WIFSIGNALED(status))
 		{
 			g_exit_status = status;
 			printf("g_exit_status error code %d\n", g_exit_status);
@@ -146,6 +140,6 @@ void	wait_process(int child_num)
 		}
 		count++;
 	}
-	printf("wait all process\n");
+	printf("wait end\n");
 }
 
