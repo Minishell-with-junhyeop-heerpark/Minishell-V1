@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 18:06:54 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/11 15:50:52 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/11 21:55:47 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,12 @@ void	set_signal_heredoc(void)
 {
 	signal(SIGINT, do_sigint_heredoc);
 	signal(SIGQUIT, SIG_IGN);
+}
+
+void	set_signal_origin(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 }
 
 void	do_sigint_heredoc(int signum)

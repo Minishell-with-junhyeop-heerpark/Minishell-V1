@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_control.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 13:13:59 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/11 15:59:43 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/11 21:52:18 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,15 +120,18 @@ void	wait_process(int child_num)
 	{
 		printf("before status:  %d\n\n",status);
 		pid = wait(&status);
-		status = make_exit_status(status);
-		printf("\n\nprocess end: %d\n", pid);
-		printf("after status:  %d\n\n",status);
-		printf("wifsig : %d\n\n", WIFSIGNALED(status));
+		printf("process end: %d\n", pid);
 		if (pid == -1)
 		{
 			perror_exit("wait error");
 		}
-		else if (WIFSIGNALED(status))
+		if (WIFEXITED(status))
+		{
+			
+			g_exit_status = WEXITSTATUS(status);
+			printf("error code %d\n", g_exit_status);
+		}
+		if (WIFSIGNALED(status))
 		{
 			g_exit_status = WTERMSIG(status);
 			printf("g_exit_status error code %d\n", g_exit_status);
@@ -140,6 +143,6 @@ void	wait_process(int child_num)
 		}
 		count++;
 	}
-	printf("wait end\n");
+	printf("wait all process\n");
 }
 

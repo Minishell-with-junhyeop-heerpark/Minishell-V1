@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envpwdcd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 20:27:15 by heerpark          #+#    #+#             */
-/*   Updated: 2024/04/28 16:05:20 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/07 17:17:11 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,16 @@
 //pwd 마지막에 개행을 넣어 말어 (현재 x)
 void	pwd(void)
 {
-	char	cwd[1024];
+	// char	cwd[1024];
 
-	if (getcwd(cwd, sizeof(cwd)) != NULL)
-	{
-		printf("%s\n", cwd);
-	}
-	else
-	{
-		perror_exit("pwd() error");
-	}
+	// if (getcwd(cwd, sizeof(cwd)) != NULL)
+	// {
+	// 	("%s\n", cwd);
+	// }
+	// else
+	// {
+	// 	perror_exit("pwd() error");
+	// }
 }
 
 void	env(t_head *head)
