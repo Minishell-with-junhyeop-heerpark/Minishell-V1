@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_fd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42.kr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 16:29:12 by heerpark          #+#    #+#             */
-/*   Updated: 2024/03/24 15:29:50 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/11 12:43:41 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ int	get_heredoc(t_process *process, char *limiter)
 {
 	int	fd;
 
-	process->heredoc_filename = make_infile(limiter);
+	// process->heredoc_filename = make_infile(limiter);
+	process->heredoc_filename = get_temp_name();
+	make_temp(limiter, process->heredoc_filename);
 	fd = open(process->heredoc_filename, O_RDONLY);
 	if (fd == -1)
 		perror_exit("get_heredoc");
