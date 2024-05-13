@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 16:08:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/11 23:13:29 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/13 14:35:31 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,18 +63,17 @@ void	make_infile(char *limiter, char *file_name)
 	while (1)
 	{
 		temp = readline("> ");
-		printf("\ntemp : %s\n", temp);
 		if (temp == NULL || ft_strncmp(temp, limiter, ft_strlen(limiter)) == 0)
 		{
-			write(1, "hihi\n\n", 6);
-			printf("\n\nrealtemp: %s", real_temp);
+			ft_printf("\033[1A");
+			ft_printf("\033[2C");
 			break ;
 		}
-		real_temp = my_stradd(real_temp, temp);
-		
-		printf("\n\nrealtemp: %s\n", real_temp);
+		real_temp = my_stradd(real_temp, temp);	// ㅇㅕ기서 temp, realtemp 둘다 free시켜서 누수도 잡아놓음
+		// printf("\n\nrealtemp: %s\n", real_temp);
 	}
-	printf("\n\nrealtemp: %s", real_temp);
+	printf("%s", real_temp);
+	// printf("%s", real_temp);
 	free(real_temp);
 	set_signal();
 	close(temp_fd);
