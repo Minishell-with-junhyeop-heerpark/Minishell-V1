@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 13:13:59 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/11 22:04:57 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/15 18:42:26 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,12 @@ void	first_child(t_head *head, int **pipes, char **envp, int i)
 	if (is_builtin(head->processes[i]->exec_cmd))
 	{
 		run_builtin(head, head->processes[i]->exec_cmd);
-		exit(0);
 	}
 	if (is_filepath(head->processes[i]->exec_cmd))
 	{
 		if (execve(head->processes[i]->exec_cmd[0], \
 		head->processes[i]->exec_cmd, envp) == -1)
 			perror_exit("file exe execve error");
-		return ;
 	}
 	if (execve(head->processes[i]->exec_path, \
 	head->processes[i]->exec_cmd, envp) == -1)
@@ -56,14 +54,12 @@ void	last_child(t_head *head, int **pipes, char **envp, int i)
 	if (is_builtin(head->processes[i]->exec_cmd))
 	{
 		run_builtin(head, head->processes[i]->exec_cmd);
-		exit(0);
 	}
 	if (is_filepath(head->processes[i]->exec_cmd))
 	{
 		if (execve(head->processes[i]->exec_cmd[0], \
 		head->processes[i]->exec_cmd, envp) == -1)
 			perror_exit("file exe execve error");
-		return ;
 	}
 	if (execve(head->processes[i]->exec_path, \
 	head->processes[i]->exec_cmd, envp) == -1)
@@ -79,14 +75,12 @@ void	mid_child(t_head *head, int **pipes, char **envp, int i)
 	if (is_builtin(head->processes[i]->exec_cmd))
 	{
 		run_builtin(head, head->processes[i]->exec_cmd);
-		exit(0);
 	}
 	if (is_filepath(head->processes[i]->exec_cmd))
 	{
 		if (execve(head->processes[i]->exec_cmd[0], \
 		head->processes[i]->exec_cmd, envp) == -1)
 			perror_exit("file exe execve error");
-		return ;
 	}
 	if (execve(head->processes[i]->exec_path, \
 	head->processes[i]->exec_cmd, envp) == -1)

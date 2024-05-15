@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 02:15:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/15 17:23:31 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/15 18:13:50 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -323,6 +323,7 @@ t_process	*get_process(t_head *head, t_list *line, char **path)
 	init_fd(process);
 	fill_elem(temp, process, &cmd, 0);
 	process->cmd = cmd;
+	printf("!!!!!!!!!!cmd: %s\n\n", cmd);
 	set_process(head, process, path);
 	printf("set_process end\n");
 	return (process);
