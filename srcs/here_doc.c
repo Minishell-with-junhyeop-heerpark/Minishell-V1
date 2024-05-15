@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 16:08:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/11 22:17:44 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/15 15:27:14 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,21 @@ char	*get_temp_name(void)
 	}
 }
 
+char	*my_stradd(char *dest, char *src)
+{
+	int		i;
+	char	*str;
+	char	*sstr;
+
+	i = 0;
+	str = ft_strjoin(dest, src);
+	free(dest);
+	free(src);
+	sstr = ft_strjoin(str, "\n");
+	free(str);
+	return (sstr);
+}
+
 void	make_infile(char *limiter, char *file_name)
 {
 	int		temp_fd;
@@ -44,19 +59,24 @@ void	make_infile(char *limiter, char *file_name)
 	if (temp_fd == -1)
 		perror_exit("make_infile open error");
 	set_signal_heredoc();
+	real_temp = ft_strdup("");
 	while (1)
 	{
-		temp = readline("");
-		printf("temp %s**, cmp_limiter %s** \n\n", temp, limiter);
-		if (temp == NULL || ft_strncmp(temp, limiter, ft_strlen(limiter)) == 0)
+		temp = readline("> ");
+		if (temp == NULL)
 		{
+			ft_printf("\033[1A");
+			ft_printf("\033[2C");
 			break ;
 		}
-		real_temp = ft_strjoin(temp, "\n");
-		write(temp_fd, real_temp, ft_strlen(real_temp));
-		free(temp);
-		free(real_temp);
+		if (ft_strncmp(temp, limiter, ft_strlen(limiter)) == 0)
+			break ;
+		real_temp = my_stradd(real_temp, temp);	// ㅇㅕ기서 temp, realtemp 둘다 free시켜서 누수도 잡아놓음
+		// printf("\n\nrealtemp: %s\n", real_temp);
 	}
+	printf("%s", real_temp);
+	// printf("%s", real_temp);
+	free(real_temp);
 	set_signal();
 	close(temp_fd);
 	// free(cmp_limiter);
