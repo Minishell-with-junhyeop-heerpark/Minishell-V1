@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:11:25 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/15 18:44:11 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/15 20:07:50 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,17 +131,7 @@ void	start_process(t_head *head, char **envp)
 	{
 		temi_print_on();
 		set_inout(head->processes[0], NULL, 0, 0);
-		if (is_builtin(head->processes[0]->exec_cmd))
-			run_builtin(head, head->processes[0]->exec_cmd);
-		if (is_filepath(head->processes[0]->exec_cmd))
-		{
-			if (execve(head->processes[0]->exec_cmd[0], \
-			head->processes[0]->exec_cmd, envp) == -1)
-				perror_exit("file exe execve error");
-		}
-		if (execve(head->processes[0]->exec_path, \
-		head->processes[0]->exec_cmd, envp) == -1)
-			perror_exit("execve error");
+		run_cmd(head, envp, 0);
 	}
 }
 
@@ -167,11 +157,7 @@ void	start_processes(t_head *head, char **envp, int **pipes, int n)
 				mid_child(head, pipes, envp, i);
 		}
 		else
-		{
-			printf("%d번째 자식 pid: %d\n", i + 1, pid);
-			// close_all_pipes(pipes, 1);
 			parent(pipes, i);
-		}
 		i++;
 	}
 }
@@ -218,7 +204,7 @@ void	exe(t_head *head, char **envp)
 		wait_process(head->size);
 	}
 	kill_heredoc(head, envp);
-	printf("exe end\n");
+	printf("----------------minishell print end------------\n");
 	set_signal();
 }
 //have to free malloced variable
