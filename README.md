@@ -34,3 +34,4 @@ For compilers to find readline you may need to set:
 cat << end | cat << quit
 이런식으로 입력할 때 파이프로 넘어온 내용보다 자식프레스의 heredoc의 내용이 우선시되어 출력됨.
 확인해보자.
+

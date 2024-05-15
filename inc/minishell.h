@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/11 17:27:50 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/15 22:05:49 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,21 @@ typedef struct s_token
 	struct s_token	*prev;
 }	t_token;
 
+typedef struct s_env
+{
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+	struct s_env	*prev;
+}	t_env;
+
 typedef struct s_list
 {
 	t_token			*token;
 	char			*key;
 	char			*value;
 	struct s_list	*next;
-	struct s_list	*prev;
+	struct s_list	*prev;	
 }	t_list;
 
 typedef struct s_process
@@ -214,6 +222,10 @@ void	exit_signal();
 
 // ft_exit.c
 int	ft_exit(char **exec_cmd);
+
+// ft_export.c
+void	ft_export(t_head *head, char **exec_cmd);
+
 
 typedef struct s_split_var {
 	t_token	*lst;

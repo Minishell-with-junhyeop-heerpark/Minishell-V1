@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 15:11:29 by heerpark          #+#    #+#             */
-/*   Updated: 2024/04/29 01:17:23 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/15 16:13:37 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	run_builtin(t_head *head, char **exec_cmd) //env 내가만든 env로 대체
 	else if (ft_strncmp(exec_cmd[0], "cd", 3) == 0)
 		cd(head, exec_cmd[1]);
 	else if (ft_strncmp(exec_cmd[0], "export", 7) == 0)
-		return ;
+		ft_export(head, exec_cmd) ;
 	else if (ft_strncmp(exec_cmd[0], "unset", 6) == 0)
 		unset(head, exec_cmd[1]);
 	else if (ft_strncmp(exec_cmd[0], "env", 4) == 0)

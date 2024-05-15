@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_to_process.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42.kr>          +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 02:15:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/01 21:39:30 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/15 18:47:11 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -300,6 +300,7 @@ void	set_process(t_head *head, t_process *process, char **path)
 	{
 		ft_printf("bash: %s: command not found\n", exec_cmd[0]);
 		head->get_error = 1;
+		// g_exit_status = 127;
 	}
 	else
 		head->get_error = 0;
@@ -319,6 +320,7 @@ t_process	*get_process(t_head *head, t_list *line, char **path)
 	init_fd(process);
 	fill_elem(temp, process, &cmd, 0);
 	process->cmd = cmd;
+	printf("!!cmd: %s\n", cmd);
 	set_process(head, process, path);
 	printf("set_process end\n");
 	return (process);
