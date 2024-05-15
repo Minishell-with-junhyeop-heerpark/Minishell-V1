@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 02:15:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/03 03:33:49 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/15 16:51:02 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,10 +254,17 @@ void	set_process(t_head *head, t_process *process, char **path)
 
 	i = 0;
 	exec_cmd = ft_split(process->cmd, ' ');
-	if (exec_cmd[0] == NULL)
+	if (exec_cmd[0] == NULL && !check_redir_heredoc(process)) // ""이런 케이스는 여기에 걸림.
 	{
+		head->get_error = 1;
+		ft_printf("no cmd\n");
+		return ;
+	}
+	else if (exec_cmd[0] == NULL && check_redir_heredoc(process))
+	{
+		head->get_error = 1;
 		unlink(process->heredoc_filename);
-		perror_exit("no cmd");
+		return ;
 	}
 	process->exec_cmd = exec_cmd;
 	// printf("%s\n%s\n", process->exec_cmd[0], process->exec_cmd[1]);
@@ -297,9 +304,9 @@ void	set_process(t_head *head, t_process *process, char **path)
 	{
 		ft_printf("bash: %s: command not found\n", exec_cmd[0]);
 		head->get_error = 1;
+		if (process->heredoc_fd != -42)
+			unlink(process->heredoc_filename);
 	}
-	else
-		head->get_error = 0;
 	process->exec_path = exec_path;
 }
 

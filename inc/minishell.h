@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/11 21:58:56 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/15 16:22:04 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,7 @@ void		parent(int **pipes, int i);
 void		close_all_pipes(int **pipes, int n);
 
 	//get_fd
+int			check_redir_heredoc(t_process *process);
 int			get_infile(char	*file_name);
 int			get_heredoc(t_process *process, char *limiter);
 int			get_outfile(char *file_name);

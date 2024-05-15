@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:11:25 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/11 21:08:06 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/15 16:52:56 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,7 @@ void	exe(t_head *head, char **envp)
 	int			**pipes;
 
 	printf("head size: %d\n", head->size);
+	head->get_error = 0;
 	if (head->size < 1)
 	{
 		// exit(EXIT_FAILURE);
@@ -188,7 +189,8 @@ void	exe(t_head *head, char **envp)
 		get_processes(head, envp);
 		if (head->get_error)
 		{
-			kill_heredoc(head, envp);
+			// kill_heredoc(head, envp);
+			set_signal();
 			return ;
 		}
 		printf("----------------minishell print----------------\n");
@@ -203,7 +205,8 @@ void	exe(t_head *head, char **envp)
 		get_processes(head, envp);
 		if (head->get_error)
 		{
-			kill_heredoc(head, envp);
+			// kill_heredoc(head, envp);
+			set_signal();
 			return ;
 		}
 		printf("----------------minishell print----------------\n");
