@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:10:35 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/04/28 21:44:35 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/15 15:19:26 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int main(int argc, char **argv, char **envp)
     char			*str;
 	t_head			*head;
 
-	g_exit_status = -1;
+	g_exit_status = 0;
     set_signal();
 	head = init_head(envp);
 	ft_printf("Welcome to minishell!\n");
