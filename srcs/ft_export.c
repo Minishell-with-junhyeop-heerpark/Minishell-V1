@@ -6,12 +6,30 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:05:39 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/16 13:53:31 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/16 16:53:45 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	free_show_list(t_list **top)
+{
+	t_list	*tmp;
+	t_list	*rmv;
+
+	tmp = *top;
+	while (tmp)
+	{
+		rmv = tmp;
+		free(rmv->key);
+		free(rmv->value);
+		tmp = rmv->next;
+		free(rmv);
+	}
+}
+
+// 1. key 값 유효성 체크하기 
+// 2. 왜 env하면 LS_COLORS가 여러개 나오는지?
 char	*export_getkey(char **exec_cmd, t_head *head)
 {
 	int		n;
@@ -24,9 +42,9 @@ char	*export_getkey(char **exec_cmd, t_head *head)
 	i = 0;
 	str = head->top->token->next->cmd;
 	printf("str: %s\n", str);
-	while (str[n] != '=')
+	while (str[n] && str[n] != '=')
 	{
-		if (!str[n] || str[n] == ' ')
+		if (str[n] == ' ')
 			return (NULL);
 		n++;
 	}
@@ -69,23 +87,98 @@ char	*export_getvalue(char **exec_cmd, t_head *head)
 	return (value);
 }
 
+void	export_add_prev(t_list **lst, t_list *new, t_list **top)
+{
+	t_list	*tmp;
 
-// t_env	*sort(t_list *env)
-// {
-// 	return NULL;	
-// }
+	tmp = *lst;
+	if (!new)
+		error_msg(1);
+	if (ft_strcmp(tmp->key, (*top)->key) == 0)
+	{
+		new->next = tmp;
+		tmp->prev = new;
+		*top = new;
+		return ;
+	}
+	new->next = tmp;
+	new->prev = tmp->prev;
+	tmp->prev->next = new;
+	tmp->prev = new;
+}
+
+void	sorting(t_list *t_env, t_list **top)
+{
+	t_list	*tmp;
+	// t_list	*new;
+	
+	tmp = *top;
+	if (tmp->next == NULL && ft_strcmp(tmp->key, t_env->key) > 0) //tmp->key 가 더 위에 있어야하는 경우
+	{
+		printf("\nadd_prev\n");
+		export_add_prev(&tmp, lst_new(ft_strdup(t_env->key), ft_strdup(t_env->value)), top);
+		// new = lst_new(t_env->key, t_env->value);
+		// tmp->next = NULL;
+		// new->next = tmp;
+		// tmp->prev = new;
+		// (*top) = new;
+		return ;
+	}
+	while (tmp)
+	{
+		if (ft_strcmp(tmp->key, t_env->key) > 0)
+		{
+			printf("\nadd_prev\n");
+			export_add_prev(&tmp, lst_new(ft_strdup(t_env->key), ft_strdup(t_env->value)), top);
+			return ;
+		}
+		tmp = tmp->next;
+	}
+	lstadd_back(top, lst_new(ft_strdup(t_env->key), ft_strdup(t_env->value)));
+}
+
+void	sort_list(t_list *env, t_list **top)
+{
+	t_list	*t_env;
+	// t_list	*new;
+	// t_list	*top;
+	
+	t_env = env;
+	*top = lst_new(ft_strdup(t_env->key), ft_strdup(t_env->value)); 
+	t_env = t_env->next;
+	while (t_env)
+	{
+		printf("========== %s ===========\n", t_env->key);
+		sorting(t_env, top);
+		t_env = t_env->next;
+	}
+}
+
 
 void	show_export(t_head *head)
 {
 	t_list	*env;
-
+	t_list	*top;
+	t_list	*tmp;
+	
+	top = NULL;
 	env = head->data->env->next;
-	while (env)
+	sort_list(env, &top);
+	printf("============= out ======================\n");
+
+	if (!top)
+		error_msg(1);
+	tmp = top;
+	while (tmp)
 	{
 		printf("declare -x ");
-		// sort(env);
-		printf("%s=\"%s\"", env->key, env->value);
+		if (tmp->value)
+			printf("%s=\"%s\"\n", tmp->key, tmp->value);
+		else
+			printf("%s\n",tmp->value);
+		tmp = tmp->next;
 	}
+	free_show_list(&top);
 }
 
 void	ft_export(t_head *head, char **exec_cmd)
@@ -93,19 +186,17 @@ void	ft_export(t_head *head, char **exec_cmd)
 	t_list	*tmp;
 	char	*key;
 	char	*value;
-	int		n;
 	int		i;
 
+	if (head->top->token->next == NULL)
+	{
+		show_export(head);		
+		return ;
+	}
 	tmp = head->data->env->next;
 	while (tmp->next)
 		tmp = tmp->next;
 	i = 0;
-	n = sizeof(exec_cmd)/4;
-	if (n == 1)
-	{
-		show_export(head);
-		return ;
-	}
 	key = export_getkey(exec_cmd, head);
 	printf("key:%s\n", key);
 	value = export_getvalue(exec_cmd, head);
