@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 15:11:29 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/15 16:13:37 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/16 13:38:47 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,8 @@ int	is_builtin(char **exec_cmd)
 		return (0);
 }
 
-void	run_builtin(t_head *head, char **exec_cmd) //env 내가만든 env로 대체
+void	run_builtin(t_head *head, char **exec_cmd)
 {
-	// printf("%s\n" ,(exec_cmd[0]));
 	if (ft_strncmp(exec_cmd[0], "echo", 5) == 0)
 		ft_echo(exec_cmd) ;
 	else if (ft_strncmp(exec_cmd[0], "pwd", 4) == 0)
@@ -60,6 +59,7 @@ void	run_builtin(t_head *head, char **exec_cmd) //env 내가만든 env로 대체
 	else if (ft_strncmp(exec_cmd[0], "exit", 5) == 0)
 		ft_exit(exec_cmd);
 	else
-		printf("it is not built in exec_cmd\n");
-	// exit(0);
+		ft_printf("it is not built in exec_cmd\n");
+	dup2(head->data->original_stdout, STDOUT_FILENO);
+	dup2(head->data->original_stdin, STDIN_FILENO);
 }

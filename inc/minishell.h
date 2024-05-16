@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/15 22:05:49 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/16 13:39:00 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,7 @@ void		parent(int **pipes, int i);
 void		close_all_pipes(int **pipes, int n);
 
 	//get_fd
+int			check_redir_heredoc(t_process *process);
 int			get_infile(char	*file_name);
 int			get_heredoc(t_process *process, char *limiter);
 int			get_outfile(char *file_name);
@@ -172,6 +173,7 @@ void		set_process(t_head *head, t_process *process, char **path);
 t_process	*get_process(t_head *head, t_list *line, char **path);
 
 	//processes_exe
+void		run_cmd(t_head *head, char **envp, int i);
 void		get_processes(t_head *head, char **envp);
 void		set_inout(t_process *process, int **pipes, int i, int close_sig);
 void		start_process(t_head *head, char **envp);

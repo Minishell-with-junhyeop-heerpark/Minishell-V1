@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:40:07 by heerpark          #+#    #+#             */
-/*   Updated: 2024/04/29 01:59:09 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/15 21:38:28 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,14 @@ char	*remove_node(t_list **lst, char *key)
 
 	current = *lst;
 	before = NULL;
+	printf("remove node\n");
 	while (current)
 	{
 		if (ft_strncmp(current->key, key, ft_strlen(key) + 1) == 0)
+		{
+			printf("found: %s\n", current->key);
 			break ;
+		}
 		before = current;
 		current = current->next;
 	}
@@ -64,6 +68,9 @@ char	*remove_node(t_list **lst, char *key)
 		*lst = current->next;
 	else
 		before->next = current->next;
+	printf("%s\n", before->key);
+	printf("%s\n", current->next->key);
+	printf("------------remove end------------\n");
 	free(current->key);
 	free(current->value);
 	free(current);
@@ -111,6 +118,7 @@ void	lst_clear(t_list **lst)
 
 void	lst_print(t_list *head)
 {
+	printf("lst print\n");
 	while (head)
 	{
 		ft_printf("%s=%s\n", head->key, head->value);

@@ -6,11 +6,25 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 16:29:12 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/11 12:43:41 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/15 16:24:10 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	check_redir_heredoc(t_process *process)
+{
+	if (process->re_infile_fd != -42)
+		return (1);
+	else if (process->re_outfile_fd != -42)
+		return (1);
+	else if (process->re_append_fd != -42)
+		return (1);
+	else if (process->heredoc_fd != -42)
+		return (1);
+	else
+		return (0);
+}
 
 void	init_fd(t_process *process)
 {
