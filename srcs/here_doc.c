@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 16:08:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/15 15:27:14 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/16 13:57:07 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	make_infile(char *limiter, char *file_name)
 		real_temp = my_stradd(real_temp, temp);	// ㅇㅕ기서 temp, realtemp 둘다 free시켜서 누수도 잡아놓음
 		// printf("\n\nrealtemp: %s\n", real_temp);
 	}
-	printf("%s", real_temp);
+	// printf("%s", real_temp);
 	// printf("%s", real_temp);
 	free(real_temp);
 	set_signal();

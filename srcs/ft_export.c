@@ -6,25 +6,27 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:05:39 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/15 22:38:47 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/16 13:53:31 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*export_getkey(char **exec_cmd)
+char	*export_getkey(char **exec_cmd, t_head *head)
 {
 	int		n;
 	int		i;
 	char	*str;
 	char	*key;
-	
+
+	(void)exec_cmd;
 	n = 0;
 	i = 0;
-	str = exec_cmd[1];
+	str = head->top->token->next->cmd;
+	printf("str: %s\n", str);
 	while (str[n] != '=')
 	{
-		if (str[n] || str[n] == ' ')
+		if (!str[n] || str[n] == ' ')
 			return (NULL);
 		n++;
 	}
@@ -59,7 +61,10 @@ char	*export_getvalue(char **exec_cmd, t_head *head)
 	if (!value)
 		error_msg(1);
 	while (s < n)
-		value[s++] = cmd[i - n - 1];
+	{
+		value[s] = cmd[i - n + s];
+		s++;
+	}
 	value[s] = 0;
 	return (value);
 }
@@ -101,7 +106,9 @@ void	ft_export(t_head *head, char **exec_cmd)
 		show_export(head);
 		return ;
 	}
-	key = export_getkey(exec_cmd);
+	key = export_getkey(exec_cmd, head);
+	printf("key:%s\n", key);
 	value = export_getvalue(exec_cmd, head);
+	printf("value:%s\n", value);
 	lstadd_back(&tmp, lst_new(key, value));
 }
