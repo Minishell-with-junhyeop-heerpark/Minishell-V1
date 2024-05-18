@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:05:39 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/16 16:53:45 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/18 19:59:51 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,40 +91,43 @@ void	export_add_prev(t_list **lst, t_list *new, t_list **top)
 {
 	t_list	*tmp;
 
+	(void)top;
 	tmp = *lst;
 	if (!new)
 		error_msg(1);
-	if (ft_strcmp(tmp->key, (*top)->key) == 0)
-	{
-		new->next = tmp;
-		tmp->prev = new;
-		*top = new;
-		return ;
-	}
+	// if (ft_strcmp(tmp->key, (*top)->key) == 0)
+	// {
+	// 	printf("push first node\n");
+	// 	new->next = tmp;
+	// 	tmp->prev = new;
+	// 	*top = new;
+	// 	return ;
+	// }
+	// printf("push here\n");
 	new->next = tmp;
 	new->prev = tmp->prev;
 	tmp->prev->next = new;
 	tmp->prev = new;
-}
+	printf("push here\n");
 
+}
 void	sorting(t_list *t_env, t_list **top)
 {
 	t_list	*tmp;
-	// t_list	*new;
+	t_list	*new;
 	
 	tmp = *top;
-	if (tmp->next == NULL && ft_strcmp(tmp->key, t_env->key) > 0) //tmp->key 가 더 위에 있어야하는 경우
+	if (tmp->next == NULL || ft_strcmp(tmp->key, t_env->key) > 0) //tmp->key 가 더 위에 있어야하는 경우
 	{
-		printf("\nadd_prev\n");
-		export_add_prev(&tmp, lst_new(ft_strdup(t_env->key), ft_strdup(t_env->value)), top);
-		// new = lst_new(t_env->key, t_env->value);
-		// tmp->next = NULL;
-		// new->next = tmp;
-		// tmp->prev = new;
-		// (*top) = new;
+		printf("\nadd_first_prev\n");
+		// export_add_prev(&tmp, lst_new(ft_strdup(t_env->key), ft_strdup(t_env->value)), top);
+		new = lst_new(ft_strdup(t_env->key), ft_strdup(t_env->value));
+		tmp->prev = new;
+		new->next = tmp;
+		*top = new;
 		return ;
 	}
-	while (tmp)
+	while (tmp->next)
 	{
 		if (ft_strcmp(tmp->key, t_env->key) > 0)
 		{
@@ -134,8 +137,26 @@ void	sorting(t_list *t_env, t_list **top)
 		}
 		tmp = tmp->next;
 	}
-	lstadd_back(top, lst_new(ft_strdup(t_env->key), ft_strdup(t_env->value)));
+	// if (ft_strcmp(tmp->next->key, t_env->key) > 0)
+	// 	export_add_prev(&tmp->next, lst_new(ft_strdup(t_env->key), ft_strdup(t_env->value)), top);
+	// else
+		lstadd_back(top, lst_new(ft_strdup(t_env->key), ft_strdup(t_env->value)));
 }
+
+void	print_top(t_list **top)
+{
+	t_list *tmp;
+
+	tmp = *top;
+	printf("-----------------test ----------\n");
+	while (tmp)
+	{
+		printf("> %s=%s\n", tmp->key, tmp->value);
+		tmp = tmp->next;
+	}
+	printf("-----------------test end ----------\n\n");
+}
+
 
 void	sort_list(t_list *env, t_list **top)
 {
@@ -150,6 +171,13 @@ void	sort_list(t_list *env, t_list **top)
 	{
 		printf("========== %s ===========\n", t_env->key);
 		sorting(t_env, top);
+		//////
+
+		print_top(top);
+
+		////
+
+		
 		t_env = t_env->next;
 	}
 }

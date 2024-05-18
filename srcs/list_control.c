@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:40:07 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/16 16:19:31 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/18 19:54:21 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	lstadd_back(t_list **lst, t_list *new)
 		current = current->next;
 	}
 	current->next = new;
+	new->prev = current;
 }
 
 char	*remove_node(t_list **lst, char *key)
