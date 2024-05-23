@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 02:15:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/23 21:43:30 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/23 23:05:36 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ char	*apply_exit_status(char *cmd, int *ind)
 	int		i;
 	int		j;
 	int		k;
-	
+
 	i = 0;
 	j = 0;
 	k = 0;

@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/23 18:41:22 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/23 23:01:11 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,17 +131,9 @@ void		parse(char *str, t_head *head);
 
 //exe func
 
-	//exe_parsing.c, exe_parsing2.c)
-char		**get_exec_paths(char **envp, char **cmds, int path_size);
+	//exe_parsing.c
 char		*get_envpath(char **envp);
-char		**get_cmd_head(char **argv, int start_idx, int end_idx);
-char		***make_cmds(char **argv, int start_idx, int end_idx);
-void		free_cmds(int cmds_size, char ***cmds);
 
-void		free_splited(char **splited);
-int			**make_pipe(int child_num);
-void		free_pipe(int **pipe, int child_num);
-void		perror_exit(char *msg);
 
 	//pipe_control
 void		wait_process(int child_num);

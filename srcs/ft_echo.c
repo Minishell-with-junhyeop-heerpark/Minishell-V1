@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 13:36:54 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/15 18:50:53 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/23 23:05:07 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	ft_echo(char **exec_cmd)
 	{
 		ft_printf("%s", exec_cmd[i]);
 		i++;
-		
+
 		if (!exec_cmd[i])
 			break ;
 		// printf("\n\necho : %s\n\n", exec_cmd[i]);
