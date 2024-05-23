@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 02:15:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/16 13:38:20 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/23 16:08:12 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,14 +226,14 @@ void	fill_elem(t_token *temp, t_process *process, char **cmd, int flag)
 			check_env(temp, process);
 			temp_str = ft_strjoin(*cmd, temp->cmd);
 			free(*cmd);
-			*cmd = ft_strjoin(temp_str, " ");
+			*cmd = ft_strjoin(temp_str, "\n");
 			free(temp_str);
 		}
 		else if (temp->redir_flag == 0 && temp->quote_flag == 1)
 		{
 			temp_str = ft_strjoin(*cmd, temp->cmd);
 			free(*cmd);
-			*cmd = ft_strjoin(temp_str, " ");
+			*cmd = ft_strjoin(temp_str, "\n");
 			free(temp_str);
 		}
 		else if (temp->redir_flag == 1)
@@ -253,7 +253,7 @@ void	set_process(t_head *head, t_process *process, char **path)
 	int		i;
 
 	i = 0;
-	exec_cmd = ft_split(process->cmd, ' ');
+	exec_cmd = ft_split(process->cmd, '\n');
 	if (exec_cmd[0] == NULL && !check_redir_heredoc(process)) // ""이런 케이스는 여기에 걸림.
 	{
 		head->get_error = 1;
@@ -323,7 +323,7 @@ t_process	*get_process(t_head *head, t_list *line, char **path)
 	init_fd(process);
 	fill_elem(temp, process, &cmd, 0);
 	process->cmd = cmd;
-	printf("!!!!!!!!!!cmd: %s\n\n", cmd);
+	// printf("!!!!!!!!!!cmd------------: %s\n\n", cmd);
 	set_process(head, process, path);
 	return (process);
 }

@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:05:39 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/18 19:59:51 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/23 16:00:26 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	free_show_list(t_list **top)
 	{
 		rmv = tmp;
 		free(rmv->key);
-		free(rmv->value);
+		if (rmv->value)
+			free(rmv->value);
 		tmp = rmv->next;
 		free(rmv);
 	}
@@ -41,7 +42,6 @@ char	*export_getkey(char **exec_cmd, t_head *head)
 	n = 0;
 	i = 0;
 	str = head->top->token->next->cmd;
-	printf("str: %s\n", str);
 	while (str[n] && str[n] != '=')
 	{
 		if (str[n] == ' ')
@@ -58,32 +58,36 @@ char	*export_getkey(char **exec_cmd, t_head *head)
 	return (key);
 }
 
-char	*export_getvalue(char **exec_cmd, t_head *head)
+typedef struct s_value_var
 {
-	int		n;
-	int		i;
-	int		s;
-	char	*value;
-	char	*cmd;
+	int n;
+	int i;
+	int s;
+}	t_value_var;
 
-	(void)exec_cmd;
-	i = 0;
-	n = 0;
-	s = 0;
+char	*export_getvalue(t_head *head)
+{
+	t_value_var	v;
+	char		*value;
+	char		*cmd;
+
+	v = (struct s_value_var){0, 0, 0};
 	cmd = head->top->token->next->cmd;
-	while (cmd[i] && cmd[i] != '=')
-		i++;
-	while (cmd[i++])
-		n++;
-	value = (char *)malloc(sizeof(char) * n + 1);
+	while (cmd[v.i] && cmd[v.i] != '=')
+		v.i++;
+	if (cmd[v.i] == '\0')
+		return (NULL);
+	while (cmd[v.i++])
+		v.n++;
+	value = (char *)malloc(sizeof(char) * v.n + 1);
 	if (!value)
 		error_msg(1);
-	while (s < n)
+	while (v.s < v.n)
 	{
-		value[s] = cmd[i - n + s];
-		s++;
+		value[v.s] = cmd[v.i - v.n + v.s];
+		v.s++;
 	}
-	value[s] = 0;
+	value[v.s] = 0;
 	return (value);
 }
 
@@ -108,7 +112,7 @@ void	export_add_prev(t_list **lst, t_list *new, t_list **top)
 	new->prev = tmp->prev;
 	tmp->prev->next = new;
 	tmp->prev = new;
-	printf("push here\n");
+	// printf("push here\n");
 
 }
 void	sorting(t_list *t_env, t_list **top)
@@ -119,7 +123,7 @@ void	sorting(t_list *t_env, t_list **top)
 	tmp = *top;
 	if (tmp->next == NULL || ft_strcmp(tmp->key, t_env->key) > 0) //tmp->key 가 더 위에 있어야하는 경우
 	{
-		printf("\nadd_first_prev\n");
+		// printf("\nadd_first_prev\n");
 		// export_add_prev(&tmp, lst_new(ft_strdup(t_env->key), ft_strdup(t_env->value)), top);
 		new = lst_new(ft_strdup(t_env->key), ft_strdup(t_env->value));
 		tmp->prev = new;
@@ -131,7 +135,7 @@ void	sorting(t_list *t_env, t_list **top)
 	{
 		if (ft_strcmp(tmp->key, t_env->key) > 0)
 		{
-			printf("\nadd_prev\n");
+			// printf("\nadd_prev\n");
 			export_add_prev(&tmp, lst_new(ft_strdup(t_env->key), ft_strdup(t_env->value)), top);
 			return ;
 		}
@@ -140,22 +144,23 @@ void	sorting(t_list *t_env, t_list **top)
 	// if (ft_strcmp(tmp->next->key, t_env->key) > 0)
 	// 	export_add_prev(&tmp->next, lst_new(ft_strdup(t_env->key), ft_strdup(t_env->value)), top);
 	// else
-		lstadd_back(top, lst_new(ft_strdup(t_env->key), ft_strdup(t_env->value)));
+	// 여기가 문제!!!!!!!!!!!!
+	lstadd_back(top, lst_new(ft_strdup(t_env->key), ft_strdup(t_env->value)));
+	printf("===================safe=====================\n");
 }
 
-void	print_top(t_list **top)
-{
-	t_list *tmp;
+// void	print_top(t_list **top)
+// {
+// 	t_list *tmp;
 
-	tmp = *top;
-	printf("-----------------test ----------\n");
-	while (tmp)
-	{
-		printf("> %s=%s\n", tmp->key, tmp->value);
-		tmp = tmp->next;
-	}
-	printf("-----------------test end ----------\n\n");
-}
+// 	tmp = *top;
+// 	printf("-----------------test ----------\n");
+// 	while (tmp)
+// 	{
+// 		printf("> %s=%s\n", tmp->key, tmp->value);
+// 		tmp = tmp->next;
+// 	}
+// }
 
 
 void	sort_list(t_list *env, t_list **top)
@@ -163,21 +168,15 @@ void	sort_list(t_list *env, t_list **top)
 	t_list	*t_env;
 	// t_list	*new;
 	// t_list	*top;
-	
+
 	t_env = env;
 	*top = lst_new(ft_strdup(t_env->key), ft_strdup(t_env->value)); 
 	t_env = t_env->next;
 	while (t_env)
 	{
-		printf("========== %s ===========\n", t_env->key);
+		printf("%s, %s\n", t_env->key, t_env->value);
 		sorting(t_env, top);
-		//////
-
-		print_top(top);
-
-		////
-
-		
+		// print_top(top);
 		t_env = t_env->next;
 	}
 }
@@ -188,12 +187,10 @@ void	show_export(t_head *head)
 	t_list	*env;
 	t_list	*top;
 	t_list	*tmp;
-	
+
 	top = NULL;
 	env = head->data->env->next;
 	sort_list(env, &top);
-	printf("============= out ======================\n");
-
 	if (!top)
 		error_msg(1);
 	tmp = top;
@@ -203,7 +200,7 @@ void	show_export(t_head *head)
 		if (tmp->value)
 			printf("%s=\"%s\"\n", tmp->key, tmp->value);
 		else
-			printf("%s\n",tmp->value);
+			printf("%s\n",tmp->key);
 		tmp = tmp->next;
 	}
 	free_show_list(&top);
@@ -218,7 +215,7 @@ void	ft_export(t_head *head, char **exec_cmd)
 
 	if (head->top->token->next == NULL)
 	{
-		show_export(head);		
+		show_export(head);
 		return ;
 	}
 	tmp = head->data->env->next;
@@ -226,8 +223,8 @@ void	ft_export(t_head *head, char **exec_cmd)
 		tmp = tmp->next;
 	i = 0;
 	key = export_getkey(exec_cmd, head);
-	printf("key:%s\n", key);
-	value = export_getvalue(exec_cmd, head);
-	printf("value:%s\n", value);
+	value = export_getvalue(head);
+	printf("key: %s, value : %s\n", key, value);
 	lstadd_back(&tmp, lst_new(key, value));
+	
 }
