@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 02:15:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/23 17:32:11 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/23 18:43:22 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,13 +121,13 @@ char	*replace_cmd(char *cmd, char *key, char *value, int *ind)
 
 	while (i < *ind)
 		new_cmd[j++] = cmd[i++];
-	
+
 	replace_value(new_cmd, &j, value);
 	i += ft_strlen(key) + 1;
 
 	while (cmd[i])
 		new_cmd[j++] = cmd[i++];
-		
+
 	new_cmd[j] = 0;
 	return (new_cmd);
 }
@@ -207,12 +207,34 @@ void	check_env(t_token *token, t_process *process)
 			i++;
 	}
 }
+
+void	concat_cmd(t_token *temp, t_process *process, char **cmd, char **str)
+{
+	if (temp->quote_flag == 0)
+	{
+		check_env(temp, process);
+		*str = ft_strjoin(*cmd, temp->cmd);
+		free(*cmd);
+		*cmd = ft_strjoin(*str, "\n");
+		free(*str);
+	}
+	else if (temp->quote_flag == 1)
+	{
+		*str = ft_strjoin(*cmd, temp->cmd);
+		free(*cmd);
+		*cmd = ft_strjoin(*str, "\n");
+		free(*str);	
+	}
+}
+
 // "echo $HOME BB"
-void	fill_elem(t_token *temp, t_process *process, char **cmd, int flag)
+void	fill_elem(t_token *temp, t_process *process, char **cmd)
 {
 	char	*temp_str;
 	int		is_filename;
+	int		flag;
 
+	flag = 0;
 	is_filename = 0;
 	while (temp)
 	{
@@ -221,20 +243,9 @@ void	fill_elem(t_token *temp, t_process *process, char **cmd, int flag)
 			set_fd(process, temp->cmd, flag);
 			is_filename = 0;
 		}
-		else if (temp->redir_flag == 0 && temp->quote_flag == 0)
+		else if (temp->redir_flag == 0)
 		{
-			check_env(temp, process);
-			temp_str = ft_strjoin(*cmd, temp->cmd);
-			free(*cmd);
-			*cmd = ft_strjoin(temp_str, "\n");
-			free(temp_str);
-		}
-		else if (temp->redir_flag == 0 && temp->quote_flag == 1)
-		{
-			temp_str = ft_strjoin(*cmd, temp->cmd);
-			free(*cmd);
-			*cmd = ft_strjoin(temp_str, "\n");
-			free(temp_str);
+			concat_cmd(temp, process, cmd, &temp_str);
 		}
 		else if (temp->redir_flag == 1)
 		{
@@ -321,7 +332,7 @@ t_process	*get_process(t_head *head, t_list *line, char **path)
 	cmd = ft_strdup("");
 	temp = line->token;
 	init_fd(process);
-	fill_elem(temp, process, &cmd, 0);
+	fill_elem(temp, process, &cmd);
 	process->cmd = cmd;
 	set_process(head, process, path);
 	return (process);

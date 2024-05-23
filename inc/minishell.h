@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/16 13:39:00 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/23 18:41:22 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ void		make_infile(char *limiter, char *file_name);
 void		make_temp(char *limiter, char *file_name);
 
 	//list_to_processes_utils
-void		fill_elem(t_token *temp, t_process *process, char **cmd, int flag);
+void		fill_elem(t_token *temp, t_process *process, char **cmd);
 void		set_fd(t_process *process, char *file_name, int redir_flag);
 int			get_redir_flag(char	*token);
 void		set_process(t_head *head, t_process *process, char **path);
