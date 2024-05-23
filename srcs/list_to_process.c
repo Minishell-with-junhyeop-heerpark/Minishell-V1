@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_to_process.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 02:15:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/23 16:08:12 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/23 17:29:38 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,6 +216,7 @@ void	fill_elem(t_token *temp, t_process *process, char **cmd, int flag)
 	is_filename = 0;
 	while (temp)
 	{
+		printf("temp->cmd: %s\n", temp->cmd);
 		if (is_filename == 1)
 		{
 			set_fd(process, temp->cmd, flag);
@@ -323,7 +324,6 @@ t_process	*get_process(t_head *head, t_list *line, char **path)
 	init_fd(process);
 	fill_elem(temp, process, &cmd, 0);
 	process->cmd = cmd;
-	// printf("!!!!!!!!!!cmd------------: %s\n\n", cmd);
 	set_process(head, process, path);
 	return (process);
 }
