@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 02:15:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/23 17:29:38 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/23 17:32:11 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,7 +216,6 @@ void	fill_elem(t_token *temp, t_process *process, char **cmd, int flag)
 	is_filename = 0;
 	while (temp)
 	{
-		printf("temp->cmd: %s\n", temp->cmd);
 		if (is_filename == 1)
 		{
 			set_fd(process, temp->cmd, flag);
