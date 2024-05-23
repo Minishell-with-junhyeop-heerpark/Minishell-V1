@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   env_control.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 22:07:00 by heerpark          #+#    #+#             */
-/*   Updated: 2024/03/29 11:50:43 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/23 15:13:09 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+
 
 void	set_env(t_list **head, char **envp)
 {
@@ -30,6 +32,7 @@ void	set_env(t_list **head, char **envp)
 				key = ft_substr(envp[n], 0, i);
 				value = ft_substr(envp[n], i + 1, 2147483647);
 				lstadd_back(head, lst_new(key, value));
+				break ;
 			}
 			i++;
 		}

@@ -44,6 +44,11 @@ cat << end | cat << quit
 이런식으로 입력할 때 파이프로 넘어온 내용보다 자식프레스의 heredoc의 내용이 우선시되어 출력됨.
 확인해보자.
 
+<0515 발견된 에러들>
+1. builtin exit status 세팅
+2. echo "a           a" 케이스. 해결법 -> char **cmd를 echo\na               a\n 이런식으로 개행을 cmd구분자로 두고 split('\n')
+3. env list랑 parsing list 분리.
+
 
 
 # 루틴

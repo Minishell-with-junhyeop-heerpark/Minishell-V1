@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/11 21:58:56 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/16 13:39:00 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,21 @@ typedef struct s_token
 	struct s_token	*prev;
 }	t_token;
 
+typedef struct s_env
+{
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+	struct s_env	*prev;
+}	t_env;
+
 typedef struct s_list
 {
 	t_token			*token;
 	char			*key;
 	char			*value;
 	struct s_list	*next;
-	struct s_list	*prev;
+	struct s_list	*prev;	
 }	t_list;
 
 typedef struct s_process
@@ -144,6 +152,7 @@ void		parent(int **pipes, int i);
 void		close_all_pipes(int **pipes, int n);
 
 	//get_fd
+int			check_redir_heredoc(t_process *process);
 int			get_infile(char	*file_name);
 int			get_heredoc(t_process *process, char *limiter);
 int			get_outfile(char *file_name);
@@ -164,6 +173,7 @@ void		set_process(t_head *head, t_process *process, char **path);
 t_process	*get_process(t_head *head, t_list *line, char **path);
 
 	//processes_exe
+void		run_cmd(t_head *head, char **envp, int i);
 void		get_processes(t_head *head, char **envp);
 void		set_inout(t_process *process, int **pipes, int i, int close_sig);
 void		start_process(t_head *head, char **envp);
@@ -214,6 +224,10 @@ void	exit_signal();
 
 // ft_exit.c
 int	ft_exit(char **exec_cmd);
+
+// ft_export.c
+void	ft_export(t_head *head, char **exec_cmd);
+
 
 typedef struct s_split_var {
 	t_token	*lst;

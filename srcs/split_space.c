@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 22:41:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/11 17:46:00 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/15 18:44:51 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,8 +117,7 @@ int	s_dquote_check(char c, t_split_var *flag)
 
 int	set_len(char *str, int i, char q)
 {
-	i++;
-	while (str[i])
+	i++;	while (str[i])
 	{
 		if (str[i] == q)
 			return (i);
@@ -165,12 +164,12 @@ void	split_space_ext(t_split_var *v, char *cmd)
 	if (cmd[v->i] == '\0')
 		v->flag = 1;
 	cmd[v->i] = '\0';
-	if (v->i > v->start && v->backup)
+	if (v->i > v->start && v->backup)	// backup이 있었다면 둘이합치기
 		v->backup = ft_strjoin(v->backup, &cmd[v->start]);
 	if (!v->backup)
 		add_token(&v->lst, &cmd[v->start]);
 	else
-		ft_token_add(&v->lst, token_new(cmd, 0, v->quote));
+		ft_token_add(&v->lst, token_new(v->backup, 0, v->quote));
 	v->backup = NULL;
 	v->i++;
 	v->start = v->i;
@@ -202,5 +201,13 @@ t_token	*split_space(char *cmd, char space)
 		}
 		split_space_ext(&v, cmd);
 	}
+
+	t_token *tmp = v.lst;
+	while (tmp)
+	{
+		printf(".... %s %d\n", tmp->cmd, tmp->redir_flag);
+		tmp = tmp->next;
+	}
+	printf(".... |\n");
 	return (v.lst);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_to_process.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 02:15:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/03 03:33:49 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/23 16:08:12 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,14 +226,14 @@ void	fill_elem(t_token *temp, t_process *process, char **cmd, int flag)
 			check_env(temp, process);
 			temp_str = ft_strjoin(*cmd, temp->cmd);
 			free(*cmd);
-			*cmd = ft_strjoin(temp_str, " ");
+			*cmd = ft_strjoin(temp_str, "\n");
 			free(temp_str);
 		}
 		else if (temp->redir_flag == 0 && temp->quote_flag == 1)
 		{
 			temp_str = ft_strjoin(*cmd, temp->cmd);
 			free(*cmd);
-			*cmd = ft_strjoin(temp_str, " ");
+			*cmd = ft_strjoin(temp_str, "\n");
 			free(temp_str);
 		}
 		else if (temp->redir_flag == 1)
@@ -253,11 +253,18 @@ void	set_process(t_head *head, t_process *process, char **path)
 	int		i;
 
 	i = 0;
-	exec_cmd = ft_split(process->cmd, ' ');
-	if (exec_cmd[0] == NULL)
+	exec_cmd = ft_split(process->cmd, '\n');
+	if (exec_cmd[0] == NULL && !check_redir_heredoc(process)) // ""이런 케이스는 여기에 걸림.
 	{
+		head->get_error = 1;
+		ft_printf("no cmd\n");
+		return ;
+	}
+	else if (exec_cmd[0] == NULL && check_redir_heredoc(process))
+	{
+		head->get_error = 1;
 		unlink(process->heredoc_filename);
-		perror_exit("no cmd");
+		return ;
 	}
 	process->exec_cmd = exec_cmd;
 	// printf("%s\n%s\n", process->exec_cmd[0], process->exec_cmd[1]);
@@ -297,9 +304,9 @@ void	set_process(t_head *head, t_process *process, char **path)
 	{
 		ft_printf("bash: %s: command not found\n", exec_cmd[0]);
 		head->get_error = 1;
+		if (process->heredoc_fd != -42)
+			unlink(process->heredoc_filename);
 	}
-	else
-		head->get_error = 0;
 	process->exec_path = exec_path;
 }
 
@@ -316,7 +323,7 @@ t_process	*get_process(t_head *head, t_list *line, char **path)
 	init_fd(process);
 	fill_elem(temp, process, &cmd, 0);
 	process->cmd = cmd;
+	// printf("!!!!!!!!!!cmd------------: %s\n\n", cmd);
 	set_process(head, process, path);
-	printf("set_process end\n");
 	return (process);
 }

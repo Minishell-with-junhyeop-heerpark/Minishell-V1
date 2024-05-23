@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 13:36:54 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/04/28 16:26:11 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/15 18:50:53 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,10 @@ void	ft_echo(char **exec_cmd)
 	{
 		ft_printf("%s", exec_cmd[i]);
 		i++;
+		
 		if (!exec_cmd[i])
 			break ;
+		// printf("\n\necho : %s\n\n", exec_cmd[i]);
 		ft_printf(" ");
 	}
 	if (!flag)

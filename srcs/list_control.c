@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_control.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:40:07 by heerpark          #+#    #+#             */
-/*   Updated: 2024/04/29 01:59:09 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/18 19:54:21 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_list	*lst_new(char *key, char *value)
 	new_node->key = key;
 	new_node->value = value;
 	new_node->next = NULL;
+	new_node->prev = NULL;
 	return (new_node);
 }
 
@@ -29,9 +30,9 @@ void	lstadd_back(t_list **lst, t_list *new)
 {
 	t_list	*current;
 
+	if (!new)
+		error_msg(1);
 	if (!lst)
-		return ;
-	if (!(*lst))
 	{
 		*lst = new;
 		return ;
@@ -42,6 +43,7 @@ void	lstadd_back(t_list **lst, t_list *new)
 		current = current->next;
 	}
 	current->next = new;
+	new->prev = current;
 }
 
 char	*remove_node(t_list **lst, char *key)
