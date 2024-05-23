@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:11:25 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/15 22:17:05 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/23 15:34:21 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,8 @@ void	start_processes(t_head *head, char **envp, int **pipes, int n)
 		i++;
 	}
 }
+
+
 
 void	exe(t_head *head, char **envp)
 {
