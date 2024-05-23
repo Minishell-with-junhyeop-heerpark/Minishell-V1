@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 16:08:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/16 13:57:07 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/23 22:48:33 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,11 @@ char	*my_stradd(char *dest, char *src)
 	return (sstr);
 }
 
-void	make_infile(char *limiter, char *file_name)
+void	get_heredoc_line(char *limiter, int temp_fd)
 {
-	int		temp_fd;
 	char	*temp;
 	char	*real_temp;
 
-	temp_fd = open(file_name, O_RDWR | O_CREAT | O_TRUNC, 0644);
-	if (temp_fd == -1)
-		perror_exit("make_infile open error");
-	set_signal_heredoc();
 	real_temp = ft_strdup("");
 	while (1)
 	{
@@ -69,17 +64,28 @@ void	make_infile(char *limiter, char *file_name)
 			ft_printf("\033[2C");
 			break ;
 		}
-		if (ft_strncmp(temp, limiter, ft_strlen(limiter)) == 0)
+		if (ft_strncmp(temp, limiter, ft_strlen(limiter) + 1) == 0)
+		{
+			free(temp);
 			break ;
-		real_temp = my_stradd(real_temp, temp);	// ㅇㅕ기서 temp, realtemp 둘다 free시켜서 누수도 잡아놓음
-		// printf("\n\nrealtemp: %s\n", real_temp);
+		}
+		real_temp = my_stradd(real_temp, temp);
 	}
-	// printf("%s", real_temp);
-	// printf("%s", real_temp);
+	write(temp_fd, real_temp, ft_strlen(real_temp) + 1);
 	free(real_temp);
+}
+
+void	make_infile(char *limiter, char *file_name)
+{
+	int		temp_fd;
+
+	temp_fd = open(file_name, O_RDWR | O_CREAT | O_TRUNC, 0644);
+	if (temp_fd == -1)
+		perror_exit("make_infile open error");
+	set_signal_heredoc();
+	get_heredoc_line(limiter, temp_fd);
 	set_signal();
 	close(temp_fd);
-	// free(cmp_limiter);
 	exit(0);
 }
 
