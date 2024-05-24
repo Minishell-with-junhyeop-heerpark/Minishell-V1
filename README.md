@@ -43,6 +43,7 @@ if (exec_cmd[0] == NULL)
 cat << end | cat << quit
 이런식으로 입력할 때 파이프로 넘어온 내용보다 자식프레스의 heredoc의 내용이 우선시되어 출력됨.
 확인해보자.
+heredoc 경로를 temp 로 할지 현재 폴더로 할지 정하기.
 
 <0515 발견된 에러들>
 1. builtin exit status 세팅

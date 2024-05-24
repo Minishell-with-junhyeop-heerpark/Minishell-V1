@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:11:25 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/23 15:34:21 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/24 09:53:58 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,7 +203,6 @@ void	exe(t_head *head, char **envp)
 		start_processes(head, envp, pipes, head->size);
 		wait_process(head->size);
 	}
-	kill_heredoc(head, envp);
 	set_signal();
 }
 //have to free malloced variable

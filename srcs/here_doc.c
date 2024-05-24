@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 16:08:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/23 22:48:33 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/24 09:50:12 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,29 +151,16 @@ void	set_rm_cmd(t_head *head, char *filename)
 }
 
 //delete the heredoc temporay file and free the var heredoc_name
-void	kill_heredoc(t_head *head, char **envp)
+void	kill_heredoc(t_head *head)
 {
 	int		i;
-	pid_t	pid;
 
 	i = 0;
 	while (head->processes[i])
 	{
 		if (head->processes[i]->heredoc_fd > 0)
 		{
-			set_rm_path(head, envp);
-			set_rm_cmd(head, head->processes[i]->heredoc_filename);
-			pid = fork();
-			if (pid == -1)
-				perror_exit("kill_heredoc fork error");
-			else if (pid == 0)
-			{
-				if (execve(head->exec_rm_path, head->exec_rm_cmd, envp) == -1)
-					perror_exit("execve error");
-			}
-			else
-				wait_process(1);
-			break ;
+			unlink(head->processes[i]->heredoc_filename);
 		}
 		i++;
 	}

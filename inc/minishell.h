@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/23 23:01:11 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/24 09:50:20 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,11 @@ void		parse(char *str, t_head *head);
 	//exe_parsing.c
 char		*get_envpath(char **envp);
 
+	//exe_utils.c
+void		perror_exit(char *msg);
+void		free_splited(char **splited);
+int			**make_pipe(int child_num);
+void		free_pipe(int **pipe, int child_num);
 
 	//pipe_control
 void		wait_process(int child_num);
@@ -152,7 +157,7 @@ int			get_append(char *file_name);
 void		init_fd(t_process *process);
 
 	//here_doc
-void		kill_heredoc(t_head *head, char **envp);
+void		kill_heredoc(t_head *head);
 char		*get_temp_name(void);
 void		make_infile(char *limiter, char *file_name);
 void		make_temp(char *limiter, char *file_name);

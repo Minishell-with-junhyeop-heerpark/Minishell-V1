@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 02:15:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/23 23:05:36 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/24 09:41:30 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,18 +252,10 @@ void	fill_elem(t_token *temp, t_process *process, char **cmd)
 
 int	no_cmd(t_head *head, t_process *process)
 {
-	if (process->exec_cmd[0] == NULL && !check_redir_heredoc(process)) // ""이런 케이스는 여기에 걸림.
+	if (process->exec_cmd[0] == NULL) // ""이런 케이스는 여기에 걸림.
 	{
 		head->get_error = 1;
 		ft_printf("bash: : command not found\n");
-		process->exec_path = NULL;
-		return (1);
-	}
-	else if (process->exec_cmd[0] == NULL && check_redir_heredoc(process))
-	{
-		head->get_error = 1;
-		ft_printf("bash: : command not found\n");
-		unlink(process->heredoc_filename);
 		process->exec_path = NULL;
 		return (1);
 	}
