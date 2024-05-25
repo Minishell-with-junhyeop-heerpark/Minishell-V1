@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   my_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 17:34:35 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/03/31 17:53:15 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/25 19:53:22 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,4 @@ void	my_strjoin(char **s1, char *s2)
 	free(tmp);
 	free(s2);
 	*s1 = str;
-	ft_printf("strjoin : %s\n\n", tmp);
 }

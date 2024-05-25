@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/25 16:33:06 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/25 21:49:46 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,12 @@ typedef struct s_process
 
 typedef struct s_data //heredoc 파일 경로 여기로 옮기기.
 {
-	int				original_stdin;
-	int				original_stdout;
-	char			**envp;
-	char			*home;
-	t_list			*env;
+	int		original_stdin;
+	int		original_stdout;
+	// char	**envp;
+	int		**pipes;
+	char	*home;
+	t_list	*env;
 }	t_data;
 
 typedef struct s_head {
@@ -225,6 +226,7 @@ void		print_error(char *cmd, char *input, char *msg, int exit_status);
 void		print_bash_error(char *input, char *msg, int exit_status);
 
 	//free.c
+void		clear_processes(t_head *head);
 
 typedef struct s_split_var {
 	t_token	*lst;

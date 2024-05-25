@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 02:15:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/25 17:13:14 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/25 22:25:23 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ char	*apply_env(char *cmd, t_list *env, int *ind)
 		error_msg(1);
 	changed = replace_cmd(cmd, key, value, ind);
 	*ind = *ind + ft_strlen(value);
-	printf("ind : %d\n", *ind);
+	// printf("ind : %d\n", *ind);
 	free(key);
 	free(value);
 	free(cmd);
@@ -296,6 +296,7 @@ void	set_exec(t_head *head, t_process *process, char **path, int i)
 	}
 	if (i != -1)
 	{
+		exec_path = NULL;
 		print_bash_error(process->exec_cmd[0], "command not found", 127);
 		head->get_error = 1;
 		if (process->heredoc_fd != -42)
@@ -326,6 +327,14 @@ void	set_process(t_head *head, t_process *process, char **path)
 	}
 }
 
+void	init_process(char *heredoc, char *cmd, char *exec_path, char **exec_cmd)
+{
+	heredoc = NULL;
+	cmd = NULL;
+	exec_path = NULL;
+	exec_cmd = NULL;
+}
+
 t_process	*get_process(t_head *head, t_list *line, char **path)
 {
 	t_process	*process;
@@ -333,6 +342,8 @@ t_process	*get_process(t_head *head, t_list *line, char **path)
 	char		*cmd;
 
 	process = (t_process *)malloc(sizeof(t_process));
+	init_process(process->heredoc_filename, process->cmd, \
+	process->exec_path, process->exec_cmd);
 	process->env = head->data->env;
 	cmd = ft_strdup("");
 	temp = line->token;

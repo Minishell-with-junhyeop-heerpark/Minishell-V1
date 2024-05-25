@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:11:25 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/25 17:41:57 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/25 21:46:55 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,16 +166,13 @@ void	start_processes(t_head *head, char **envp, int **pipes, int n)
 
 void	exe(t_head *head, char **envp)
 {
-	int			**pipes;
-
-	printf("head size: %d\n", head->size);
+	// printf("head size: %d\n", head->size);
 	head->get_error = 0;
 	if (head->size == 1)
 	{
 		get_processes(head, envp);
 		if (head->get_error)
 		{
-			// kill_heredoc(head, envp);
 			set_signal();
 			return ;
 		}
@@ -185,16 +182,14 @@ void	exe(t_head *head, char **envp)
 	}
 	else
 	{
-		pipes = make_pipe(head->size - 1);
-		// close_all_pipes(pipes, head->size - 1);
+		head->data->pipes = make_pipe(head->size - 1);
 		get_processes(head, envp);
 		if (head->get_error)
 		{
-			// kill_heredoc(head, envp);
 			set_signal();
 			return ;
 		}
-		start_processes(head, envp, pipes, head->size);
+		start_processes(head, envp, head->data->pipes, head->size);
 		wait_process(head->size);
 	}
 	set_signal();
