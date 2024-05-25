@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 21:34:06 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/04/28 15:25:18 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/23 23:05:11 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ft_exit(char **exec_cmd)
 	int	num;
 	if (exec_cmd[1] == NULL)	// If exit no arguments
 		exit(0);
-		
+
 	// if exit argument is exist
 	if (exec_cmd[2] != NULL)	// If exit arguments more than one 
 	{

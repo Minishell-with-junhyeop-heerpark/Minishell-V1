@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env_control.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 22:07:00 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/23 15:13:09 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/23 23:04:30 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
 
 void	set_env(t_list **head, char **envp)
 {

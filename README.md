@@ -17,7 +17,7 @@ echo ehco a | ./minishell 에서 파이프 이후 프로세스 실행되는거 �
 
 <temi>
 자식프로세스에서 ctrl-c 받는거 처리할라면 temi 켜놔야함.
-heredoc수정할때도 추가하면 좋을듯 
+heredoc수정할때도 추가하면 좋을듯
 
 <pipe, fd>
 프로세스 종료 후에 모든 파이프, 모든 fd 닫아주기. !!!!!
@@ -43,12 +43,12 @@ if (exec_cmd[0] == NULL)
 cat << end | cat << quit
 이런식으로 입력할 때 파이프로 넘어온 내용보다 자식프레스의 heredoc의 내용이 우선시되어 출력됨.
 확인해보자.
+heredoc 경로를 temp 로 할지 현재 폴더로 할지 정하기.
 
 <0515 발견된 에러들>
 1. builtin exit status 세팅
 2. echo "a           a" 케이스. 해결법 -> char **cmd를 echo\na               a\n 이런식으로 개행을 cmd구분자로 두고 split('\n')
 3. env list랑 parsing list 분리.
-
 
 
 # 루틴

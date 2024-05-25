@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_to_process.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 02:15:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/23 16:08:12 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/24 09:41:30 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,6 @@ void	set_fd(t_process *process, char *file_name, int redir_flag)
 	else
 		perror_exit("set_fd");
 }
-
-///////////////////////////////////////////////////////////
-/* junhyeop */
-
-/* 파싱할때 $도 분할해서 파싱하기로 바꾸기 */
 
 char	*getkey(char *str)
 {
@@ -121,13 +116,13 @@ char	*replace_cmd(char *cmd, char *key, char *value, int *ind)
 
 	while (i < *ind)
 		new_cmd[j++] = cmd[i++];
-	
+
 	replace_value(new_cmd, &j, value);
 	i += ft_strlen(key) + 1;
 
 	while (cmd[i])
 		new_cmd[j++] = cmd[i++];
-		
+
 	new_cmd[j] = 0;
 	return (new_cmd);
 }
@@ -161,7 +156,7 @@ char	*apply_exit_status(char *cmd, int *ind)
 	int		i;
 	int		j;
 	int		k;
-	
+
 	i = 0;
 	j = 0;
 	k = 0;
@@ -207,12 +202,33 @@ void	check_env(t_token *token, t_process *process)
 			i++;
 	}
 }
-// "echo $HOME BB"
-void	fill_elem(t_token *temp, t_process *process, char **cmd, int flag)
+
+void	concat_cmd(t_token *temp, t_process *process, char **cmd, char **str)
+{
+	if (temp->quote_flag == 0)
+	{
+		check_env(temp, process);
+		*str = ft_strjoin(*cmd, temp->cmd);
+		free(*cmd);
+		*cmd = ft_strjoin(*str, "\n");
+		free(*str);
+	}
+	else if (temp->quote_flag == 1)
+	{
+		*str = ft_strjoin(*cmd, temp->cmd);
+		free(*cmd);
+		*cmd = ft_strjoin(*str, "\n");
+		free(*str);	
+	}
+}
+
+void	fill_elem(t_token *temp, t_process *process, char **cmd)
 {
 	char	*temp_str;
 	int		is_filename;
+	int		flag;
 
+	flag = 0;
 	is_filename = 0;
 	while (temp)
 	{
@@ -221,20 +237,9 @@ void	fill_elem(t_token *temp, t_process *process, char **cmd, int flag)
 			set_fd(process, temp->cmd, flag);
 			is_filename = 0;
 		}
-		else if (temp->redir_flag == 0 && temp->quote_flag == 0)
+		else if (temp->redir_flag == 0)
 		{
-			check_env(temp, process);
-			temp_str = ft_strjoin(*cmd, temp->cmd);
-			free(*cmd);
-			*cmd = ft_strjoin(temp_str, "\n");
-			free(temp_str);
-		}
-		else if (temp->redir_flag == 0 && temp->quote_flag == 1)
-		{
-			temp_str = ft_strjoin(*cmd, temp->cmd);
-			free(*cmd);
-			*cmd = ft_strjoin(temp_str, "\n");
-			free(temp_str);
+			concat_cmd(temp, process, cmd, &temp_str);
 		}
 		else if (temp->redir_flag == 1)
 		{
@@ -245,51 +250,40 @@ void	fill_elem(t_token *temp, t_process *process, char **cmd, int flag)
 	}
 }
 
-void	set_process(t_head *head, t_process *process, char **path)
+int	no_cmd(t_head *head, t_process *process)
 {
-	char	**exec_cmd;
+	if (process->exec_cmd[0] == NULL) // ""이런 케이스는 여기에 걸림.
+	{
+		head->get_error = 1;
+		ft_printf("bash: : command not found\n");
+		process->exec_path = NULL;
+		return (1);
+	}
+	return (0);
+}
+
+void	set_builtin(t_head *head, t_process *process, char **exec_cmd)
+{
+	if (exec_cmd[1] && ft_strncmp(exec_cmd[1], "~", 1) == 0)
+	{
+		if (ft_strncmp(exec_cmd[1], "~/", 2) == 0)
+			add_homepath(head, &exec_cmd[1], 0);
+		else
+			add_homepath(head, &exec_cmd[1], 1);
+	}
+	process->exec_path = NULL;
+	return ;
+}
+
+void	set_exec(t_head *head, t_process *process, char **path, int i)
+{
 	char	*exec_path;
 	char	*test_path;
-	int		i;
 
-	i = 0;
-	exec_cmd = ft_split(process->cmd, '\n');
-	if (exec_cmd[0] == NULL && !check_redir_heredoc(process)) // ""이런 케이스는 여기에 걸림.
-	{
-		head->get_error = 1;
-		ft_printf("no cmd\n");
-		return ;
-	}
-	else if (exec_cmd[0] == NULL && check_redir_heredoc(process))
-	{
-		head->get_error = 1;
-		unlink(process->heredoc_filename);
-		return ;
-	}
-	process->exec_cmd = exec_cmd;
-	// printf("%s\n%s\n", process->exec_cmd[0], process->exec_cmd[1]);
-	if (is_builtin(exec_cmd))
-	{
-		if (exec_cmd[1] && ft_strncmp(exec_cmd[1], "~", 1) == 0)
-		{
-			if (ft_strncmp(exec_cmd[1], "~/", 2) == 0)
-				add_homepath(head, &exec_cmd[1], 0);
-			else
-				add_homepath(head, &exec_cmd[1], 1);
-		}
-		return ;
-	}
-	if (is_filepath(exec_cmd))
-	{
-		printf("im in file_path\n");
-		if (ft_strncmp(exec_cmd[0], "~", 1) == 0)
-			add_homepath(head, &exec_cmd[0], 0);
-		return ;
-	}
 	while (path[i])
 	{
 		test_path = ft_strjoin(path[i], "/");
-		exec_path = ft_strjoin(test_path, exec_cmd[0]);
+		exec_path = ft_strjoin(test_path, process->exec_cmd[0]);
 		if (access(exec_path, X_OK) == 0)
 		{
 			i = -1;
@@ -302,12 +296,34 @@ void	set_process(t_head *head, t_process *process, char **path)
 	}
 	if (i != -1)
 	{
-		ft_printf("bash: %s: command not found\n", exec_cmd[0]);
+		ft_printf("bash: %s: command not found\n", process->exec_cmd[0]);
 		head->get_error = 1;
 		if (process->heredoc_fd != -42)
 			unlink(process->heredoc_filename);
 	}
 	process->exec_path = exec_path;
+}
+
+void	set_process(t_head *head, t_process *process, char **path)
+{
+	char	**exec_cmd;
+
+	exec_cmd = ft_split(process->cmd, '\n');
+	process->exec_cmd = exec_cmd;
+	if (no_cmd(head, process)) // 여기서 종료될 때 exec_cmd free 생각하자.
+		return ;
+	if (is_builtin(exec_cmd))
+		set_builtin(head, process, exec_cmd);
+	else if (is_filepath(exec_cmd))
+	{
+		if (ft_strncmp(exec_cmd[0], "~", 1) == 0)
+			add_homepath(head, &exec_cmd[0], 0);
+		process->exec_path = NULL;
+	}
+	else
+	{
+		set_exec(head, process, path, 0);
+	}
 }
 
 t_process	*get_process(t_head *head, t_list *line, char **path)
@@ -321,9 +337,8 @@ t_process	*get_process(t_head *head, t_list *line, char **path)
 	cmd = ft_strdup("");
 	temp = line->token;
 	init_fd(process);
-	fill_elem(temp, process, &cmd, 0);
+	fill_elem(temp, process, &cmd);
 	process->cmd = cmd;
-	// printf("!!!!!!!!!!cmd------------: %s\n\n", cmd);
 	set_process(head, process, path);
 	return (process);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/16 13:39:00 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/24 09:50:20 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,17 +131,14 @@ void		parse(char *str, t_head *head);
 
 //exe func
 
-	//exe_parsing.c, exe_parsing2.c)
-char		**get_exec_paths(char **envp, char **cmds, int path_size);
+	//exe_parsing.c
 char		*get_envpath(char **envp);
-char		**get_cmd_head(char **argv, int start_idx, int end_idx);
-char		***make_cmds(char **argv, int start_idx, int end_idx);
-void		free_cmds(int cmds_size, char ***cmds);
 
+	//exe_utils.c
+void		perror_exit(char *msg);
 void		free_splited(char **splited);
 int			**make_pipe(int child_num);
 void		free_pipe(int **pipe, int child_num);
-void		perror_exit(char *msg);
 
 	//pipe_control
 void		wait_process(int child_num);
@@ -160,13 +157,13 @@ int			get_append(char *file_name);
 void		init_fd(t_process *process);
 
 	//here_doc
-void		kill_heredoc(t_head *head, char **envp);
+void		kill_heredoc(t_head *head);
 char		*get_temp_name(void);
 void		make_infile(char *limiter, char *file_name);
 void		make_temp(char *limiter, char *file_name);
 
 	//list_to_processes_utils
-void		fill_elem(t_token *temp, t_process *process, char **cmd, int flag);
+void		fill_elem(t_token *temp, t_process *process, char **cmd);
 void		set_fd(t_process *process, char *file_name, int redir_flag);
 int			get_redir_flag(char	*token);
 void		set_process(t_head *head, t_process *process, char **path);

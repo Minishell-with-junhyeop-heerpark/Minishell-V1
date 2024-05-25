@@ -13,7 +13,6 @@ SRC	= $(SRC_DIR)/cmd_list.c \
 		$(SRC_DIR)/here_doc.c \
 		$(SRC_DIR)/exe_parsing.c \
 		$(SRC_DIR)/pipe_control.c \
-		$(SRC_DIR)/exe_parsing2.c \
 		$(SRC_DIR)/exe_utils.c \
 		$(SRC_DIR)/processes_exe.c \
 		$(SRC_DIR)/list_to_process.c \
