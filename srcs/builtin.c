@@ -6,13 +6,15 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 15:11:29 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/23 23:03:52 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/25 16:48:50 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // echo pwd cd export unset env exit
+
+// void	err
 
 int	is_exit(char **exec_cmd)
 {

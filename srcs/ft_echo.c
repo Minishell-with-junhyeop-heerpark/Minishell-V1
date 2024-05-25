@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 13:36:54 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/23 23:05:07 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/25 16:10:39 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,5 @@ void	ft_echo(char **exec_cmd)
 	}
 	if (!flag)
 		ft_printf("\n");
+	g_exit_status = 0;
 }

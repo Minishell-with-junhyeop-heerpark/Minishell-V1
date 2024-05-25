@@ -84,14 +84,11 @@ typedef struct s_process
 	char	*cmd;
 	char	*exec_path;
 	char	**exec_cmd;
-	char	*builtin_cmds;
 	t_list	*env;
 }	t_process;
 
 typedef struct s_data //heredoc 파일 경로 여기로 옮기기.
 {
-	char			**exec_rm_cmd;
-	char			*exec_rm_path;
 	int				original_stdin;
 	int				original_stdout;
 	char			**envp;
@@ -102,8 +99,6 @@ typedef struct s_data //heredoc 파일 경로 여기로 옮기기.
 typedef struct s_head {
 	int				size;
 	int				get_error;
-	char			**exec_rm_cmd;
-	char			*exec_rm_path;
 	struct s_list	*top;
 	t_data			*data;
 	t_process		**processes;
@@ -225,6 +220,11 @@ int	ft_exit(char **exec_cmd);
 // ft_export.c
 void	ft_export(t_head *head, char **exec_cmd);
 
+	// error.c
+void		print_error(char *cmd, char *input, char *msg, int exit_status);
+void		print_bash_error(char *input, char *msg, int exit_status);
+
+	//free.c
 
 typedef struct s_split_var {
 	t_token	*lst;

@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 02:15:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/24 09:41:30 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/25 17:13:14 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,7 +255,7 @@ int	no_cmd(t_head *head, t_process *process)
 	if (process->exec_cmd[0] == NULL) // ""이런 케이스는 여기에 걸림.
 	{
 		head->get_error = 1;
-		ft_printf("bash: : command not found\n");
+		print_bash_error(process->exec_cmd[0], "command not found", 127);
 		process->exec_path = NULL;
 		return (1);
 	}
@@ -296,7 +296,7 @@ void	set_exec(t_head *head, t_process *process, char **path, int i)
 	}
 	if (i != -1)
 	{
-		ft_printf("bash: %s: command not found\n", process->exec_cmd[0]);
+		print_bash_error(process->exec_cmd[0], "command not found", 127);
 		head->get_error = 1;
 		if (process->heredoc_fd != -42)
 			unlink(process->heredoc_filename);
