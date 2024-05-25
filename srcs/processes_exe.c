@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:11:25 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/24 09:53:58 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/25 17:41:57 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,13 +170,7 @@ void	exe(t_head *head, char **envp)
 
 	printf("head size: %d\n", head->size);
 	head->get_error = 0;
-	if (head->size < 1)
-	{
-		// exit(EXIT_FAILURE);
-		// head size 0인 경우는 이미 준형이 파싱에서 걸러지는듯?
-		return ;
-	}
-	else if (head->size == 1)
+	if (head->size == 1)
 	{
 		get_processes(head, envp);
 		if (head->get_error)

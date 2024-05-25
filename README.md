@@ -46,7 +46,7 @@ cat << end | cat << quit
 heredoc 경로를 temp 로 할지 현재 폴더로 할지 정하기.
 
 <0515 발견된 에러들>
-1. builtin exit status 세팅
+1. builtin exit status 세팅 -O
 2. echo "a           a" 케이스. 해결법 -> char **cmd를 echo\na               a\n 이런식으로 개행을 cmd구분자로 두고 split('\n')
 3. env list랑 parsing list 분리.
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:05:39 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/23 22:49:20 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/25 16:13:10 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -366,5 +366,4 @@ void	ft_export(t_head *head, char **exec_cmd)
 	}
 	tmp = head->data->env->next;
 	ft_export_ext(head, tmp);
-		
 }
