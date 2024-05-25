@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:10:29 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/04/28 22:29:15 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/25 16:35:09 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,11 @@ void	add_cmd(t_head *head, char *line, int pipe_flag)
 	command = ft_strdup(&line[i]);
 	if (!command)
 		error_msg(1);
-	if (is_empty(command))
-	{
-		
-	}
-	ft_lst_add(head, cmd_list_new(command));
+	ft_lst_add(head, cmd_list_new(head, command));
 	free(command);
 }
 
-void	parse(char *line, t_head *head)
+int	parse(char *line, t_head *head)
 {
 	t_flag	flag;
 	int		start;
@@ -91,11 +87,14 @@ void	parse(char *line, t_head *head)
 			// printf("confirm %s\n", &line[start]);
 			add_cmd(head, &line[start], flag.pipe);
 			start = i + 1;
+			if (head->get_error)
+				return (0);
 			if (flag.pipe == 0)
 				break ;
 		}
 		i++;
 	}
+	return (1);
 }
 
 // int	error_check(char *str)

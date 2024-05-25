@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/25 19:39:50 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/25 16:33:06 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,19 +110,19 @@ void		error_msg(int type);
 void		add_cmd(t_head *head, char *line, int pipe_flag);
 void		add_token(t_token **lst, char *cmd);
 
-t_token		*make_token(char *command);
+t_token		*make_token(t_head *head, char *command);
 t_head		*init_head(char **envp);
 t_token		*token_new(char *command, int flag, int dquote_flag);
 
-t_list		*cmd_list_new(char *command);
+t_list		*cmd_list_new(t_head *head, char *command);
 void		ft_lst_add(t_head *head, t_list *new);
 void		ft_token_add(t_token **lst, t_token *new);
 
 char		**split_pipe(char const *s);
-t_token		*split_space(char *s, char space);	// pipe 단위로 나눈 것 -> 공백 단위로 나눔
+t_token		*split_space(t_head *head, char *s, char space);	// pipe 단위로 나눈 것 -> 공백 단위로 나눔
 
 void		free_list(t_head *head);
-void		parse(char *str, t_head *head);
+int	parse(char *str, t_head *head);
 
 //exe func
 

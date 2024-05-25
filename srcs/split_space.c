@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 22:41:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/15 18:44:51 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/25 16:09:24 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,8 @@ int	s_dquote_check(char c, t_split_var *flag)
 
 int	set_len(char *str, int i, char q)
 {
-	i++;	while (str[i])
+	i++;
+	while (str[i])
 	{
 		if (str[i] == q)
 			return (i);
@@ -126,7 +127,7 @@ int	set_len(char *str, int i, char q)
 	return (-1);
 }
 
-char	*make_cmd(char *cmd, t_split_var *v, char q)
+char	*make_cmd(t_head *head, char *cmd, t_split_var *v, char q)
 {
 	char	*p_cmd;
 	int		i;
@@ -136,7 +137,7 @@ char	*make_cmd(char *cmd, t_split_var *v, char q)
 	s = v->start;
 	i = set_len(cmd, v->i, q);
 	if (i == -1)
-		error_msg(2);
+		head->get_error = 1;
 	if (i - s <= 1)
 	{
 		v->i = i + 1;
@@ -175,7 +176,7 @@ void	split_space_ext(t_split_var *v, char *cmd)
 	v->start = v->i;
 }
 
-t_token	*split_space(char *cmd, char space)
+t_token	*split_space(t_head *head, char *cmd, char space)
 {
 	t_split_var	v;
 
@@ -192,22 +193,14 @@ t_token	*split_space(char *cmd, char space)
 			if (s_quote_check(cmd[v.i], &v))
 			{
 				if (!v.backup)
-					v.backup = make_cmd(cmd, &v, cmd[v.i]);
+					v.backup = make_cmd(head, cmd, &v, cmd[v.i]);
 				else
-					my_strjoin(&v.backup, make_cmd(cmd, &v, cmd[v.i]));
+					my_strjoin(&v.backup, make_cmd(head, cmd, &v, cmd[v.i]));
 			}
 			else
 				v.i++;
 		}
 		split_space_ext(&v, cmd);
 	}
-
-	t_token *tmp = v.lst;
-	while (tmp)
-	{
-		printf(".... %s %d\n", tmp->cmd, tmp->redir_flag);
-		tmp = tmp->next;
-	}
-	printf(".... |\n");
 	return (v.lst);
 }

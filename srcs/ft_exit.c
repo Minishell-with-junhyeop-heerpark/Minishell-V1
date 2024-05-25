@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 21:34:06 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/23 23:05:11 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/25 16:37:03 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,14 @@ int	ft_exit(char **exec_cmd)
 	if (exec_cmd[2] != NULL)	// If exit arguments more than one 
 	{
 		ft_putstr_fd("minishell: exit: too many arguments\n", STDERR);
+		g_exit_status = 1;
 		return (1);
 	}
 	else if (!check_disit(exec_cmd[1]))	// If exit argument is not disit
 	{
 		printf("minishell: exit: %s: numeric argument required\n", exec_cmd[1]);
-		return (255);
+		exit(255);
 	}
-
 	num = ft_atoi(exec_cmd[1]);
 	exit(num % 256);
 	return (-1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 20:00:39 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/04/28 22:28:47 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/25 16:14:10 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@ t_head	*init_head(char **envp)
 {
 	t_head	*head;
 
+	printf("Welcome to minishell!\n");
+	set_signal();
+	g_exit_status = 0;
 	head = (t_head *)malloc(sizeof(t_head));
 	head->data = (t_data *)malloc(sizeof(t_data));
 	if (!head)
@@ -60,7 +63,7 @@ t_head	*init_head(char **envp)
 // 	return (head);
 // }
 
-t_list	*cmd_list_new(char *command)
+t_list	*cmd_list_new(t_head *head, char *command)
 {
 	t_list	*newnode;
 
@@ -69,7 +72,7 @@ t_list	*cmd_list_new(char *command)
 		error_msg(1);
 	newnode->next = NULL;
 	newnode->prev = NULL;
-	newnode->token = make_token(command);
+	newnode->token = make_token(head, command);
 	return (newnode);
 }
 
@@ -88,13 +91,13 @@ t_token	*token_new(char *command, int flag, int quote_flag)
 	return (new);
 }
 
-t_token	*make_token(char *command)
+t_token	*make_token(t_head *head, char *command)
 {
 	// int		i;
 	t_token	*token;
 	
 	// i = 0;
-	token = split_space(command, ' ');
+	token = split_space(head, command, ' ');
 	return (token);
 }
 
