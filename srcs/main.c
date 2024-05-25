@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:10:35 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/24 09:54:19 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/25 16:27:57 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,7 @@ int	main(int argc, char **argv, char **envp)
 	t_head	*head;
 
 	void_argument(argc, argv);
-	set_signal();
-	g_exit_status = 0;
 	head = init_head(envp);
-	printf("Welcome to minishell!\n");
 	while (1)
 	{
 		str = readline("minishell$ ");
@@ -53,11 +50,17 @@ int	main(int argc, char **argv, char **envp)
 		else
 		{
 			add_history(str);
-			parse(str, head);
+			if (parse(str, head) == 0)
+			{
+				error_msg(2);
+				free_list(head);
+				free(str);
+				continue ;
+			}
 			exe(head, envp);
 			kill_heredoc(head);
 			free_list(head);
-			free(str); 
+			free(str);
 		}
 	}
 	return (0);

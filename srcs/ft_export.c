@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:05:39 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/23 22:49:20 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/25 16:47:17 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -342,6 +342,7 @@ void	ft_export_ext(t_head *head, t_list *env)
 		if (key == NULL)
 		{
 			key_error(cmd);
+			head->get_error = 1;
 			tmp = tmp->next;
 			continue ;
 		}
@@ -362,9 +363,11 @@ void	ft_export(t_head *head, char **exec_cmd)
 	if (head->top->token->next == NULL)
 	{
 		show_export(head);
+		g_exit_status = 0;
 		return ;
 	}
 	tmp = head->data->env->next;
 	ft_export_ext(head, tmp);
-		
+	if (head->get_error)
+		g_exit_status = 1;
 }
