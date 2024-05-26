@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_to_process.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 02:15:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/25 22:25:23 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/26 11:45:53 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,9 @@ char	*getkey(char *str)
 
 char	*env_find_value(char *key, t_list *envp)
 {
-	int	i;
+	// int	i;
 
-	i = 0;
+	// i = 0;
 	while (envp)
 	{
 		if (ft_strcmp(envp->key, key) == 0)
@@ -327,12 +327,12 @@ void	set_process(t_head *head, t_process *process, char **path)
 	}
 }
 
-void	init_process(char *heredoc, char *cmd, char *exec_path, char **exec_cmd)
+void	init_process(char **heredoc, char **cmd, char **exec_path, char ***exec_cmd)
 {
-	heredoc = NULL;
-	cmd = NULL;
-	exec_path = NULL;
-	exec_cmd = NULL;
+	*heredoc = NULL;
+	*cmd = NULL;
+	*exec_path = NULL;
+	*exec_cmd = NULL;
 }
 
 t_process	*get_process(t_head *head, t_list *line, char **path)
@@ -342,8 +342,8 @@ t_process	*get_process(t_head *head, t_list *line, char **path)
 	char		*cmd;
 
 	process = (t_process *)malloc(sizeof(t_process));
-	init_process(process->heredoc_filename, process->cmd, \
-	process->exec_path, process->exec_cmd);
+	init_process(&process->heredoc_filename, &process->cmd, \
+	&process->exec_path, &process->exec_cmd);
 	process->env = head->data->env;
 	cmd = ft_strdup("");
 	temp = line->token;

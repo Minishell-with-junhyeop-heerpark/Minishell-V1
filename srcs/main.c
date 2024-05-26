@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:10:35 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/25 22:29:36 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/26 13:04:58 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ int	main(int argc, char **argv, char **envp)
 				continue ;
 			}
 			exe(head, envp);
-			// clear_processes(head); //미완성 segmentation주의 ㅋㅋ
 			kill_heredoc(head);
+			clear_processes(head);
 			free_list(head);
 			free(str);
 		}

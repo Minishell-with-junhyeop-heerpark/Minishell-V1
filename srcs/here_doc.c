@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 16:08:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/25 15:37:14 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/26 13:04:31 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ char	*get_temp_name(void)
 
 char	*my_stradd(char *dest, char *src)
 {
-	int		i;
+	// int		i;
 	char	*str;
 	char	*sstr;
 
-	i = 0;
+	// i = 0;
 	str = ft_strjoin(dest, src);
 	free(dest);
 	free(src);
