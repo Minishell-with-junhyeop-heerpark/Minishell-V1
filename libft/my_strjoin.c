@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   my_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 17:34:35 by junhyeop          #+#    #+#             */
 /*   Updated: 2024/05/25 19:51:12 by junhyeop         ###   ########.fr       */

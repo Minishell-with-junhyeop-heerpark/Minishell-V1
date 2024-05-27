@@ -102,22 +102,32 @@ void	run_cmd(t_head *head, char **envp, int i)
 	if (is_builtin(head->processes[i]->exec_cmd))
 	{
 		run_builtin(head, head->processes[i]->exec_cmd);
+		exit(g_exit_status);
 	}
 	if (is_filepath(head->processes[i]->exec_cmd))
 	{
 		if (execve(head->processes[i]->exec_cmd[0], \
 		head->processes[i]->exec_cmd, envp) == -1)
+		{
 			perror_exit("file exe execve error");
+		}
 	}
 	if (execve(head->processes[i]->exec_path, \
 	head->processes[i]->exec_cmd, envp) == -1)
+	{
+		printf("exe %d!!!!!!\n", i);
+		printf("%s\n", head->processes[i]->exec_path);
+		printf("%s, %s\n", head->processes[i]->exec_cmd[0], head->processes[i]->exec_cmd[1]);
+		printf("%s\n",envp[0]);
 		perror_exit("execve error");
+	}
 }
 
 void	start_process(t_head *head, char **envp) 
 {
 	pid_t	pid;
 
+	printf("what's up nigger\n");
 	if (is_builtin(head->processes[0]->exec_cmd))
 	{
 		set_inout(head->processes[0], NULL, 0, 0);
@@ -174,7 +184,6 @@ void	exe(t_head *head, char **envp)
 		get_processes(head, envp);
 		if (head->get_error)
 		{
-			// kill_heredoc(head, envp);
 			set_signal();
 			return ;
 		}
@@ -184,16 +193,14 @@ void	exe(t_head *head, char **envp)
 	}
 	else
 	{
-		pipes = make_pipe(head->size - 1);
-		// close_all_pipes(pipes, head->size - 1);
+		head->data->pipes = make_pipe(head->size - 1);
 		get_processes(head, envp);
 		if (head->get_error)
 		{
-			// kill_heredoc(head, envp);
 			set_signal();
 			return ;
 		}
-		start_processes(head, envp, pipes, head->size);
+		start_processes(head, envp, head->data->pipes, head->size);
 		wait_process(head->size);
 	}
 	set_signal();
