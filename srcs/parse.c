@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:10:29 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/27 19:55:57 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/27 21:17:42 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	add_cmd(t_head *head, char *line, int pipe_flag)
 		i++;
 	command = ft_strdup(&line[i]);
 	if (!command)
-		error_msg(1);
+		error_msg(0);
 	if (check_white_space(command) && pipe_flag)
 	{
 		head->get_error = 2;

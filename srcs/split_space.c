@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 22:41:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/27 20:10:58 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/27 21:17:47 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	*make_cmd(t_head *head, char *cmd, t_split_var *v, char q)
 	ind = 0;
 	p_cmd = (char *)malloc(sizeof(char) * (i - s - 2) + 1);
 	if (!p_cmd)
-		error_msg(1);
+		error_msg(0);
 	while (s < i)
 	{
 		if (cmd[s] != q)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_to_process.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 02:15:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/27 19:30:03 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/27 21:17:34 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ char	*apply_env(char *cmd, t_list *env, int *ind)
 	value = env_find_value(key, env);
 	// printf("key : %s\nvalue: %s\n", key, value);
 	if (!value)
-		error_msg(1);
+		error_msg(0);
 	changed = replace_cmd(cmd, key, value, ind);
 	*ind = *ind + ft_strlen(value);
 	// printf("ind : %d\n", *ind);
