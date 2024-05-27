@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:10:35 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/27 19:35:46 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/27 19:49:53 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		str = readline("minishell$ ");
+		system("leaks --list minishell");
 		if (!str)
 			exit_signal();
 		else if (*str == '\0' || check_white_space(str))
