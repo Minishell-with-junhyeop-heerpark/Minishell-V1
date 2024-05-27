@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/27 20:21:57 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/27 21:28:38 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,14 @@ typedef struct s_head {
 	t_data			*data;
 	t_process		**processes;
 }	t_head;
+
+typedef struct s_value_var
+{
+	int	n;
+	int	i;
+	int	s;
+}	t_value_var;
+
 
 int	check_white_space(char *str);
 
@@ -239,6 +247,22 @@ int	ft_exit(char **exec_cmd);
 
 // ft_export.c
 void	ft_export(t_head *head, char **exec_cmd);
+void	export_update(t_head *head, t_list **lst, char *key, char *value);
+int	get_op(char *cmd);
+void	ft_export_ext(t_head *head, t_list *env);
+
+void	export_add_prev(t_list **lst, t_list *new, t_list **top);
+void	sorting(t_list *t_env, t_list **top);
+void	sort_list(t_list *env, t_list **top);
+void	show_export(t_head *head);
+char	*export_strjoin(char *s1, char *s2);
+
+void	free_show_list(t_list **top);
+void	key_error(char *key);
+int		key_validate(char *key);
+char	*export_getkey(char *cmd, int *op);
+char	*export_getvalue(char *cmd);
+
 
 // error.c
 void	print_error(char *cmd, char *input, char *msg, int exit_status);
@@ -248,11 +272,14 @@ void	print_bash_error(char *input, char *msg, int exit_status);
 void	clear_processes(t_head *head);
 
 
-// utils_2.c
+// utils2.c
 void	init_parse(t_parse *p);
 int		s_quote_check(char c, t_split_var *flag);
 int		s_dquote_check(char c, t_split_var *flag);
 int		set_len(char *str, int i, char q);
+
+// utils3.c
+void	set_home(t_head *head);
 
 // signal2.c
 void	temi_print_off(void);
@@ -264,6 +291,5 @@ void	exit_signal(void);
 void	sig_handler(int signo);
 void	set_signal(void);
 void	temi_print_on(void);
-
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 20:03:35 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/27 20:06:02 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/27 20:57:26 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,5 @@ void	exit_signal()
 	ft_printf("\033[1A");
 	ft_printf("\033[10C");
 	ft_printf(" exit\n");
-	exit(-1);
+	exit(255);
 }

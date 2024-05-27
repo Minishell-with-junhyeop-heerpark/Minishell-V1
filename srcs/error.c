@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 06:30:07 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/27 20:14:07 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/27 21:21:51 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	error_msg(int type)
 {
-	if (type == 1)
+	if (type == 0)
 		ft_putstr_fd("malloc error\n", 2);
 	if (type == 2)
 	{

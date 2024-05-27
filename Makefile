@@ -27,8 +27,11 @@ SRC	= $(SRC_DIR)/cmd_list.c \
 		$(SRC_DIR)/add_token.c \
 		$(SRC_DIR)/ft_export.c \
 		$(SRC_DIR)/free.c \
-		$(SRC_DIR)/utils_2.c \
-		$(SRC_DIR)/signal2.c 
+		$(SRC_DIR)/utils2.c \
+		$(SRC_DIR)/utils3.c \
+		$(SRC_DIR)/signal2.c \
+		$(SRC_DIR)/ft_export2.c \
+		$(SRC_DIR)/ft_export3.c
 
 LIBDIR = ./libft/
 LIBNAME = ft
