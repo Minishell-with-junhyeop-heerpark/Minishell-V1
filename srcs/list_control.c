@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:40:07 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/23 17:29:03 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/27 21:17:37 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	lstadd_back(t_list **lst, t_list *new)
 	t_list	*current;
 
 	if (!new)
-		error_msg(1);
+		error_msg(0);
 	if (!lst)
 	{
 		*lst = new;

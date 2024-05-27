@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/27 19:28:27 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/27 21:28:38 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 # define STDOUT 		1
 # define STDERR 		2
 
-int g_exit_status;
+int	g_exit_status;
 
 typedef struct s_flag
 {
@@ -45,6 +45,13 @@ typedef struct s_flag
 	int pipe;
 
 }	t_flag;
+
+typedef struct s_parse
+{
+	t_flag flag;
+	int		start;
+	int		i;
+}	t_parse;
 
 typedef struct s_token
 {
@@ -90,11 +97,20 @@ typedef struct s_data //heredoc 파일 경로 여기로 옮기기.
 {
 	int		original_stdin;
 	int		original_stdout;
-	// char	**envp;
 	int		**pipes;
 	char	*home;
 	t_list	*env;
 }	t_data;
+
+typedef struct s_split_var {
+	t_token	*lst;
+	char	*backup;
+	int		i;
+	int		flag;
+	int		start;
+	int		quote;
+	int		dquote;
+}	t_split_var;
 
 typedef struct s_head {
 	int				size;
@@ -103,6 +119,14 @@ typedef struct s_head {
 	t_data			*data;
 	t_process		**processes;
 }	t_head;
+
+typedef struct s_value_var
+{
+	int	n;
+	int	i;
+	int	s;
+}	t_value_var;
+
 
 int	check_white_space(char *str);
 
@@ -223,22 +247,49 @@ int	ft_exit(char **exec_cmd);
 
 // ft_export.c
 void	ft_export(t_head *head, char **exec_cmd);
+void	export_update(t_head *head, t_list **lst, char *key, char *value);
+int	get_op(char *cmd);
+void	ft_export_ext(t_head *head, t_list *env);
 
-	// error.c
-void		print_error(char *cmd, char *input, char *msg, int exit_status);
-void		print_bash_error(char *input, char *msg, int exit_status);
+void	export_add_prev(t_list **lst, t_list *new, t_list **top);
+void	sorting(t_list *t_env, t_list **top);
+void	sort_list(t_list *env, t_list **top);
+void	show_export(t_head *head);
+char	*export_strjoin(char *s1, char *s2);
 
-	//free.c
-void		clear_processes(t_head *head);
+void	free_show_list(t_list **top);
+void	key_error(char *key);
+int		key_validate(char *key);
+char	*export_getkey(char *cmd, int *op);
+char	*export_getvalue(char *cmd);
 
-typedef struct s_split_var {
-	t_token	*lst;
-	char	*backup;
-	int		i;
-	int		flag;
-	int		start;
-	int		quote;
-	int		dquote;
-}	t_split_var;
+
+// error.c
+void	print_error(char *cmd, char *input, char *msg, int exit_status);
+void	print_bash_error(char *input, char *msg, int exit_status);
+
+//free.c
+void	clear_processes(t_head *head);
+
+
+// utils2.c
+void	init_parse(t_parse *p);
+int		s_quote_check(char c, t_split_var *flag);
+int		s_dquote_check(char c, t_split_var *flag);
+int		set_len(char *str, int i, char q);
+
+// utils3.c
+void	set_home(t_head *head);
+
+// signal2.c
+void	temi_print_off(void);
+void	set_signal_heredoc(void);
+void	set_signal_origin(void);
+void	do_sigint_heredoc(int signum);
+void	exit_signal(void);
+
+void	sig_handler(int signo);
+void	set_signal(void);
+void	temi_print_on(void);
 
 #endif
