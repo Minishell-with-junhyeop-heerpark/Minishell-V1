@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/27 17:50:09 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/27 19:28:27 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,6 @@ typedef struct s_process
 	int		re_outfile_fd;
 	int		re_append_fd;
 	int		heredoc_fd;
-	// int		is_built;
-	int		file_open;
 	char	*heredoc_filename;
 	char	*cmd;
 	char	*exec_path;

@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 02:15:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/27 18:08:05 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/27 19:30:03 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	set_fd(t_process *process, char *file_name, int redir_flag)
 		process->heredoc_fd = get_heredoc(process, file_name);
 		process->re_infile_fd = -42;
 	}
-	process->file_open = 1;
 }
 
 char	*getkey(char *str)
@@ -254,7 +253,8 @@ int	no_cmd(t_head *head, t_process *process)
 	if (process->exec_cmd[0] == NULL) // ""이런 케이스는 여기에 걸림.
 	{
 		head->get_error = 1;
-		print_bash_error(process->exec_cmd[0], "command not found", 127);
+		if (*(process->cmd) == '\n')
+			print_bash_error(process->exec_cmd[0], "command not found", 127);
 		process->exec_path = NULL;
 		return (1);
 	}
@@ -332,7 +332,6 @@ void	init_process(t_process *process)
 	process->cmd = NULL;
 	process->exec_cmd = NULL;
 	process->exec_cmd = NULL;
-	process->file_open = 0;
 }
 
 t_process	*get_process(t_head *head, t_list *line, char **path)
@@ -352,3 +351,4 @@ t_process	*get_process(t_head *head, t_list *line, char **path)
 	set_process(head, process, path);
 	return (process);
 }
+
