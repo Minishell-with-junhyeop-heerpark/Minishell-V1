@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 06:30:07 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/25 16:40:00 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/25 21:55:26 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,14 @@ void	error_msg(int type)
 		ft_putstr_fd("malloc error\n", 2);
 	if (type == 2)
 	{
-		ft_putstr_fd("minishell: Command not found\n", 2);
+		ft_putstr_fd("minishell: command not found\n", 2);
 		g_exit_status = 127;
+		return ;
+	}
+	if (type == 3)
+	{
+		ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2);
+		g_exit_status = 258;
 		return ;
 	}
 	exit(1);
@@ -37,8 +43,8 @@ void	print_error(char *cmd, char *input, char *msg, int exit_status)
 void	print_bash_error(char *input, char *msg, int exit_status)
 {
 	if (input == NULL)
-		ft_printf("bash: %s: %s\n", "", msg);
+		ft_printf("minishell: %s: %s\n", "", msg);
 	else
-		ft_printf("bash: %s: %s\n", input, msg);
+		ft_printf("minishell: %s: %s\n", input, msg);
 	g_exit_status = exit_status;
 }

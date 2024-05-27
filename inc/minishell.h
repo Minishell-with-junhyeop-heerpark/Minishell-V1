@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/25 16:33:06 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/25 21:53:14 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,9 @@ typedef struct s_head {
 	t_process		**processes;
 }	t_head;
 
+int	check_white_space(char *str);
+
+
 //parsing func
 void		error_msg(int type);
 
@@ -111,8 +114,9 @@ void		add_cmd(t_head *head, char *line, int pipe_flag);
 void		add_token(t_token **lst, char *cmd);
 
 t_token		*make_token(t_head *head, char *command);
-t_head		*init_head(char **envp);
+t_head		*init_head(char **envp, int argc, char **argv);
 t_token		*token_new(char *command, int flag, int dquote_flag);
+void		void_argument(int argc, char **argv);
 
 t_list		*cmd_list_new(t_head *head, char *command);
 void		ft_lst_add(t_head *head, t_list *new);
@@ -121,7 +125,7 @@ void		ft_token_add(t_token **lst, t_token *new);
 char		**split_pipe(char const *s);
 t_token		*split_space(t_head *head, char *s, char space);	// pipe 단위로 나눈 것 -> 공백 단위로 나눔
 
-void		free_list(t_head *head);
+void		free_list(t_head *head, char *str);
 int	parse(char *str, t_head *head);
 
 //exe func

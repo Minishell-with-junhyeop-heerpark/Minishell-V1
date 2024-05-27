@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 22:41:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/25 16:09:24 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/25 21:05:17 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	**freeall(char **strs)
 	return (NULL);
 }
 
-int	strcnt(char const *s, char c)
+int	strcnt(char const *s, char c, t_head *head)
 {
 	int	n;
 	int	pipe_flag;
@@ -48,7 +48,10 @@ int	strcnt(char const *s, char c)
 		if (*s == c)
 		{
 			if (pipe_flag == 1)
-				ft_putstr_fd("bash: syntax error near unexpected token `||'", 2);
+			{
+				printf("here\n");
+				head->get_error = 2;
+			}
 			n++;
 			pipe_flag = 1;
 		}
