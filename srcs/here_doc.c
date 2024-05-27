@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 16:08:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/27 19:33:06 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/27 20:09:03 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ char	*get_temp_name(void)
 			free(filename);
 		}
 		else
+		{
+			free(add);
 			return (filename);
+		}
 		n++;
 	}
 }
