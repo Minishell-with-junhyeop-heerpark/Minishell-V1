@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 22:41:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/25 21:05:17 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/27 17:44:59 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,10 @@ char	*make_cmd(t_head *head, char *cmd, t_split_var *v, char q)
 	s = v->start;
 	i = set_len(cmd, v->i, q);
 	if (i == -1)
+	{
 		head->get_error = 1;
+		return (NULL);
+	}
 	if (i - s <= 1)
 	{
 		v->i = i + 1;
@@ -202,6 +205,8 @@ t_token	*split_space(t_head *head, char *cmd, char space)
 			}
 			else
 				v.i++;
+			if (head->get_error)
+				return (NULL);
 		}
 		split_space_ext(&v, cmd);
 	}
