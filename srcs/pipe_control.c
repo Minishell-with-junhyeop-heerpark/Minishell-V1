@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 13:13:59 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/15 20:46:44 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/27 21:37:28 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,24 +71,25 @@ void	wait_process(int child_num)
 {
 	int	count;
 	int	status;
+	int	org_status;
 	int	pid;
 
 	count = 0;
 	while (count < child_num)
 	{
-		pid = wait(&status);
-		status = make_exit_status(status);
+		pid = wait(&org_status);
+		status = make_exit_status(org_status);
 		if (pid == -1)
 		{
 			perror_exit("wait error");
 		}
-		else if (WIFSIGNALED(status))
+		else if (WIFSIGNALED(org_status))
 		{
 			g_exit_status = status;
 		}
-		else if (WIFEXITED(status))
+		else if (WIFEXITED(org_status))
 		{
-			g_exit_status = WEXITSTATUS(status);
+			g_exit_status = WEXITSTATUS(org_status);
 		}
 		count++;
 	}

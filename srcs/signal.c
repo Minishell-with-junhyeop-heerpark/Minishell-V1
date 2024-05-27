@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 18:06:54 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/11 22:26:05 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/27 21:29:57 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,5 @@ void	exit_signal()
 	ft_printf("\033[1A");
 	ft_printf("\033[10C");
 	ft_printf(" exit\n");
-	exit(-1);
+	exit(255);
 }
