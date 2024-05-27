@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 20:00:39 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/27 17:13:38 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/27 19:33:21 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,18 +51,6 @@ t_head	*init_head(char **envp, int argc, char **argv)
 	set_home(head);
 	return (head);
 }
-
-// t_token	*init_token()
-// {
-// 	t_token	*new;
-
-// 	new = (t_token *)malloc(sizeof(t_head));
-// 	if (!head)
-// 		error_msg(1);
-// 	head->top = NULL;
-// 	head->size = 0;
-// 	return (head);
-// }
 
 t_list	*cmd_list_new(t_head *head, char *command)
 {
