@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 18:17:19 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/25 16:51:58 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/25 21:52:53 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,12 @@ void	free_token(t_token *token)
 	}
 }
 
-void	free_list(t_head *head)
+void	free_list(t_head *head, char *str)
 {
 	t_list	*tmp;
 	t_list	*rmv;
 
+	free(str);
 	tmp = head->top;
 	while (tmp)
 	{
