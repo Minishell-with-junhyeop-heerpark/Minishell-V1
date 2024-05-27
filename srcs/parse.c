@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:10:29 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/25 21:49:00 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/27 17:56:13 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,14 @@ int	is_empty(char *cmd)
 			return (0);
 		i++;
 	}
+	return (1);
+}
+
+int	check_quote(int dq, int q, t_head *head)
+{
+	if (!dq && !q)
+		return (0);
+	head->get_error = 3;
 	return (1);
 }
 
@@ -90,6 +98,8 @@ int	parse(char *line, t_head *head)
 			if (line[i] == '\0')
 				flag.pipe = 0;	// 끝난 부분이 pipe가 아니라면
 			line[i] = '\0';		// 분리하기 쉽게 널 값으로 변환
+			if (check_quote(flag.dquote, flag.quote, head))
+				return (0);
 			// printf("confirm %s\n", &line[start]);
 			add_cmd(head, &line[start], flag.pipe);
 			start = i + 1;
