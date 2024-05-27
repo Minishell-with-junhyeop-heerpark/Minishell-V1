@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 18:17:19 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/25 21:52:53 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/27 20:14:57 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	free_list(t_head *head, char *str)
 		free_token(rmv->token);
 		free(rmv);
 	}
+	if (head->processes)
+		clear_processes(head);
 	head->size = 0;
 	head->top = NULL;
 	head->get_error = 0;

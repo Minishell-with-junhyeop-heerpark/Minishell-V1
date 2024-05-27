@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 06:30:07 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/27 17:56:53 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/27 20:14:07 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,6 @@ void	error_msg(int type)
 	if (type == 3)
 	{
 		ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2);
-		g_exit_status = 258;
-		return ;
-	}
-	if (type == 4)
-	{
-		ft_putstr_fd("minishell: syntax error \' or \"\n", 2);
 		g_exit_status = 258;
 		return ;
 	}
