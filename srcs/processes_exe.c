@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   processes_exe.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42.kr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:11:25 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/26 14:36:33 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/27 17:25:04 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,6 @@ void	start_processes(t_head *head, char **envp, int **pipes, int n)
 
 void	exe(t_head *head, char **envp)
 {
-	// printf("head size: %d\n", head->size);
 	head->get_error = 0;
 	if (head->size == 1)
 	{

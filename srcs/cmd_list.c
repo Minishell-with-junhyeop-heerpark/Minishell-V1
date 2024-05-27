@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 20:00:39 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/25 16:14:10 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/27 17:13:38 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,11 @@ void	set_home(t_head *head)
 	}
 }
 
-t_head	*init_head(char **envp)
+t_head	*init_head(char **envp, int argc, char **argv)
 {
 	t_head	*head;
 
+	void_argument(argc, argv);
 	printf("Welcome to minishell!\n");
 	set_signal();
 	g_exit_status = 0;
@@ -93,10 +94,8 @@ t_token	*token_new(char *command, int flag, int quote_flag)
 
 t_token	*make_token(t_head *head, char *command)
 {
-	// int		i;
 	t_token	*token;
-	
-	// i = 0;
+
 	token = split_space(head, command, ' ');
 	return (token);
 }
