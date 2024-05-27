@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:11:25 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/27 17:36:30 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/27 19:33:31 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,6 @@ void	start_process(t_head *head, char **envp)
 {
 	pid_t	pid;
 
-	printf("what's up nigger\n");
 	if (is_builtin(head->processes[0]->exec_cmd))
 	{
 		set_inout(head->processes[0], NULL, 0, 0);
