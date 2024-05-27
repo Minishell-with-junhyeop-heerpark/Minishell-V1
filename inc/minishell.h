@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/25 21:53:14 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/27 17:50:09 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ typedef struct s_process
 	int		re_outfile_fd;
 	int		re_append_fd;
 	int		heredoc_fd;
-	int		is_built;
+	// int		is_built;
+	int		file_open;
 	char	*heredoc_filename;
 	char	*cmd;
 	char	*exec_path;
@@ -174,7 +175,7 @@ void		run_cmd(t_head *head, char **envp, int i);
 void		get_processes(t_head *head, char **envp);
 void		set_inout(t_process *process, int **pipes, int i, int close_sig);
 void		start_process(t_head *head, char **envp);
-void		start_processes(t_head *head, char **envp, int **pipes, int n);
+void		start_processes(t_head *head, char **envp, int **pipes);
 void		exe(t_head *head, char **envp);
 
 	//builtin.c

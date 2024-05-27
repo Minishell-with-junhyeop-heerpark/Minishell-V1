@@ -61,3 +61,4 @@ heredoc 경로를 temp 로 할지 현재 폴더로 할지 정하기.
 * execve에 넣는 envp를 업데이트 해줘야할지 말아야할지 정하기 업데이트 한다면 update_envp()를 사용하자.
 * 파싱 중간에 '들어오면 미니쉘 먹통됨 ex) echo', 다른 케이스들도 있을듯
 * echo echo a | ./minishell 케이스에서 자식 프로세스 종료 안되는거 check
+* no file perror check

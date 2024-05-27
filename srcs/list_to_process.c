@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_to_process.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42.kr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 02:15:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/26 11:45:53 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/27 18:08:05 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,7 @@ void	set_fd(t_process *process, char *file_name, int redir_flag)
 		process->heredoc_fd = get_heredoc(process, file_name);
 		process->re_infile_fd = -42;
 	}
-	else
-		perror_exit("set_fd");
+	process->file_open = 1;
 }
 
 char	*getkey(char *str)
@@ -327,12 +326,13 @@ void	set_process(t_head *head, t_process *process, char **path)
 	}
 }
 
-void	init_process(char **heredoc, char **cmd, char **exec_path, char ***exec_cmd)
+void	init_process(t_process *process)
 {
-	*heredoc = NULL;
-	*cmd = NULL;
-	*exec_path = NULL;
-	*exec_cmd = NULL;
+	process->heredoc_filename = NULL;
+	process->cmd = NULL;
+	process->exec_cmd = NULL;
+	process->exec_cmd = NULL;
+	process->file_open = 0;
 }
 
 t_process	*get_process(t_head *head, t_list *line, char **path)
@@ -342,8 +342,7 @@ t_process	*get_process(t_head *head, t_list *line, char **path)
 	char		*cmd;
 
 	process = (t_process *)malloc(sizeof(t_process));
-	init_process(&process->heredoc_filename, &process->cmd, \
-	&process->exec_path, &process->exec_cmd);
+	init_process(process);
 	process->env = head->data->env;
 	cmd = ft_strdup("");
 	temp = line->token;
