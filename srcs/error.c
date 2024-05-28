@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 06:30:07 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/27 21:21:51 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/28 14:39:35 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,12 @@ void	print_error(char *cmd, char *input, char *msg, int exit_status)
 
 void	print_bash_error(char *input, char *msg, int exit_status)
 {
+	// 왜 두개 출력결과가 다르지..?
+	// printf("input: %s/ msg: %s\n", input, msg);
+	// ft_printf("input: %s/ msg: %s\n", input, msg);
 	if (input == NULL)
-		ft_printf("minishell: %s: %s\n", "", msg);
+		printf("minishell: %s: %s\n", "", msg);
 	else
-		ft_printf("minishell: %s: %s\n", input, msg);
+		printf("minishell: %s: %s\n", input, msg);
 	g_exit_status = exit_status;
 }

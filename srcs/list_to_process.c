@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_to_process.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 02:15:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/27 21:17:34 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/28 14:21:02 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,27 +31,64 @@ int	get_redir_flag(char	*token)
 	return (0);
 }
 
+void	close_unused_input(t_process *process)
+{
+	if (process->heredoc_fd != -42)
+	{
+		if (process->heredoc_fd != -1)
+		{
+			close(process->heredoc_fd);
+			unlink(process->heredoc_filename);
+		}
+		process->heredoc_fd = -42;
+	}
+	if (process->re_infile_fd != -42)
+	{
+		if (process->re_infile_fd != -1)
+		{
+			close(process->re_infile_fd);
+		}
+		process->re_infile_fd = -42;
+	}
+}
+
+void	close_unused_output(t_process *process)
+{
+	if (process->re_append_fd != -42)
+	{
+		if (process->re_append_fd != -1)
+			close(process->re_append_fd);
+		process->re_append_fd = -42;
+	}
+	if (process->re_outfile_fd != -42)
+	{
+		if (process->re_outfile_fd != -1)
+			close(process->re_outfile_fd);
+		process->re_outfile_fd = -42;
+	}
+}
+
 void	set_fd(t_process *process, char *file_name, int redir_flag)
 {
 	if (redir_flag == 1)
 	{
+		close_unused_output(process);
 		process->re_outfile_fd = get_outfile(file_name);
-		process->re_append_fd = -42;
 	}
 	else if (redir_flag == 2)
 	{
+		close_unused_output(process);
 		process->re_append_fd = get_append(file_name);
-		process->re_outfile_fd = -42;
 	}
 	else if (redir_flag == 3)
 	{
+		close_unused_input(process);
 		process->re_infile_fd = get_infile(file_name);
-		process->heredoc_fd = -42;
 	}
 	else if (redir_flag == 4)
 	{
+		close_unused_input(process);
 		process->heredoc_fd = get_heredoc(process, file_name);
-		process->re_infile_fd = -42;
 	}
 }
 

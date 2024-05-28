@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 17:50:59 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/27 21:42:53 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/28 13:27:43 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	free_process(t_process *process)
 		free(process->exec_path);
 	if (process->exec_cmd != NULL)
 		free_splited(process->exec_cmd);
-	free(process);
 }
 
 void	close_fds(t_process *process)
@@ -48,6 +47,7 @@ void	clear_processes(t_head *head)
 	{
 		free_process(processes[i]);
 		close_fds(processes[i]);
+		free(processes[i]);
 		i++;
 	}
 	free(processes[i]);
