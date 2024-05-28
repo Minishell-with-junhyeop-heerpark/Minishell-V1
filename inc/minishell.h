@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/25 21:49:46 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:37:56 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 # define STDOUT 		1
 # define STDERR 		2
 
-int g_exit_status;
+int	g_exit_status;
 
 typedef struct s_flag
 {
@@ -45,6 +45,13 @@ typedef struct s_flag
 	int pipe;
 
 }	t_flag;
+
+typedef struct s_parse
+{
+	t_flag flag;
+	int		start;
+	int		i;
+}	t_parse;
 
 typedef struct s_token
 {
@@ -79,7 +86,6 @@ typedef struct s_process
 	int		re_outfile_fd;
 	int		re_append_fd;
 	int		heredoc_fd;
-	int		is_built;
 	char	*heredoc_filename;
 	char	*cmd;
 	char	*exec_path;
@@ -91,11 +97,20 @@ typedef struct s_data //heredoc 파일 경로 여기로 옮기기.
 {
 	int		original_stdin;
 	int		original_stdout;
-	// char	**envp;
 	int		**pipes;
 	char	*home;
 	t_list	*env;
 }	t_data;
+
+typedef struct s_split_var {
+	t_token	*lst;
+	char	*backup;
+	int		i;
+	int		flag;
+	int		start;
+	int		quote;
+	int		dquote;
+}	t_split_var;
 
 typedef struct s_head {
 	int				size;
@@ -105,6 +120,17 @@ typedef struct s_head {
 	t_process		**processes;
 }	t_head;
 
+typedef struct s_value_var
+{
+	int	n;
+	int	i;
+	int	s;
+}	t_value_var;
+
+
+int	check_white_space(char *str);
+
+
 //parsing func
 void		error_msg(int type);
 
@@ -112,8 +138,9 @@ void		add_cmd(t_head *head, char *line, int pipe_flag);
 void		add_token(t_token **lst, char *cmd);
 
 t_token		*make_token(t_head *head, char *command);
-t_head		*init_head(char **envp);
+t_head		*init_head(char **envp, int argc, char **argv);
 t_token		*token_new(char *command, int flag, int dquote_flag);
+void		void_argument(int argc, char **argv);
 
 t_list		*cmd_list_new(t_head *head, char *command);
 void		ft_lst_add(t_head *head, t_list *new);
@@ -122,7 +149,7 @@ void		ft_token_add(t_token **lst, t_token *new);
 char		**split_pipe(char const *s);
 t_token		*split_space(t_head *head, char *s, char space);	// pipe 단위로 나눈 것 -> 공백 단위로 나눔
 
-void		free_list(t_head *head);
+void		free_list(t_head *head, char *str);
 int	parse(char *str, t_head *head);
 
 //exe func
@@ -146,10 +173,10 @@ void		close_all_pipes(int **pipes, int n);
 
 	//get_fd
 int			check_redir_heredoc(t_process *process);
-int			get_infile(char	*file_name);
-int			get_heredoc(t_process *process, char *limiter);
-int			get_outfile(char *file_name);
-int			get_append(char *file_name);
+int			get_infile(t_head *head, char *file_name);
+int			get_heredoc(t_head *head, t_process *process, char *limiter);
+int			get_outfile(t_head *head, char *file_name);
+int			get_append(t_head *head, char *file_name);
 void		init_fd(t_process *process);
 
 	//here_doc
@@ -159,8 +186,8 @@ void		make_infile(char *limiter, char *file_name);
 void		make_temp(char *limiter, char *file_name);
 
 	//list_to_processes_utils
-void		fill_elem(t_token *temp, t_process *process, char **cmd);
-void		set_fd(t_process *process, char *file_name, int redir_flag);
+void		fill_elem(t_head *head, t_token *temp, t_process *process, char **cmd);
+void		set_fd(t_head *head, t_process *process, char *file_name, int redir_flag);
 int			get_redir_flag(char	*token);
 void		set_process(t_head *head, t_process *process, char **path);
 t_process	*get_process(t_head *head, t_list *line, char **path);
@@ -170,7 +197,7 @@ void		run_cmd(t_head *head, char **envp, int i);
 void		get_processes(t_head *head, char **envp);
 void		set_inout(t_process *process, int **pipes, int i, int close_sig);
 void		start_process(t_head *head, char **envp);
-void		start_processes(t_head *head, char **envp, int **pipes, int n);
+void		start_processes(t_head *head, char **envp, int **pipes);
 void		exe(t_head *head, char **envp);
 
 	//builtin.c
@@ -220,22 +247,49 @@ int	ft_exit(char **exec_cmd);
 
 // ft_export.c
 void	ft_export(t_head *head, char **exec_cmd);
+void	export_update(t_head *head, t_list **lst, char *key, char *value);
+int	get_op(char *cmd);
+void	ft_export_ext(t_head *head, t_list *env);
 
-	// error.c
-void		print_error(char *cmd, char *input, char *msg, int exit_status);
-void		print_bash_error(char *input, char *msg, int exit_status);
+void	export_add_prev(t_list **lst, t_list *new, t_list **top);
+void	sorting(t_list *t_env, t_list **top);
+void	sort_list(t_list *env, t_list **top);
+void	show_export(t_head *head);
+char	*export_strjoin(char *s1, char *s2);
 
-	//free.c
-void		clear_processes(t_head *head);
+void	free_show_list(t_list **top);
+void	key_error(char *key);
+int		key_validate(char *key);
+char	*export_getkey(char *cmd, int *op);
+char	*export_getvalue(char *cmd);
 
-typedef struct s_split_var {
-	t_token	*lst;
-	char	*backup;
-	int		i;
-	int		flag;
-	int		start;
-	int		quote;
-	int		dquote;
-}	t_split_var;
+
+// error.c
+void	print_error(char *cmd, char *input, char *msg, int exit_status);
+void	print_bash_error(char *input, char *msg, int exit_status);
+
+//free.c
+void	clear_processes(t_head *head);
+
+
+// utils2.c
+void	init_parse(t_parse *p);
+int		s_quote_check(char c, t_split_var *flag);
+int		s_dquote_check(char c, t_split_var *flag);
+int		set_len(char *str, int i, char q);
+
+// utils3.c
+void	set_home(t_head *head);
+
+// signal2.c
+void	temi_print_off(void);
+void	set_signal_heredoc(void);
+void	set_signal_origin(void);
+void	do_sigint_heredoc(int signum);
+void	exit_signal(void);
+
+void	sig_handler(int signo);
+void	set_signal(void);
+void	temi_print_on(void);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 18:06:54 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/11 22:26:05 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/27 21:43:15 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	sig_handler(int signo)
 			ft_putstr_fd("\n",STDOUT);//다시출력해서 커서가 글자의 끝에 있음.
 	}
 
-}
+} 
 
 void	set_signal()
 {
@@ -54,40 +54,4 @@ void	temi_print_on()
 	tcsetattr(1, 0, &term);  // 변경한 term 설정을 현재 터미널에 적용
     // 시그널 세팅
 	
-}
-
-void	temi_print_off()
-{
-	struct termios term;
-
-	tcgetattr(STDIN_FILENO, &term);
-    term.c_lflag &= ~(ECHOCTL);
-    tcsetattr(STDIN_FILENO, TCSANOW, &term);
-}
-
-void	set_signal_heredoc(void)
-{
-	signal(SIGINT, do_sigint_heredoc);
-	signal(SIGQUIT, SIG_IGN);
-}
-
-void	set_signal_origin(void)
-{
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
-}
-
-void	do_sigint_heredoc(int signum)
-{
-	(void)signum;
-	ft_putstr_fd("\n", STDERR);
-	exit (1);
-}
-
-void	exit_signal()
-{
-	ft_printf("\033[1A");
-	ft_printf("\033[10C");
-	ft_printf(" exit\n");
-	exit(-1);
 }

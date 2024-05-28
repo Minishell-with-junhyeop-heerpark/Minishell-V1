@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:10:29 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/25 16:35:09 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/27 21:17:42 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 int	quote_check(char c, t_flag *flag)
 {
-	if (flag->dquote == 1)					// "의 안이라면 넘어감
+	if (flag->dquote == 1)
 		return (flag->quote);
-	if (c == '\'' && flag->quote == 0)	// ' 시작
+	if (c == '\'' && flag->quote == 0)
 		return (1);
-	if ((c == '\'') && flag->quote == 1)	// ' 끝남
+	if ((c == '\'') && flag->quote == 1)
 		return (0);
 	return (flag->quote);
 }
@@ -34,17 +34,11 @@ int	dquote_check(char c, t_flag *flag)
 	return (flag->dquote);
 }
 
-int	is_empty(char *cmd)
+int	check_quote(int dq, int q, t_head *head)
 {
-	int	i;
-
-	i = 0;
-	while (cmd[i])
-	{
-		if (cmd[i] != ' ')
-			return (0);
-		i++;
-	}
+	if (!dq && !q)
+		return (0);
+	head->get_error = 1;
 	return (1);
 }
 
@@ -59,40 +53,42 @@ void	add_cmd(t_head *head, char *line, int pipe_flag)
 		i++;
 	command = ft_strdup(&line[i]);
 	if (!command)
-		error_msg(1);
+		error_msg(0);
+	if (check_white_space(command) && pipe_flag)
+	{
+		head->get_error = 2;
+		free(command);
+		return ;
+	}
 	ft_lst_add(head, cmd_list_new(head, command));
 	free(command);
 }
 
 int	parse(char *line, t_head *head)
 {
-	t_flag	flag;
-	int		start;
-	int		i;
+	t_parse	p;
 
-	flag = (t_flag){0, 0, 1};
-	i = 0;
-	start = 0;
+	init_parse(&p);
 	while (1)
 	{
-		// echo '"asdfsdf" | cat'
-		flag.quote = quote_check(line[i], &flag);	// quote 여부 확인
-		flag.dquote = dquote_check(line[i], &flag); // dquote 여부 확인
-		// 분기해야할 때 quote 확인
-		if (line[i] == '\0' || (line[i] == '|' && (flag.quote == 0 && flag.dquote == 0)))
+		p.flag.quote = quote_check(line[p.i], &p.flag);
+		p.flag.dquote = dquote_check(line[p.i], &p.flag);
+		if (line[p.i] == '\0' || (line[p.i] == '|' \
+		&& (p.flag.quote == 0 && p.flag.dquote == 0)))
 		{
-			if (line[i] == '\0')
-				flag.pipe = 0;	// 끝난 부분이 pipe가 아니라면
-			line[i] = '\0';		// 분리하기 쉽게 널 값으로 변환
-			// printf("confirm %s\n", &line[start]);
-			add_cmd(head, &line[start], flag.pipe);
-			start = i + 1;
+			if (line[p.i] == '\0')
+				p.flag.pipe = 0;
+			line[p.i] = '\0';
+			if (check_quote(p.flag.dquote, p.flag.quote, head))
+				return (0);
+			add_cmd(head, &line[p.start], p.flag.pipe);
+			p.start = p.i + 1;
 			if (head->get_error)
 				return (0);
-			if (flag.pipe == 0)
+			if (p.flag.pipe == 0)
 				break ;
 		}
-		i++;
+		p.i++;
 	}
 	return (1);
 }

@@ -6,22 +6,11 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 22:41:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/25 16:09:24 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/27 21:17:47 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	ft_putstr_fd(char *s, int fd)
-{
-	if (!s || fd < 0)
-		return ;
-	while (*s)
-	{
-		write(fd, s, 1);
-		s++;
-	}
-}
 
 char	**freeall(char **strs)
 {
@@ -32,29 +21,6 @@ char	**freeall(char **strs)
 		free(strs[i++]);
 	free(strs);
 	return (NULL);
-}
-
-int	strcnt(char const *s, char c)
-{
-	int	n;
-	int	pipe_flag;
-
-	pipe_flag = 0;
-	n = 0;
-	while (*s)
-	{
-		if (*s != ' ' && *s != c)
-			pipe_flag = 0;
-		if (*s == c)
-		{
-			if (pipe_flag == 1)
-				ft_putstr_fd("bash: syntax error near unexpected token `||'", 2);
-			n++;
-			pipe_flag = 1;
-		}
-		s++;
-	}
-	return (n + 1);
 }
 
 char	*split_str(char const *s, char c)
@@ -81,52 +47,6 @@ char	*split_str(char const *s, char c)
 	return (str);
 }
 
-int	s_quote_check(char c, t_split_var *flag)
-{
-	if (c == '\'')
-	{
-		flag->quote = 1;
-		flag->dquote = 0;
-	}
-	else if (c == '\"')
-	{
-		flag->quote = 0;
-		flag->dquote = 1;
-	}
-	else
-		return (0);
-	return (1);
-}
-
-int	s_dquote_check(char c, t_split_var *flag)
-{
-	if (flag->dquote == 1)
-		return (1);
-	if (c == '\"' && flag->dquote == 0)
-	{
-		flag->dquote = 1;
-		return (1);
-	}
-	if ((c == '\"') && flag->dquote == 1)
-	{
-		flag->dquote = 0;
-		return (0);
-	}
-	return (flag->dquote);
-}
-
-int	set_len(char *str, int i, char q)
-{
-	i++;
-	while (str[i])
-	{
-		if (str[i] == q)
-			return (i);
-		i++;
-	}
-	return (-1);
-}
-
 char	*make_cmd(t_head *head, char *cmd, t_split_var *v, char q)
 {
 	char	*p_cmd;
@@ -137,7 +57,10 @@ char	*make_cmd(t_head *head, char *cmd, t_split_var *v, char q)
 	s = v->start;
 	i = set_len(cmd, v->i, q);
 	if (i == -1)
+	{
 		head->get_error = 1;
+		return (NULL);
+	}
 	if (i - s <= 1)
 	{
 		v->i = i + 1;
@@ -147,7 +70,7 @@ char	*make_cmd(t_head *head, char *cmd, t_split_var *v, char q)
 	ind = 0;
 	p_cmd = (char *)malloc(sizeof(char) * (i - s - 2) + 1);
 	if (!p_cmd)
-		error_msg(1);
+		error_msg(0);
 	while (s < i)
 	{
 		if (cmd[s] != q)
@@ -199,6 +122,8 @@ t_token	*split_space(t_head *head, char *cmd, char space)
 			}
 			else
 				v.i++;
+			if (head->get_error)
+				return (NULL);
 		}
 		split_space_ext(&v, cmd);
 	}

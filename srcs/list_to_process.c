@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 02:15:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/26 11:45:53 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:41:46 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,30 +31,65 @@ int	get_redir_flag(char	*token)
 	return (0);
 }
 
-void	set_fd(t_process *process, char *file_name, int redir_flag)
+void	close_unused_input(t_process *process)
+{
+	if (process->heredoc_fd != -42)
+	{
+		if (process->heredoc_fd != -1)
+		{
+			close(process->heredoc_fd);
+			unlink(process->heredoc_filename);
+		}
+		process->heredoc_fd = -42;
+	}
+	if (process->re_infile_fd != -42)
+	{
+		if (process->re_infile_fd != -1)
+		{
+			close(process->re_infile_fd);
+		}
+		process->re_infile_fd = -42;
+	}
+}
+
+void	close_unused_output(t_process *process)
+{
+	if (process->re_append_fd != -42)
+	{
+		if (process->re_append_fd != -1)
+			close(process->re_append_fd);
+		process->re_append_fd = -42;
+	}
+	if (process->re_outfile_fd != -42)
+	{
+		if (process->re_outfile_fd != -1)
+			close(process->re_outfile_fd);
+		process->re_outfile_fd = -42;
+	}
+}
+
+void	set_fd(t_head *head, t_process *process, char *file_name, int redir_flag)
 {
 	if (redir_flag == 1)
 	{
-		process->re_outfile_fd = get_outfile(file_name);
-		process->re_append_fd = -42;
+		close_unused_output(process);
+		process->re_outfile_fd = get_outfile(head, file_name);
 	}
 	else if (redir_flag == 2)
 	{
-		process->re_append_fd = get_append(file_name);
-		process->re_outfile_fd = -42;
+		close_unused_output(process);
+		process->re_append_fd = get_append(head, file_name);
 	}
 	else if (redir_flag == 3)
 	{
-		process->re_infile_fd = get_infile(file_name);
-		process->heredoc_fd = -42;
+		close_unused_input(process);
+		process->re_infile_fd = get_infile(head, file_name);
 	}
 	else if (redir_flag == 4)
 	{
-		process->heredoc_fd = get_heredoc(process, file_name);
-		process->re_infile_fd = -42;
+		close_unused_input(process);
+		process->heredoc_fd = get_heredoc(head, process, file_name);
 	}
-	else
-		perror_exit("set_fd");
 }
 
 char	*getkey(char *str)
@@ -138,7 +173,7 @@ char	*apply_env(char *cmd, t_list *env, int *ind)
 	value = env_find_value(key, env);
 	// printf("key : %s\nvalue: %s\n", key, value);
 	if (!value)
-		error_msg(1);
+		error_msg(0);
 	changed = replace_cmd(cmd, key, value, ind);
 	*ind = *ind + ft_strlen(value);
 	// printf("ind : %d\n", *ind);
@@ -222,7 +257,7 @@ void	concat_cmd(t_token *temp, t_process *process, char **cmd, char **str)
 	}
 }
 
-void	fill_elem(t_token *temp, t_process *process, char **cmd)
+void	fill_elem(t_head *head, t_token *temp, t_process *process, char **cmd)
 {
 	char	*temp_str;
 	int		is_filename;
@@ -234,7 +269,7 @@ void	fill_elem(t_token *temp, t_process *process, char **cmd)
 	{
 		if (is_filename == 1)
 		{
-			set_fd(process, temp->cmd, flag);
+			set_fd(head, process, temp->cmd, flag);
 			is_filename = 0;
 		}
 		else if (temp->redir_flag == 0)
@@ -255,7 +290,8 @@ int	no_cmd(t_head *head, t_process *process)
 	if (process->exec_cmd[0] == NULL) // ""이런 케이스는 여기에 걸림.
 	{
 		head->get_error = 1;
-		print_bash_error(process->exec_cmd[0], "command not found", 127);
+		if (*(process->cmd) == '\n')
+			print_bash_error(process->exec_cmd[0], "command not found", 127);
 		process->exec_path = NULL;
 		return (1);
 	}
@@ -327,12 +363,12 @@ void	set_process(t_head *head, t_process *process, char **path)
 	}
 }
 
-void	init_process(char **heredoc, char **cmd, char **exec_path, char ***exec_cmd)
+void	init_process(t_process *process)
 {
-	*heredoc = NULL;
-	*cmd = NULL;
-	*exec_path = NULL;
-	*exec_cmd = NULL;
+	process->heredoc_filename = NULL;
+	process->cmd = NULL;
+	process->exec_cmd = NULL;
+	process->exec_cmd = NULL;
 }
 
 t_process	*get_process(t_head *head, t_list *line, char **path)
@@ -342,14 +378,14 @@ t_process	*get_process(t_head *head, t_list *line, char **path)
 	char		*cmd;
 
 	process = (t_process *)malloc(sizeof(t_process));
-	init_process(&process->heredoc_filename, &process->cmd, \
-	&process->exec_path, &process->exec_cmd);
+	init_process(process);
 	process->env = head->data->env;
 	cmd = ft_strdup("");
 	temp = line->token;
 	init_fd(process);
-	fill_elem(temp, process, &cmd);
+	fill_elem(head, temp, process, &cmd);
 	process->cmd = cmd;
 	set_process(head, process, path);
 	return (process);
 }
+

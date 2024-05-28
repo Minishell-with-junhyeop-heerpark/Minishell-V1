@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   processes_exe.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42.kr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:11:25 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/26 14:36:33 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/27 20:02:42 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,29 +39,32 @@ void	get_processes(t_head *head, char **envp)
 
 void	 set_inout(t_process *process, int **pipes, int i, int close_sig)
 {
+	(void)close_sig;
+	(void)i;
+	(void)pipes;
 	if (process->re_outfile_fd > 0)
 	{
 		dup2(process->re_outfile_fd, STDOUT_FILENO);
-		if (close_sig)
-			close(pipes[i][1]);
+		// if (close_sig)
+		// 	close(pipes[i][1]);
 	}
 	if (process->re_append_fd > 0)
 	{
 		dup2(process->re_append_fd, STDOUT_FILENO);
-		if (close_sig)
-			close(pipes[i][1]);
+		// if (close_sig)
+		// 	close(pipes[i][1]);
 	}
 	if (process->re_infile_fd > 0)
 	{
 		dup2(process->re_infile_fd, STDIN_FILENO);
-		if (close_sig)
-			close(pipes[i][0]);
+		// if (close_sig)
+		// 	close(pipes[i][0]);
 	}
 	if (process->heredoc_fd > 0)
 	{
 		dup2(process->heredoc_fd, STDIN_FILENO);
-		if (close_sig)
-			close(pipes[i][0]);
+		// if (close_sig)
+		// 	close(pipes[i][0]);
 	}
 }
 
@@ -127,7 +130,6 @@ void	start_process(t_head *head, char **envp)
 {
 	pid_t	pid;
 
-	printf("what's up nigger\n");
 	if (is_builtin(head->processes[0]->exec_cmd))
 	{
 		set_inout(head->processes[0], NULL, 0, 0);
@@ -145,13 +147,13 @@ void	start_process(t_head *head, char **envp)
 	}
 }
 
-void	start_processes(t_head *head, char **envp, int **pipes, int n)
+void	start_processes(t_head *head, char **envp, int **pipes)
 {
 	int		i;
 	pid_t	pid;
 
 	i = 0;
-	while (i < n)
+	while (i < head->size)
 	{
 		pid = fork();
 		if (pid == -1)
@@ -161,7 +163,7 @@ void	start_processes(t_head *head, char **envp, int **pipes, int n)
 			temi_print_on();
 			if (i == 0) 
 				first_child(head, pipes, envp, i);
-			else if (i == n - 1)
+			else if (i == head->size - 1)
 				last_child(head, pipes, envp, i);
 			else
 				mid_child(head, pipes, envp, i);
@@ -176,7 +178,6 @@ void	start_processes(t_head *head, char **envp, int **pipes, int n)
 
 void	exe(t_head *head, char **envp)
 {
-	// printf("head size: %d\n", head->size);
 	head->get_error = 0;
 	if (head->size == 1)
 	{
@@ -199,7 +200,7 @@ void	exe(t_head *head, char **envp)
 			set_signal();
 			return ;
 		}
-		start_processes(head, envp, head->data->pipes, head->size);
+		start_processes(head, envp, head->data->pipes);
 		wait_process(head->size);
 	}
 	set_signal();

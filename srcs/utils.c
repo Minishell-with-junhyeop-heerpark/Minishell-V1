@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 18:17:19 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/25 16:51:58 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/27 20:56:42 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,13 @@ void	free_token(t_token *token)
 	{
 		rmv = token;
 		token = token->next;
-		free(rmv->cmd);
+		if (rmv->cmd)
+			free(rmv->cmd);
 		free(rmv);
 	}
 }
 
-void	free_list(t_head *head)
+void	free_list(t_head *head, char *str)
 {
 	t_list	*tmp;
 	t_list	*rmv;
@@ -38,7 +39,11 @@ void	free_list(t_head *head)
 		free_token(rmv->token);
 		free(rmv);
 	}
+	if (head->processes)
+		clear_processes(head);
 	head->size = 0;
 	head->top = NULL;
 	head->get_error = 0;
+	head->processes = NULL;
+	free(str);
 }

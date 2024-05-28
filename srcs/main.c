@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42.kr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:10:35 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/26 13:04:58 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/27 21:42:56 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,22 @@ void	void_argument(int argc, char **argv)
 	(void)argv;
 }
 
+void	parse_error(char *str, t_head *head)
+{
+	error_msg(head->get_error + 1);
+	free_list(head, str);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char	*str;
 	t_head	*head;
 
-	void_argument(argc, argv);
-	head = init_head(envp);
+	head = init_head(envp, argc, argv);
 	while (1)
 	{
 		str = readline("minishell$ ");
+		// system("leaks --list minishell");
 		if (!str)
 			exit_signal();
 		else if (*str == '\0' || check_white_space(str))
@@ -52,16 +58,12 @@ int	main(int argc, char **argv, char **envp)
 			add_history(str);
 			if (parse(str, head) == 0)
 			{
-				error_msg(2);
-				free_list(head);
-				free(str);
+				parse_error(str, head);
 				continue ;
 			}
 			exe(head, envp);
 			kill_heredoc(head);
-			clear_processes(head);
-			free_list(head);
-			free(str);
+			free_list(head, str);
 		}
 	}
 	return (0);

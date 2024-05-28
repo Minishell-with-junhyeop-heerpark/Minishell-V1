@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envpwdcd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 20:27:15 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/25 17:33:57 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/25 21:57:00 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	cd(t_head *head, char *dir)
 		if (chdir(head->data->home) == -1)
 		{
 			g_exit_status = 1;
-			ft_printf("bash: cd: %s: can't implement cd\n", dir);
+			ft_printf("minishell: cd: %s: can't implement cd\n", dir);
 		}
 	}
 	else
@@ -64,7 +64,7 @@ void	cd(t_head *head, char *dir)
 		if (chdir(dir) == -1)
 		{
 			g_exit_status = 1;
-			ft_printf("bash: cd: %s: can't implement cd\n", dir);
+			ft_printf("minishell: cd: %s: can't implement cd\n", dir);
 		}
 	}
 }
