@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 02:15:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/28 14:21:02 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:41:46 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,27 +68,27 @@ void	close_unused_output(t_process *process)
 	}
 }
 
-void	set_fd(t_process *process, char *file_name, int redir_flag)
+void	set_fd(t_head *head, t_process *process, char *file_name, int redir_flag)
 {
 	if (redir_flag == 1)
 	{
 		close_unused_output(process);
-		process->re_outfile_fd = get_outfile(file_name);
+		process->re_outfile_fd = get_outfile(head, file_name);
 	}
 	else if (redir_flag == 2)
 	{
 		close_unused_output(process);
-		process->re_append_fd = get_append(file_name);
+		process->re_append_fd = get_append(head, file_name);
 	}
 	else if (redir_flag == 3)
 	{
 		close_unused_input(process);
-		process->re_infile_fd = get_infile(file_name);
+		process->re_infile_fd = get_infile(head, file_name);
 	}
 	else if (redir_flag == 4)
 	{
 		close_unused_input(process);
-		process->heredoc_fd = get_heredoc(process, file_name);
+		process->heredoc_fd = get_heredoc(head, process, file_name);
 	}
 }
 
@@ -257,7 +257,7 @@ void	concat_cmd(t_token *temp, t_process *process, char **cmd, char **str)
 	}
 }
 
-void	fill_elem(t_token *temp, t_process *process, char **cmd)
+void	fill_elem(t_head *head, t_token *temp, t_process *process, char **cmd)
 {
 	char	*temp_str;
 	int		is_filename;
@@ -269,7 +269,7 @@ void	fill_elem(t_token *temp, t_process *process, char **cmd)
 	{
 		if (is_filename == 1)
 		{
-			set_fd(process, temp->cmd, flag);
+			set_fd(head, process, temp->cmd, flag);
 			is_filename = 0;
 		}
 		else if (temp->redir_flag == 0)
@@ -383,7 +383,7 @@ t_process	*get_process(t_head *head, t_list *line, char **path)
 	cmd = ft_strdup("");
 	temp = line->token;
 	init_fd(process);
-	fill_elem(temp, process, &cmd);
+	fill_elem(head, temp, process, &cmd);
 	process->cmd = cmd;
 	set_process(head, process, path);
 	return (process);

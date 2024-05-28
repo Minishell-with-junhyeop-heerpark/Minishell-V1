@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/27 21:28:38 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/28 16:37:56 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,10 +173,10 @@ void		close_all_pipes(int **pipes, int n);
 
 	//get_fd
 int			check_redir_heredoc(t_process *process);
-int			get_infile(char	*file_name);
-int			get_heredoc(t_process *process, char *limiter);
-int			get_outfile(char *file_name);
-int			get_append(char *file_name);
+int			get_infile(t_head *head, char *file_name);
+int			get_heredoc(t_head *head, t_process *process, char *limiter);
+int			get_outfile(t_head *head, char *file_name);
+int			get_append(t_head *head, char *file_name);
 void		init_fd(t_process *process);
 
 	//here_doc
@@ -186,8 +186,8 @@ void		make_infile(char *limiter, char *file_name);
 void		make_temp(char *limiter, char *file_name);
 
 	//list_to_processes_utils
-void		fill_elem(t_token *temp, t_process *process, char **cmd);
-void		set_fd(t_process *process, char *file_name, int redir_flag);
+void		fill_elem(t_head *head, t_token *temp, t_process *process, char **cmd);
+void		set_fd(t_head *head, t_process *process, char *file_name, int redir_flag);
 int			get_redir_flag(char	*token);
 void		set_process(t_head *head, t_process *process, char **path);
 t_process	*get_process(t_head *head, t_list *line, char **path);
