@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:10:29 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/27 21:17:42 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/30 14:58:44 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,16 @@ void	add_cmd(t_head *head, char *line, int pipe_flag)
 	command = ft_strdup(&line[i]);
 	if (!command)
 		error_msg(0);
-	if (check_white_space(command) && pipe_flag)
+	if (check_white_space(command))
 	{
-		head->get_error = 2;
+		if (pipe_flag)
+			head->get_error = 2;
+		else
+			head->get_error = 1;
 		free(command);
 		return ;
 	}
-	ft_lst_add(head, cmd_list_new(head, command));
+	ft_lst_add(head, cmd_list_new(command));
 	free(command);
 }
 
@@ -92,32 +95,3 @@ int	parse(char *line, t_head *head)
 	}
 	return (1);
 }
-
-// int	error_check(char *str)
-// {
-// 	int n;
-// 	char *command;
-
-// 	n = 0;
-// 	while (str[n] != ' ' || str[n] != ';' || str[n] != '|')
-// 		n++;
-// 	command = (char *)malloc(sizeof(char) * n + 1);
-// 	command = memcpy(command, str, n);
-// 	printf("%s", command);
-// 	split_pipe(str);
-// 	return (1);
-// }
-
-// int main(int ac, char **av, char **envp)
-// {
-// 	(void)ac;
-// 	(void)av;
-// 	while (*envp != NULL)
-// 	{
-// 		printf("%s\n", *envp);
-// 		envp++;
-// 	}
-
-// 	error_check("asdhfjkl sdfsdkf | dsfjklds");
-// 	return (0);
-// }

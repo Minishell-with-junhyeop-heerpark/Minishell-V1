@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_to_process.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42.kr>          +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 02:15:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/28 16:41:46 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/30 14:50:24 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,9 +114,6 @@ char	*getkey(char *str)
 
 char	*env_find_value(char *key, t_list *envp)
 {
-	// int	i;
-
-	// i = 0;
 	while (envp)
 	{
 		if (ft_strcmp(envp->key, key) == 0)

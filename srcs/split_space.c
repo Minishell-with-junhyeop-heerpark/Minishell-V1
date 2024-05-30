@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 22:41:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/27 21:17:47 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/30 14:37:06 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,40 +46,37 @@ char	*split_str(char const *s, char c)
 	str[i] = 0;
 	return (str);
 }
-
-char	*make_cmd(t_head *head, char *cmd, t_split_var *v, char q)
+typedef struct s_make_cmd_var
 {
-	char	*p_cmd;
-	int		i;
-	int		s;
-	int		ind;
+	int	i;
+	int	s;
+	int	ind;
+}	t_make_cmd_var;
 
-	s = v->start;
-	i = set_len(cmd, v->i, q);
-	if (i == -1)
+char	*make_cmd(char *cmd, t_split_var *sv, char q)
+{
+	char			*p_cmd;
+	t_make_cmd_var	v;
+
+	v = (t_make_cmd_var){set_len(cmd, sv->i, q), sv->start, 0};
+	if (v.i - v.s <= 1)
 	{
-		head->get_error = 1;
+		sv->i = v.i + 1;
+		sv->start = v.i + 1;
 		return (NULL);
 	}
-	if (i - s <= 1)
-	{
-		v->i = i + 1;
-		v->start = i + 1;
-		return (NULL);
-	}
-	ind = 0;
-	p_cmd = (char *)malloc(sizeof(char) * (i - s - 2) + 1);
+	p_cmd = (char *)malloc(sizeof(char) * (v.i - v.s - 2) + 1);
 	if (!p_cmd)
 		error_msg(0);
-	while (s < i)
+	while (v.s < v.i)
 	{
-		if (cmd[s] != q)
-			p_cmd[ind++] = cmd[s];
-		s++;
+		if (cmd[v.s] != q)
+			p_cmd[v.ind++] = cmd[v.s];
+		v.s++;
 	}
-	p_cmd[ind] = 0;
-	v->i = i + 1;
-	v->start = i + 1;
+	p_cmd[v.ind] = 0;
+	sv->i = v.i + 1;
+	sv->start = v.i + 1;
 	return (p_cmd);
 }
 
@@ -88,7 +85,7 @@ void	split_space_ext(t_split_var *v, char *cmd)
 	if (cmd[v->i] == '\0')
 		v->flag = 1;
 	cmd[v->i] = '\0';
-	if (v->i > v->start && v->backup)	// backup이 있었다면 둘이합치기
+	if (v->i > v->start && v->backup)
 		v->backup = ft_strjoin(v->backup, &cmd[v->start]);
 	if (!v->backup)
 		add_token(&v->lst, &cmd[v->start]);
@@ -99,7 +96,7 @@ void	split_space_ext(t_split_var *v, char *cmd)
 	v->start = v->i;
 }
 
-t_token	*split_space(t_head *head, char *cmd, char space)
+t_token	*split_space(char *cmd, char space)
 {
 	t_split_var	v;
 
@@ -116,14 +113,12 @@ t_token	*split_space(t_head *head, char *cmd, char space)
 			if (s_quote_check(cmd[v.i], &v))
 			{
 				if (!v.backup)
-					v.backup = make_cmd(head, cmd, &v, cmd[v.i]);
+					v.backup = make_cmd(cmd, &v, cmd[v.i]);
 				else
-					my_strjoin(&v.backup, make_cmd(head, cmd, &v, cmd[v.i]));
+					my_strjoin(&v.backup, make_cmd(cmd, &v, cmd[v.i]));
 			}
 			else
 				v.i++;
-			if (head->get_error)
-				return (NULL);
 		}
 		split_space_ext(&v, cmd);
 	}

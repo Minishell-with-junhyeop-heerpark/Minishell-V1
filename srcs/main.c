@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:10:35 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/27 21:42:56 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/30 14:59:20 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-// gcc testsignal.c -lreadline -L/Users/sham/.brew/opt/readline/lib -I/Users/sham/.brew/opt/readline/include
 
 int	check_white_space(char *str)
 {
@@ -48,7 +47,6 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		str = readline("minishell$ ");
-		// system("leaks --list minishell");
 		if (!str)
 			exit_signal();
 		else if (*str == '\0' || check_white_space(str))

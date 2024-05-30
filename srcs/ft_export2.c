@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 21:23:55 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/27 21:24:49 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/30 14:59:57 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	key_error(char *key)
 
 int	key_validate(char *key)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!ft_isalpha(key[i]) && key[i] != '_')

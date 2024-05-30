@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 21:13:55 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/27 21:17:50 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/30 15:37:55 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,11 @@ t_head	*init_head(char **envp, int argc, char **argv)
 	set_env(&(head->data->env), envp);
 	set_home(head);
 	return (head);
+}
+
+void	export_update_free(char *env_value, char *value, char *key)
+{
+	free(env_value);
+	free(value);
+	free(key);
 }
