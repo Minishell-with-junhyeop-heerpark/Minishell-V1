@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42.kr>          +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/28 16:37:56 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/30 15:57:19 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,17 @@
 # define STDOUT 		1
 # define STDERR 		2
 
-int	g_exit_status;
-
 typedef struct s_flag
 {
 	int	quote;
 	int	dquote;
-	int pipe;
+	int	pipe;
 
 }	t_flag;
 
 typedef struct s_parse
 {
-	t_flag flag;
+	t_flag	flag;
 	int		start;
 	int		i;
 }	t_parse;
@@ -127,30 +125,26 @@ typedef struct s_value_var
 	int	s;
 }	t_value_var;
 
-
-int	check_white_space(char *str);
-
+int			g_exit_status;
+int			check_white_space(char *str);
 
 //parsing func
 void		error_msg(int type);
-
 void		add_cmd(t_head *head, char *line, int pipe_flag);
 void		add_token(t_token **lst, char *cmd);
 
-t_token		*make_token(t_head *head, char *command);
+char		*make_cmd(char *cmd, t_split_var *sv, char q);
+t_token		*make_token(char *command);
 t_head		*init_head(char **envp, int argc, char **argv);
 t_token		*token_new(char *command, int flag, int dquote_flag);
 void		void_argument(int argc, char **argv);
-
-t_list		*cmd_list_new(t_head *head, char *command);
+t_list		*cmd_list_new(char *command);
 void		ft_lst_add(t_head *head, t_list *new);
 void		ft_token_add(t_token **lst, t_token *new);
-
 char		**split_pipe(char const *s);
-t_token		*split_space(t_head *head, char *s, char space);	// pipe 단위로 나눈 것 -> 공백 단위로 나눔
-
+t_token		*split_space(char *s, char space);
 void		free_list(t_head *head, char *str);
-int	parse(char *str, t_head *head);
+int			parse(char *str, t_head *head);
 
 //exe func
 
@@ -186,8 +180,10 @@ void		make_infile(char *limiter, char *file_name);
 void		make_temp(char *limiter, char *file_name);
 
 	//list_to_processes_utils
-void		fill_elem(t_head *head, t_token *temp, t_process *process, char **cmd);
-void		set_fd(t_head *head, t_process *process, char *file_name, int redir_flag);
+void		fill_elem(t_head *head, t_token *temp, \
+					t_process *process, char **cmd);
+void		set_fd(t_head *head, t_process *process, \
+					char *file_name, int redir_flag);
 int			get_redir_flag(char	*token);
 void		set_process(t_head *head, t_process *process, char **path);
 t_process	*get_process(t_head *head, t_list *line, char **path);
@@ -234,62 +230,58 @@ void		add_homepath(t_head *head, char **exec_cmd, int only_home);
 void		ft_echo(char **exec_cmd);
 
 	// signal.c
-void	sig_handler(int signo);
-void	set_signal();
-void	temi_print_off();
-void	temi_print_on();
-void	set_signal_heredoc(void);
-void	do_sigint_heredoc(int signum);
-void	exit_signal();
+void		sig_handler(int signo);
+void		set_signal(void);
+void		temi_print_off(void);
+void		temi_print_on(void);
+void		set_signal_heredoc(void);
+void		do_sigint_heredoc(int signum);
+void		exit_signal(void);
 
 // ft_exit.c
-int	ft_exit(char **exec_cmd);
+int			ft_exit(char **exec_cmd);
 
 // ft_export.c
-void	ft_export(t_head *head, char **exec_cmd);
-void	export_update(t_head *head, t_list **lst, char *key, char *value);
-int	get_op(char *cmd);
-void	ft_export_ext(t_head *head, t_list *env);
+void		ft_export(t_head *head, char **exec_cmd);
+void		export_update(t_head *head, t_list **lst, char *key, char *value);
+int			get_op(char *cmd);
+void		ft_export_ext(t_head *head, t_list *env, int op);
 
-void	export_add_prev(t_list **lst, t_list *new, t_list **top);
-void	sorting(t_list *t_env, t_list **top);
-void	sort_list(t_list *env, t_list **top);
-void	show_export(t_head *head);
-char	*export_strjoin(char *s1, char *s2);
+void		export_add_prev(t_list **lst, t_list *new, t_list **top);
+void		sorting(t_list *t_env, t_list **top);
+void		sort_list(t_list *env, t_list **top);
+void		show_export(t_head *head);
+char		*export_strjoin(char *s1, char *s2);
 
-void	free_show_list(t_list **top);
-void	key_error(char *key);
-int		key_validate(char *key);
-char	*export_getkey(char *cmd, int *op);
-char	*export_getvalue(char *cmd);
-
+void		free_show_list(t_list **top);
+void		key_error(char *key);
+int			key_validate(char *key);
+char		*export_getkey(char *cmd, int *op);
+char		*export_getvalue(char *cmd);
 
 // error.c
-void	print_error(char *cmd, char *input, char *msg, int exit_status);
-void	print_bash_error(char *input, char *msg, int exit_status);
+void		print_error(char *cmd, char *input, char *msg, int exit_status);
+void		print_bash_error(char *input, char *msg, int exit_status);
 
 //free.c
-void	clear_processes(t_head *head);
-
+void		clear_processes(t_head *head);
 
 // utils2.c
-void	init_parse(t_parse *p);
-int		s_quote_check(char c, t_split_var *flag);
-int		s_dquote_check(char c, t_split_var *flag);
-int		set_len(char *str, int i, char q);
+void		init_parse(t_parse *p);
+int			s_quote_check(char c, t_split_var *flag);
+int			s_dquote_check(char c, t_split_var *flag);
+int			set_len(char *str, int i, char q);
 
 // utils3.c
-void	set_home(t_head *head);
-
-// signal2.c
-void	temi_print_off(void);
-void	set_signal_heredoc(void);
-void	set_signal_origin(void);
-void	do_sigint_heredoc(int signum);
-void	exit_signal(void);
-
-void	sig_handler(int signo);
-void	set_signal(void);
-void	temi_print_on(void);
+void		set_home(t_head *head);
+void		temi_print_off(void);
+void		set_signal_heredoc(void);
+void		set_signal_origin(void);
+void		do_sigint_heredoc(int signum);
+void		exit_signal(void);
+void		sig_handler(int signo);
+void		set_signal(void);
+void		temi_print_on(void);
+void		export_update_free(char *env_value, char *value, char *key);
 
 #endif

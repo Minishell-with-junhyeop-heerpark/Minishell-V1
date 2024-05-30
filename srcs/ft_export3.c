@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 21:25:38 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/27 21:26:06 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/30 14:59:49 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	export_add_prev(t_list **lst, t_list *new, t_list **top)
 	tmp->prev->next = new;
 	tmp->prev = new;
 }
+
 void	sorting(t_list *t_env, t_list **top)
 {
 	t_list	*tmp;
@@ -67,7 +68,6 @@ void	sort_list(t_list *env, t_list **top)
 	}
 }
 
-
 void	show_export(t_head *head)
 {
 	t_list	*env;
@@ -86,7 +86,7 @@ void	show_export(t_head *head)
 		if (tmp->value)
 			printf("%s=\"%s\"\n", tmp->key, tmp->value);
 		else
-			printf("%s\n",tmp->key);
+			printf("%s\n", tmp->key);
 		tmp = tmp->next;
 	}
 	free_show_list(&top);

@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:05:39 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/27 21:26:09 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/30 15:56:10 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,7 @@ void	export_update(t_head *head, t_list **lst, char *key, char *value)
 				return ;
 			else
 				str = export_strjoin(env->value, value);
-			free(env->value);
-			free(value);
-			free(key);			
+			export_update_free(env->value, value, key);
 			env->value = str;
 			return ;
 		}
@@ -44,7 +42,7 @@ void	export_update(t_head *head, t_list **lst, char *key, char *value)
 
 void	export_ext(t_head *head, t_list **lst, char *key, char *value)
 {
-	t_list *tmp;
+	t_list	*tmp;
 
 	tmp = *lst;
 	while (tmp)
@@ -74,21 +72,19 @@ int	get_op(char *cmd)
 		if (cmd[i] == '=')
 			break ;
 		if (cmd[i] == '+' && cmd[i + 1] == '=')
-			return (1);		// += 
+			return (1);
 		i++;
 	}
-	return (0); 	// =
+	return (0);
 }
 
-void	ft_export_ext(t_head *head, t_list *env)
+void	ft_export_ext(t_head *head, t_list *env, int op)
 {
 	t_token	*tmp;
 	char	*cmd;
 	char	*key;
 	char	*value;
-	int		op;
 
-	op = 0;
 	tmp = head->top->token->next;
 	while (tmp)
 	{
@@ -122,7 +118,7 @@ void	ft_export(t_head *head, char **exec_cmd)
 		return ;
 	}
 	tmp = head->data->env->next;
-	ft_export_ext(head, tmp);
+	ft_export_ext(head, tmp, 0);
 	if (head->get_error)
 		g_exit_status = 1;
 }

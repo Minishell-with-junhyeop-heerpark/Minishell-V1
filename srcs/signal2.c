@@ -6,19 +6,19 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 20:03:35 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/27 20:57:26 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/30 14:48:24 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	temi_print_off()
+void	temi_print_off(void)
 {
-	struct termios term;
+	struct termios	term;
 
 	tcgetattr(STDIN_FILENO, &term);
-    term.c_lflag &= ~(ECHOCTL);
-    tcsetattr(STDIN_FILENO, TCSANOW, &term);
+	term.c_lflag &= ~(ECHOCTL);
+	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 }
 
 void	set_signal_heredoc(void)
@@ -36,11 +36,10 @@ void	set_signal_origin(void)
 void	do_sigint_heredoc(int signum)
 {
 	(void)signum;
-	ft_putstr_fd("\n", STDERR);
 	exit (1);
 }
 
-void	exit_signal()
+void	exit_signal(void)
 {
 	ft_printf("\033[1A");
 	ft_printf("\033[10C");

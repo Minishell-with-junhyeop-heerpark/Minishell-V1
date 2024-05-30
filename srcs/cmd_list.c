@@ -6,13 +6,13 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 20:00:39 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/27 21:16:26 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/30 15:36:24 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_list	*cmd_list_new(t_head *head, char *command)
+t_list	*cmd_list_new(char *command)
 {
 	t_list	*newnode;
 
@@ -21,7 +21,7 @@ t_list	*cmd_list_new(t_head *head, char *command)
 		error_msg(0);
 	newnode->next = NULL;
 	newnode->prev = NULL;
-	newnode->token = make_token(head, command);
+	newnode->token = make_token(command);
 	return (newnode);
 }
 
@@ -40,11 +40,11 @@ t_token	*token_new(char *command, int flag, int quote_flag)
 	return (new);
 }
 
-t_token	*make_token(t_head *head, char *command)
+t_token	*make_token(char *command)
 {
 	t_token	*token;
 
-	token = split_space(head, command, ' ');
+	token = split_space(command, ' ');
 	return (token);
 }
 
@@ -69,7 +69,6 @@ void	ft_token_add(t_token **lst, t_token *new)
 	}
 }
 
-
 void	ft_lst_add(t_head *head, t_list *new)
 {
 	t_list	*tmp;
@@ -79,7 +78,7 @@ void	ft_lst_add(t_head *head, t_list *new)
 	if (tmp == NULL)
 	{
 		head->top = new;
-		return ; 
+		return ;
 	}
 	else if (tmp == NULL && new == NULL)
 		return ;
