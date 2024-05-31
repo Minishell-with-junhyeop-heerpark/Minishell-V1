@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 13:13:59 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/27 21:37:28 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/31 22:17:25 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,4 +94,3 @@ void	wait_process(int child_num)
 		count++;
 	}
 }
-

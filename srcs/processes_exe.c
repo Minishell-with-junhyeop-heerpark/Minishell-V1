@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:11:25 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/31 21:47:21 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/31 22:16:06 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,10 @@ void	get_processes(t_head *head, char **envp)
 	t_process	**processes;
 	t_list		*node;
 	char		**path;
-	char		*env_path;
 	int			i;
 
 	processes = (t_process **)malloc(sizeof(t_process *) * (head->size + 1));
-	env_path = get_envpath(envp);
-	if (env_path == NULL)
-		path = NULL;
-	else
-	{
-		path = ft_split(env_path, ':');
-		if (!path)
-			perror_exit("get_processes-split");
-	}
+	path = get_path(envp);
 	i = 0;
 	node = head->top;
 	while (node)
@@ -107,7 +98,7 @@ void	run_cmd(t_head *head, char **envp, int i)
 	}
 }
 
-void	start_process(t_head *head, char **envp) 
+void	start_process(t_head *head, char **envp)
 {
 	pid_t	pid;
 
