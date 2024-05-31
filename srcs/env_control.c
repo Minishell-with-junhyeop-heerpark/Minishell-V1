@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 22:07:00 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/31 21:05:38 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/31 21:21:15 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,20 +73,4 @@ void	update_envp(t_head *head)
 		free_splited(head->data->envp);
 	head->data->envp = ft_split(envp_line, ' ');
 	free(envp_line);
-	// for (int i=0; head->data->envp[i]; i++)
-	// {
-	// 	printf("%s\n",head->data->envp[i]);
-	// }
 }
-
-// int	main(int argc, char **argv, char **envp)
-// {
-// 	t_list	*head;
-// 	char	*envp_line;
-// 	char	**my_envp;
-
-// 	set_env(&head, envp);
-
-// 	envp_line = get_envp_line(head);
-// 	update_envp()
-// }

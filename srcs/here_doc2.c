@@ -1,35 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_fd.c                                           :+:      :+:    :+:   */
+/*   here_doc2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/23 16:29:12 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/31 21:23:32 by heerpark         ###   ########.fr       */
+/*   Created: 2024/05/31 21:25:36 by heerpark          #+#    #+#             */
+/*   Updated: 2024/05/31 21:26:14 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_redir_heredoc(t_process *process)
+void	kill_heredoc(t_head *head)
 {
-	if (process->re_infile_fd != -42)
-		return (1);
-	else if (process->re_outfile_fd != -42)
-		return (1);
-	else if (process->re_append_fd != -42)
-		return (1);
-	else if (process->heredoc_fd != -42)
-		return (1);
-	else
-		return (0);
-}
+	int		i;
 
-void	init_fd(t_process *process)
-{
-	process->re_outfile_fd = -42;
-	process->re_append_fd = -42;
-	process->re_infile_fd = -42;
-	process->heredoc_fd = -42;
+	i = 0;
+	while (head->processes[i])
+	{
+		if (head->processes[i]->heredoc_fd > 0)
+		{
+			unlink(head->processes[i]->heredoc_filename);
+		}
+		i++;
+	}
 }

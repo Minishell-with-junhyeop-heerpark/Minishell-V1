@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 14:28:58 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/23 23:05:02 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/31 21:21:37 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ char	*get_pwd(void)
 	return (cwd);
 }
 
-// if only_home is true, whole path is replaced with home_path, 
-// otherwise first ~ is replaced with home_path
 void	add_homepath(t_head *head, char **exec_cmd, int only_home)
 {
 	char	*res;

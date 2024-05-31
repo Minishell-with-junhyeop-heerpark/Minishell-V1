@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/31 16:28:33 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/31 21:33:56 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ void		ft_lst_add(t_head *head, t_list *new);
 void		ft_token_add(t_token **lst, t_token *new);
 char		**split_pipe(char const *s);
 t_token		*split_space(char *s, char space);
-void		free_list(t_head *head, char *str);
+void		clear(t_head *head, char *str);
 int			parse(char *str, t_head *head);
 
 //exe func
@@ -214,7 +214,6 @@ t_list		*lst_new(char *key, char *value);
 void		lstadd_back(t_list **lst, t_list *new);
 char		*remove_node(t_list **lst, char *key);
 void		lst_clear(t_list **lst);
-void		lst_print(t_list *head);
 void		get_node_value(t_list *env, t_token *token);
 
 	//env_control.c

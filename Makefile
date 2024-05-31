@@ -10,7 +10,9 @@ SRC	= $(SRC_DIR)/cmd_list.c \
 		$(SRC_DIR)/split_space.c \
 		$(SRC_DIR)/utils.c \
 		$(SRC_DIR)/get_fd.c \
+		$(SRC_DIR)/get_fd2.c \
 		$(SRC_DIR)/here_doc.c \
+		$(SRC_DIR)/here_doc2.c \
 		$(SRC_DIR)/exe_parsing.c \
 		$(SRC_DIR)/pipe_control.c \
 		$(SRC_DIR)/exe_utils.c \

@@ -6,11 +6,28 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:11:25 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/31 19:05:24 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/31 21:47:21 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	**get_path(char **envp)
+{
+	char		*env_path;
+	char		**path;
+
+	env_path = get_envpath(envp);
+	if (env_path == NULL)
+		path = NULL;
+	else
+	{
+		path = ft_split(env_path, ':');
+		if (!path)
+			perror_exit("get_processes-split");
+	}
+	return (path);
+}
 
 void	get_processes(t_head *head, char **envp)
 {
@@ -21,7 +38,6 @@ void	get_processes(t_head *head, char **envp)
 	int			i;
 
 	processes = (t_process **)malloc(sizeof(t_process *) * (head->size + 1));
-	node = head->top;
 	env_path = get_envpath(envp);
 	if (env_path == NULL)
 		path = NULL;
@@ -32,6 +48,7 @@ void	get_processes(t_head *head, char **envp)
 			perror_exit("get_processes-split");
 	}
 	i = 0;
+	node = head->top;
 	while (node)
 	{
 		processes[i] = get_process(head, node, path);
@@ -45,7 +62,7 @@ void	get_processes(t_head *head, char **envp)
 	return ;
 }
 
-void	 set_inout(t_process *process, int **pipes, int i, int close_sig)
+void	set_inout(t_process *process, int **pipes, int i, int close_sig)
 {
 	(void)close_sig;
 	(void)i;
@@ -53,60 +70,20 @@ void	 set_inout(t_process *process, int **pipes, int i, int close_sig)
 	if (process->re_outfile_fd > 0)
 	{
 		dup2(process->re_outfile_fd, STDOUT_FILENO);
-		// if (close_sig)
-		// 	close(pipes[i][1]);
 	}
 	if (process->re_append_fd > 0)
 	{
 		dup2(process->re_append_fd, STDOUT_FILENO);
-		// if (close_sig)
-		// 	close(pipes[i][1]);
 	}
 	if (process->re_infile_fd > 0)
 	{
 		dup2(process->re_infile_fd, STDIN_FILENO);
-		// if (close_sig)
-		// 	close(pipes[i][0]);
 	}
 	if (process->heredoc_fd > 0)
 	{
 		dup2(process->heredoc_fd, STDIN_FILENO);
-		// if (close_sig)
-		// 	close(pipes[i][0]);
 	}
 }
-
-// void	start_process(t_head *head, char **envp)
-// {
-// 	pid_t	pid;
-
-// 	if (is_builtin(head->processes[0]->exec_cmd))
-// 	{
-// 		set_inout(head->processes[0], NULL, 0, 0);
-// 		run_builtin(head, head->processes[0]->exec_cmd);
-// 		dup2(head->data->original_stdout, STDOUT_FILENO);
-// 		dup2(head->data->original_stdin, STDIN_FILENO);
-// 		return ;
-// 	}
-// 	if (is_filepath(head->processes[0]->exec_cmd))
-// 	{
-// 		set_inout(head->processes[0], NULL, 0, 0);
-// 		if (execve(head->processes[0]->exec_cmd[0], \
-// 		head->processes[0]->exec_cmd, envp) == -1)
-// 			perror_exit("file exe execve error");
-// 		// return ;
-// 	}
-// 	pid = fork();
-// 	if (pid == -1)
-// 		perror_exit("start_process fork error");
-// 	else if (pid == 0)
-// 	{
-// 		set_inout(head->processes[0], NULL, 0, 0);
-// 		if (execve(head->processes[0]->exec_path, \
-// 		head->processes[0]->exec_cmd, envp) == -1)
-// 			perror_exit("execve error");
-// 	}
-// }
 
 void	run_cmd(t_head *head, char **envp, int i)
 {
@@ -126,10 +103,6 @@ void	run_cmd(t_head *head, char **envp, int i)
 	if (execve(head->processes[i]->exec_path, \
 	head->processes[i]->exec_cmd, envp) == -1)
 	{
-		printf("exe %d!!!!!!\n", i);
-		printf("%s\n", head->processes[i]->exec_path);
-		printf("%s, %s\n", head->processes[i]->exec_cmd[0], head->processes[i]->exec_cmd[1]);
-		printf("%s\n",envp[0]);
 		perror_exit("execve error");
 	}
 }
@@ -169,7 +142,7 @@ void	start_processes(t_head *head, char **envp, int **pipes)
 		else if (pid == 0)
 		{
 			temi_print_on();
-			if (i == 0) 
+			if (i == 0)
 				first_child(head, pipes, envp, i);
 			else if (i == head->size - 1)
 				last_child(head, pipes, envp, i);
@@ -182,11 +155,8 @@ void	start_processes(t_head *head, char **envp, int **pipes)
 	}
 }
 
-
-
 void	exe(t_head *head, char **envp)
 {
-	head->get_error = 0;
 	if (head->size == 1)
 	{
 		get_processes(head, envp);
@@ -213,4 +183,3 @@ void	exe(t_head *head, char **envp)
 	}
 	set_signal();
 }
-//have to free malloced variable

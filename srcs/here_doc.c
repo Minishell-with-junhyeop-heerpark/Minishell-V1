@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 16:08:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/27 20:09:03 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/31 21:25:51 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,9 @@ char	*get_temp_name(void)
 
 char	*my_stradd(char *dest, char *src)
 {
-	// int		i;
 	char	*str;
 	char	*sstr;
 
-	// i = 0;
 	str = ft_strjoin(dest, src);
 	free(dest);
 	free(src);
@@ -103,68 +101,4 @@ void	make_temp(char *limiter, char *file_name)
 		make_infile(limiter, file_name);
 	else
 		wait_process(1);
-}
-
-// void	set_rm_path(t_head *head, char **envp)
-// {
-// 	int		path_idx;
-// 	char	**path;
-// 	char	*now_path;
-// 	char	*exec_path;
-
-// 	path = ft_split(get_envpath(envp), ':');
-// 	path_idx = 0;
-// 	while (path[path_idx])
-// 	{
-// 		now_path = ft_strjoin(path[path_idx], "/");
-// 		exec_path = ft_strjoin(now_path, "rm");
-// 		free(now_path);
-// 		if (access(exec_path, X_OK) == 0)
-// 		{
-// 			head->exec_rm_path = exec_path;
-// 			path_idx = -1;
-// 			break ;
-// 		}
-// 		free(exec_path);
-// 		path_idx++;
-// 	}
-// 	free_splited(path);
-// 	if (path_idx != -1)
-// 		perror_exit("rm not found");
-// }
-
-// void	set_rm_cmd(t_head *head, char *filename)
-// {
-// 	char	*temp;
-// 	char	*file_cwd;
-// 	char	*cmd;
-// 	char	*cwd;
-// 	char	buf[1024];
-
-// 	cwd = getcwd(buf, sizeof(buf));
-// 	if (cwd == NULL) 
-// 		perror_exit("getcwd() error");
-// 	temp = ft_strjoin("/", filename);
-// 	file_cwd = ft_strjoin(cwd, temp);
-// 	free(temp);
-// 	cmd = ft_strjoin("rm ", file_cwd);
-// 	free(file_cwd);
-// 	head->exec_rm_cmd = ft_split(cmd, ' ');
-// 	free(cmd);
-// }
-
-//delete the heredoc temporay file and free the var heredoc_name
-void	kill_heredoc(t_head *head)
-{
-	int		i;
-
-	i = 0;
-	while (head->processes[i])
-	{
-		if (head->processes[i]->heredoc_fd > 0)
-		{
-			unlink(head->processes[i]->heredoc_filename);
-		}
-		i++;
-	}
 }

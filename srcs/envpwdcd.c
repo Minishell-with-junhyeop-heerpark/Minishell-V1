@@ -6,13 +6,12 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 20:27:15 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/31 21:14:36 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/31 21:21:19 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-//pwd 마지막에 개행을 넣어 말어 (현재 x)
 void	pwd(void)
 {
 	char	cwd[1024];

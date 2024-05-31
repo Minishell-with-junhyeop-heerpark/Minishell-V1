@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:10:35 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/31 21:05:27 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/31 21:35:00 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	void_argument(int argc, char **argv)
 void	parse_error(char *str, t_head *head)
 {
 	error_msg(head->get_error + 1);
-	free_list(head, str);
+	clear(head, str);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -61,8 +61,7 @@ int	main(int argc, char **argv, char **envp)
 			}
 			update_envp(head);
 			exe(head, head->data->envp);
-			kill_heredoc(head);
-			free_list(head, str);
+			clear(head, str);
 		}
 	}
 	return (0);
