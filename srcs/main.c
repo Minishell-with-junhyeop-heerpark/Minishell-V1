@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:10:35 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/31 19:08:13 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/05/31 20:35:49 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,15 @@ int	main(int argc, char **argv, char **envp)
 		else
 		{
 			add_history(str);
+			printf("parsing start!!!!!!!!\n\n");
 			if (parse(str, head) == 0)
 			{
 				parse_error(str, head);
 				continue ;
 			}
+			printf("update_envp start!!!!!\n\n");
 			update_envp(head);
+			printf("exe start!!!!!!!!\n\n");
 			exe(head, head->data->envp);
 			kill_heredoc(head);
 			free_list(head, str);
