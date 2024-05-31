@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   processes_exe.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:11:25 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/30 14:49:01 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/31 19:05:24 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,20 @@ void	get_processes(t_head *head, char **envp)
 	t_process	**processes;
 	t_list		*node;
 	char		**path;
+	char		*env_path;
 	int			i;
 
 	processes = (t_process **)malloc(sizeof(t_process *) * (head->size + 1));
 	node = head->top;
-	path = ft_split(get_envpath(envp), ':');
-	if (!path)
-		perror_exit("get_processes-split");
+	env_path = get_envpath(envp);
+	if (env_path == NULL)
+		path = NULL;
+	else
+	{
+		path = ft_split(env_path, ':');
+		if (!path)
+			perror_exit("get_processes-split");
+	}
 	i = 0;
 	while (node)
 	{
@@ -32,7 +39,8 @@ void	get_processes(t_head *head, char **envp)
 		i++;
 	}
 	processes[i] = NULL;
-	free_splited(path);
+	if (path)
+		free_splited(path);
 	head->processes = processes;
 	return ;
 }

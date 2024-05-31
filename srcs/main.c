@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:10:35 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/30 14:59:20 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/31 19:08:13 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ int	main(int argc, char **argv, char **envp)
 				parse_error(str, head);
 				continue ;
 			}
-			exe(head, envp);
+			update_envp(head);
+			exe(head, head->data->envp);
 			kill_heredoc(head);
 			free_list(head, str);
 		}

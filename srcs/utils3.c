@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 21:13:55 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/30 15:37:55 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/31 17:24:37 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ t_head	*init_head(char **envp, int argc, char **argv)
 	if (!head)
 		error_msg(0);
 	head->top = NULL;
+	head->data->envp = NULL;
 	head->size = 0;
 	head->data->original_stdin = dup(STDOUT_FILENO);
 	head->data->original_stdout = dup(STDOUT_FILENO);

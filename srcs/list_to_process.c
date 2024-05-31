@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_to_process.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 02:15:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/30 14:50:24 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/31 19:08:00 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -313,21 +313,24 @@ void	set_exec(t_head *head, t_process *process, char **path, int i)
 	char	*exec_path;
 	char	*test_path;
 
-	while (path[i])
+	if (path)
 	{
-		test_path = ft_strjoin(path[i], "/");
-		exec_path = ft_strjoin(test_path, process->exec_cmd[0]);
-		if (access(exec_path, X_OK) == 0)
+		while (path[i])
 		{
-			i = -1;
+			test_path = ft_strjoin(path[i], "/");
+			exec_path = ft_strjoin(test_path, process->exec_cmd[0]);
+			if (access(exec_path, X_OK) == 0)
+			{
+				i = -1;
+				free(test_path);
+				break ;
+			}
 			free(test_path);
-			break ;
+			free(exec_path);
+			i++;
 		}
-		free(test_path);
-		free(exec_path);
-		i++;
 	}
-	if (i != -1)
+	if (path == NULL || i != -1)
 	{
 		exec_path = NULL;
 		print_bash_error(process->exec_cmd[0], "command not found", 127);
