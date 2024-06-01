@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 18:17:19 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/31 21:39:33 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/06/01 14:15:23 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	clear(t_head *head, char *str)
 		free_token(rmv->token);
 		free(rmv);
 	}
-	kill_heredoc(head);
 	if (head->processes)
 		clear_processes(head);
 	head->size = 0;

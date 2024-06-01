@@ -6,52 +6,11 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:11:25 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/31 22:16:06 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/06/01 14:27:07 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	**get_path(char **envp)
-{
-	char		*env_path;
-	char		**path;
-
-	env_path = get_envpath(envp);
-	if (env_path == NULL)
-		path = NULL;
-	else
-	{
-		path = ft_split(env_path, ':');
-		if (!path)
-			perror_exit("get_processes-split");
-	}
-	return (path);
-}
-
-void	get_processes(t_head *head, char **envp)
-{
-	t_process	**processes;
-	t_list		*node;
-	char		**path;
-	int			i;
-
-	processes = (t_process **)malloc(sizeof(t_process *) * (head->size + 1));
-	path = get_path(envp);
-	i = 0;
-	node = head->top;
-	while (node)
-	{
-		processes[i] = get_process(head, node, path);
-		node = node->next;
-		i++;
-	}
-	processes[i] = NULL;
-	if (path)
-		free_splited(path);
-	head->processes = processes;
-	return ;
-}
 
 void	set_inout(t_process *process, int **pipes, int i, int close_sig)
 {
