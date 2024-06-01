@@ -71,3 +71,5 @@ heredoc 경로를 temp 로 할지 현재 폴더로 할지 정하기.
    << HERE_DOC > a.txt | cat a.txt | wc -l
 
 4. << end | cat | cat 이런거 실행되어야 하는데 내꺼는 << end에서 nocmd로 받아서 뒤에거도 실행이안됨.
+
+5. pipe가 process실행전에 터져있는 경우들이 있다. 그런 경우에는  dup인자를 받아서 -1인치 체크해보자
