@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 21:13:55 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/31 20:34:50 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/06/01 15:57:15 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,11 @@ void	export_update_free(char *env_value, char *value, char *key)
 	free(env_value);
 	free(value);
 	free(key);
+}
+
+int	key_check(char c)
+{
+	if (ft_isalpha(c) == 0 && c != '_')
+		return (0);
+	return (1);
 }
