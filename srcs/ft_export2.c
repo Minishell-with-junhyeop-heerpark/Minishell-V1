@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 21:23:55 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/06/01 15:12:17 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/06/01 18:02:24 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ char	*export_getvalue(char *cmd)
 		v.n++;
 	value = (char *)malloc(sizeof(char) * v.n + 1);
 	if (!value)
-		error_msg(0);
+		error_msg(0, NULL);
 	while (v.s < v.n)
 	{
 		value[v.s] = cmd[v.i - v.n + v.s];

@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 21:53:55 by heerpark          #+#    #+#             */
-/*   Updated: 2024/06/01 16:18:13 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/06/01 19:58:12 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,10 @@ char	*apply_env(char *cmd, t_list *env, int *ind)
 	char	*value;
 
 	key = getkey(&cmd[*ind + 1]);
+	printf("key: %s\n",key);
 	value = env_find_value(key, env);
 	if (!value)
-		error_msg(0);
+		error_msg(0, NULL);
 	changed = replace_cmd(cmd, key, value, ind);
 	*ind = *ind + ft_strlen(value);
 	free(key);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export3.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 21:25:38 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/06/01 15:12:30 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/06/01 18:02:32 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	export_add_prev(t_list **lst, t_list *new, t_list **top)
 	(void)top;
 	tmp = *lst;
 	if (!new)
-		error_msg(0);
+		error_msg(0, NULL);
 	new->next = tmp;
 	new->prev = tmp->prev;
 	tmp->prev->next = new;
@@ -78,7 +78,7 @@ void	show_export(t_head *head)
 	env = head->data->env->next;
 	sort_list(env, &top);
 	if (!top)
-		error_msg(0);
+		error_msg(0, NULL);
 	tmp = top;
 	while (tmp)
 	{

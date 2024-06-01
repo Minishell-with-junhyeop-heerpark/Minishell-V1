@@ -38,7 +38,8 @@ SRC	= $(SRC_DIR)/cmd_list.c \
 		$(SRC_DIR)/ft_export2.c \
 		$(SRC_DIR)/ft_export3.c \
 		$(SRC_DIR)/ft_cd.c \
-		$(SRC_DIR)/wait_process.c
+		$(SRC_DIR)/wait_process.c \
+		$(SRC_DIR)/redir_error.c
 
 LIBDIR = ./libft/
 LIBNAME = ft

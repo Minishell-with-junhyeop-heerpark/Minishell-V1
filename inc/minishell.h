@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/06/01 16:20:16 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/06/01 20:10:23 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,13 @@ typedef struct s_flag
 	int	pipe;
 
 }	t_flag;
+
+typedef struct s_make_cmd_var
+{
+	int	i;
+	int	s;
+	int	ind;
+}	t_make_cmd_var;
 
 typedef struct s_parse
 {
@@ -114,6 +121,7 @@ typedef struct s_split_var {
 typedef struct s_head {
 	int				size;
 	int				get_error;
+	char			*error_str;
 	struct s_list	*top;
 	t_data			*data;
 	t_process		**processes;
@@ -130,16 +138,15 @@ int			g_exit_status;
 int			check_white_space(char *str);
 
 //parsing func
-void		error_msg(int type);
 void		add_cmd(t_head *head, char *line, int pipe_flag);
 void		add_token(t_token **lst, char *cmd);
 
 char		*make_cmd(char *cmd, t_split_var *sv, char q);
-t_token		*make_token(char *command);
+t_token		*make_token(char *command, t_head *head);
 t_head		*init_head(char **envp, int argc, char **argv);
 t_token		*token_new(char *command, int flag, int dquote_flag);
 void		void_argument(int argc, char **argv);
-t_list		*cmd_list_new(char *command);
+t_list		*cmd_list_new(char *command, t_head *head);
 void		ft_lst_add(t_head *head, t_list *new);
 void		ft_token_add(t_token **lst, t_token *new);
 char		**split_pipe(char const *s);
@@ -205,7 +212,7 @@ void		set_process(t_head *head, t_process *process, char **path);
 void		init_process(t_process *process);
 t_process	*get_process(t_head *head, t_list *line, char **path);
 
-	//processes_exe
+//processes_exe
 void		run_cmd(t_head *head, char **envp, int i);
 void		get_processes(t_head *head, char **envp);
 void		set_inout(t_process *process, int **pipes, int i, int close_sig);
@@ -278,6 +285,8 @@ char		*export_getvalue(char *cmd);
 // error.c
 void		print_error(char *cmd, char *input, char *msg, int exit_status);
 void		print_bash_error(char *input, char *msg, int exit_status);
+int			error_msg_ext(int type, t_head *head);
+void		error_msg(int type, t_head *head);
 
 //free.c
 void		clear_processes(t_head *head);
@@ -305,5 +314,11 @@ int			key_check(char c);
 void		cd(t_head *head, char *dir);
 void		change_env(t_head *head);
 void		change_pwd(t_list *env, char *cwd);
+
+// redir_error.c
+void	redir_err_str(char *cmd, t_head *head);
+int	redir_err_flag(char *cmd, t_head *head);
+void	redir_err_check(t_token *token, t_head *head);
+
 
 #endif

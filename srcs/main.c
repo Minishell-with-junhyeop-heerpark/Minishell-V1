@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:10:35 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/06/01 14:18:50 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/06/01 20:09:21 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	void_argument(int argc, char **argv)
 
 void	parse_error(char *str, t_head *head)
 {
-	error_msg(head->get_error + 1);
+	error_msg(head->get_error + 1, head);
 	free_list(head, str);
 }
 
@@ -43,6 +43,8 @@ int	main(int argc, char **argv, char **envp)
 	char	*str;
 	t_head	*head;
 
+	if (ft_strcmp(">>", ">>>") == 0)
+		printf("hi\n");
 	head = init_head(envp, argc, argv);
 	while (1)
 	{
@@ -59,6 +61,8 @@ int	main(int argc, char **argv, char **envp)
 				parse_error(str, head);
 				continue ;
 			}
+			// system("leaks minishell");
+			// sleep(2);
 			update_envp(head);
 			exe(head, head->data->envp);
 			clear(head, str);

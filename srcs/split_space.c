@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 22:41:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/06/01 15:57:43 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/06/01 20:17:37 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,6 @@ char	*split_str(char const *s, char c)
 	str[i] = 0;
 	return (str);
 }
-typedef struct s_make_cmd_var
-{
-	int	i;
-	int	s;
-	int	ind;
-}	t_make_cmd_var;
 
 char	*make_cmd(char *cmd, t_split_var *sv, char q)
 {
@@ -67,7 +61,7 @@ char	*make_cmd(char *cmd, t_split_var *sv, char q)
 	}
 	p_cmd = (char *)malloc(sizeof(char) * (v.i - v.s - 2) + 1);
 	if (!p_cmd)
-		error_msg(0);
+		error_msg(0, NULL);
 	while (v.s < v.i)
 	{
 		if (cmd[v.s] != q)
@@ -77,16 +71,23 @@ char	*make_cmd(char *cmd, t_split_var *sv, char q)
 	p_cmd[v.ind] = 0;
 	sv->i = v.i + 1;
 	sv->start = v.i + 1;
+	printf("cmd : %s\n", p_cmd);
 	return (p_cmd);
 }
 
 void	split_space_ext(t_split_var *v, char *cmd)
 {
+	char	*tmp;
+
 	if (cmd[v->i] == '\0')
 		v->flag = 1;
 	cmd[v->i] = '\0';
 	if (v->i > v->start && v->backup)
+	{
+		tmp = v->backup;
 		v->backup = ft_strjoin(v->backup, &cmd[v->start]);
+		free(tmp);
+	}
 	if (!v->backup)
 		add_token(&v->lst, &cmd[v->start]);
 	else
@@ -122,5 +123,14 @@ t_token	*split_space(char *cmd, char space)
 		}
 		split_space_ext(&v, cmd);
 	}
+
+	t_token *tmp = v.lst;
+	while (tmp)
+	{
+		printf(".... %s %d\n", tmp->cmd, tmp->redir_flag);
+		tmp = tmp->next;
+	}
+	printf(".... |\n");
+
 	return (v.lst);
 }

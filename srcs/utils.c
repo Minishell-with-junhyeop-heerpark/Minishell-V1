@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 18:17:19 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/06/01 14:18:34 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/06/01 19:21:23 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@ void	free_list(t_head *head, char *str)
 	}
 	if (head->processes)
 		clear_processes(head);
+	if (head->error_str)		
+		free(head->error_str);
+	head->error_str = NULL;
 	head->size = 0;
 	head->top = NULL;
 	head->get_error = 0;

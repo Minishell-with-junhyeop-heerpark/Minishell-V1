@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_to_process_utils1.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 21:53:55 by heerpark          #+#    #+#             */
-/*   Updated: 2024/06/01 15:44:09 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/06/01 16:41:36 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

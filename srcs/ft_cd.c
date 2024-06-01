@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 15:59:21 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/06/01 16:00:12 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/06/01 18:02:18 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	change_pwd(t_list *env, char *cwd)
 	char	*tmp;
 
 	if (cwd == NULL)
-		error_msg(0);
+		error_msg(0, NULL);
 	while (env)
 	{
 		if (ft_strcmp(env->key, "PWD") == 0)
@@ -42,7 +42,7 @@ void	change_env(t_head *head)
 		change_pwd(env, ft_strdup(cwd));
 	}
 	else
-		error_msg(0);
+		error_msg(0, NULL);
 }
 
 void	cd(t_head *head, char *dir)

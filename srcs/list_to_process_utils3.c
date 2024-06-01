@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 21:53:55 by heerpark          #+#    #+#             */
-/*   Updated: 2024/06/01 16:19:17 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/06/01 20:06:50 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*apply_exit_status(char *cmd, int *ind)
 	k = 0;
 	str_exit = ft_itoa(g_exit_status);
 	changed = (char *)malloc(sizeof(char) * \
-	(ft_strlen(str_exit) + ft_strlen(cmd) - 2) + 1);
+	(ft_strlen(str_exit) + ft_strlen(cmd) - 2 ) + 1);
 	while (i < *ind)
 		changed[i++] = cmd[j++];
 	while (str_exit[k])

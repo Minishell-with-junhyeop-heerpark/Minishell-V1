@@ -3,16 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 06:30:07 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/06/01 15:58:10 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/06/01 19:20:56 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	error_msg(int type)
+int	error_msg_ext(int type, t_head *head)
+{
+	if (type == 11)
+	{
+		ft_printf("minishell: syntax error near unexpected token `%s'\n", head->error_str);
+		g_exit_status = 258;
+		return (0);
+	}
+	return (1);
+}
+
+void	error_msg(int type, t_head *head)
 {
 	if (type == 0)
 		ft_putstr_fd("malloc error\n", 2);
@@ -35,6 +46,8 @@ void	error_msg(int type)
 		g_exit_status = 258;
 		return ;
 	}
+	if (error_msg_ext(type, head) == 0)
+		return ;
 	exit(1);
 }
 
