@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/06/01 14:43:02 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/06/01 15:06:17 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,7 +194,8 @@ char		*replace_cmd(char *cmd, char *key, char *value, int *ind);
 char		*apply_env(char *cmd, t_list *env, int *ind);
 char		*apply_exit_status(char *cmd, int *ind);
 void		check_env(t_token *token, t_process *process);
-void		concat_cmd(t_token *temp, t_process *process, char **cmd, char **str);
+void		concat_cmd(t_token *temp, t_process *process, \
+			char **cmd, char **str);
 int			no_cmd(t_head *head, t_process *process);
 void		set_builtin(t_head *head, t_process *process, char **exec_cmd);
 void		set_exec(t_head *head, t_process *process, char **path, int i);

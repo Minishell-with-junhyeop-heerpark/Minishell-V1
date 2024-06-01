@@ -6,11 +6,19 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 21:53:55 by heerpark          #+#    #+#             */
-/*   Updated: 2024/06/01 14:49:49 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/06/01 15:05:42 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	init_process(t_process *process)
+{
+	process->heredoc_filename = NULL;
+	process->cmd = NULL;
+	process->exec_cmd = NULL;
+	process->exec_cmd = NULL;
+}
 
 int	get_redir_flag(char	*token)
 {

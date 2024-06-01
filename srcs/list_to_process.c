@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 02:15:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/06/01 15:03:38 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/06/01 15:05:33 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,14 +84,6 @@ void	set_process(t_head *head, t_process *process, char **path)
 	{
 		set_exec(head, process, path, 0);
 	}
-}
-
-void	init_process(t_process *process)
-{
-	process->heredoc_filename = NULL;
-	process->cmd = NULL;
-	process->exec_cmd = NULL;
-	process->exec_cmd = NULL;
 }
 
 t_process	*get_process(t_head *head, t_list *line, char **path)
