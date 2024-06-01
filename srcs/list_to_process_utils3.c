@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_to_process_utils3.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 21:53:55 by heerpark          #+#    #+#             */
-/*   Updated: 2024/06/01 14:48:59 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/06/01 16:19:17 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ char	*apply_exit_status(char *cmd, int *ind)
 	j = 0;
 	k = 0;
 	str_exit = ft_itoa(g_exit_status);
-	changed = (char *)malloc(sizeof(char) * (ft_strlen(str_exit) + \
-	ft_strlen(cmd) - 2) + 1);
+	changed = (char *)malloc(sizeof(char) * \
+	(ft_strlen(str_exit) + ft_strlen(cmd) - 2) + 1);
 	while (i < *ind)
 		changed[i++] = cmd[j++];
 	while (str_exit[k])
@@ -56,7 +56,7 @@ void	check_env(t_token *token, t_process *process)
 			cmd = apply_exit_status(cmd, &i);
 			token->cmd = cmd;
 		}
-		else if (cmd[i] == '$' && cmd[i + 1] && cmd[i + 1] != '\"')
+		else if (cmd[i] == '$' && key_check(cmd[i + 1]) && cmd[i + 1] != '\"')
 		{
 			cmd = apply_env(token->cmd, env, &i);
 			token->cmd = cmd;

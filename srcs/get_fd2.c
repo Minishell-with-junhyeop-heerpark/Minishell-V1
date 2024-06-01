@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_fd2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 21:22:40 by heerpark          #+#    #+#             */
-/*   Updated: 2024/06/01 15:36:23 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/06/01 16:17:38 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int	get_heredoc(t_head *head, t_process *process, char *limiter)
 {
 	int	fd;
 
-	printf("welcome heredoc\n\n");
 	process->heredoc_filename = get_temp_name();
 	printf("!!!!!!!!!heredoc name:%s\n", process->heredoc_filename);
 	make_temp(limiter, process->heredoc_filename);
@@ -37,7 +36,6 @@ int	get_heredoc(t_head *head, t_process *process, char *limiter)
 	if (fd == -1)
 	{
 		head->get_error = 1;
-		ft_printf("minishell: get_heredoc error!!\n");
 	}
 	return (fd);
 }

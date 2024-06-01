@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_to_process_utils2.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 21:53:55 by heerpark          #+#    #+#             */
-/*   Updated: 2024/06/01 14:49:23 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/06/01 16:18:13 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*getkey(char *str)
 
 	n = 0;
 	i = 0;
-	while (str[n] && str[n] != ' ' && str[n] != '$')
+	while (str[n] && key_check(str[n]) && str[n] != '$')
 		n++;
 	dest = (char *)malloc(sizeof(char) * n + 1);
 	while (i < n)

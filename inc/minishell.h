@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/06/01 15:59:57 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/06/01 16:20:16 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -305,6 +305,5 @@ int			key_check(char c);
 void		cd(t_head *head, char *dir);
 void		change_env(t_head *head);
 void		change_pwd(t_list *env, char *cwd);
-
 
 #endif
