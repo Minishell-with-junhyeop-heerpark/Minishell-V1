@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envpwdcd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 20:27:15 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/31 21:21:19 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/06/01 15:59:53 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,24 +47,4 @@ void	unset(t_head *head, char *key)
 	if (key != NULL)
 		remove_node(&(head->data->env->next), key);
 	g_exit_status = 0;
-}
-
-void	cd(t_head *head, char *dir)
-{
-	if (dir == NULL)
-	{
-		if (chdir(head->data->home) == -1)
-		{
-			g_exit_status = 1;
-			ft_printf("minishell: cd: %s: can't implement cd\n", dir);
-		}
-	}
-	else
-	{
-		if (chdir(dir) == -1)
-		{
-			g_exit_status = 1;
-			ft_printf("minishell: cd: %s: can't implement cd\n", dir);
-		}
-	}
 }

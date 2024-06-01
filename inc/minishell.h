@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/06/01 15:06:17 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/06/01 15:59:57 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,7 @@ void		ft_lst_add(t_head *head, t_list *new);
 void		ft_token_add(t_token **lst, t_token *new);
 char		**split_pipe(char const *s);
 t_token		*split_space(char *s, char space);
+void		free_list(t_head *head, char *str);
 void		clear(t_head *head, char *str);
 int			parse(char *str, t_head *head);
 
@@ -298,5 +299,12 @@ void		sig_handler(int signo);
 void		set_signal(void);
 void		temi_print_on(void);
 void		export_update_free(char *env_value, char *value, char *key);
+int			key_check(char c);
+
+// ft_cd.c
+void		cd(t_head *head, char *dir);
+void		change_env(t_head *head);
+void		change_pwd(t_list *env, char *cwd);
+
 
 #endif

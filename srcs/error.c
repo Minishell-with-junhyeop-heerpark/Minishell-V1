@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 06:30:07 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/06/01 15:12:04 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/06/01 15:58:10 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,16 @@ void	error_msg(int type)
 		g_exit_status = 127;
 		return ;
 	}
-	if (type == 3)
+	if (type == 3 || type == 4 || type == 5)
 	{
-		ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2);
+		if (type == 3)
+			ft_putstr_fd \
+			("minishell: syntax error near unexpected token `|'\n", 2);
+		if (type == 4)
+			ft_putstr_fd("minishell: syntax error for unclosed token\n", 2);
+		if (type == 5)
+			ft_putstr_fd \
+			("minishell: syntax error near unexpected token `||'\n", 2);
 		g_exit_status = 258;
 		return ;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 18:17:19 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/06/01 14:15:23 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/06/01 14:18:34 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	free_token(t_token *token)
 	}
 }
 
-void	clear(t_head *head, char *str)
+void	free_list(t_head *head, char *str)
 {
 	t_list	*tmp;
 	t_list	*rmv;
@@ -45,6 +45,11 @@ void	clear(t_head *head, char *str)
 	head->top = NULL;
 	head->get_error = 0;
 	head->processes = NULL;
-	head->get_error = 0;
 	free(str);
+}
+
+void	clear(t_head *head, char *str)
+{
+	kill_heredoc(head);
+	free_list(head, str);
 }

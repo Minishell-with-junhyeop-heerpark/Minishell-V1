@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:10:29 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/30 14:58:44 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/06/01 15:48:31 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	check_quote(int dq, int q, t_head *head)
 {
 	if (!dq && !q)
 		return (0);
-	head->get_error = 1;
+	head->get_error = 3;
 	return (1);
 }
 
@@ -56,10 +56,12 @@ void	add_cmd(t_head *head, char *line, int pipe_flag)
 		error_msg(0);
 	if (check_white_space(command))
 	{
-		if (pipe_flag)
+		if (pipe_flag && line[i + 1] == '|')
+			head->get_error = 4;
+		else if (pipe_flag)
 			head->get_error = 2;
 		else
-			head->get_error = 1;
+			head->get_error = 3;
 		free(command);
 		return ;
 	}
