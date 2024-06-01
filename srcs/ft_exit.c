@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 21:34:06 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/06/01 15:12:11 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/06/01 15:48:01 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ int	ft_exit(char **exec_cmd)
 	}
 	else if (!check_disit(exec_cmd[1]))
 	{
-		ft_printf("minishell: exit: %s: numeric argument required\n", exec_cmd[1]);
+		ft_printf("minishell: exit: %s: \
+		numeric argument required\n", exec_cmd[1]);
 		exit(255);
 	}
 	num = ft_atoi(exec_cmd[1]);

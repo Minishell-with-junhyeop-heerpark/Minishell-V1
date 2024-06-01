@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:10:35 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/31 21:35:00 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/06/01 15:48:41 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int	main(int argc, char **argv, char **envp)
 			}
 			update_envp(head);
 			exe(head, head->data->envp);
+			kill_heredoc(head);
 			clear(head, str);
 		}
 	}

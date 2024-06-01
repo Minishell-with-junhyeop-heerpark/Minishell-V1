@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 21:53:55 by heerpark          #+#    #+#             */
-/*   Updated: 2024/06/01 15:05:42 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/06/01 15:44:09 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	close_unused_input(t_process *process)
 		{
 			close(process->heredoc_fd);
 			unlink(process->heredoc_filename);
+			free(process->heredoc_filename);
 		}
 		process->heredoc_fd = -42;
 	}
