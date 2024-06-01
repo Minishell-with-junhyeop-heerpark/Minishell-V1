@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_fd2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 21:22:40 by heerpark          #+#    #+#             */
-/*   Updated: 2024/06/01 16:17:38 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/06/01 16:41:45 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	get_heredoc(t_head *head, t_process *process, char *limiter)
 	int	fd;
 
 	process->heredoc_filename = get_temp_name();
-	printf("!!!!!!!!!heredoc name:%s\n", process->heredoc_filename);
 	make_temp(limiter, process->heredoc_filename);
 	fd = open(process->heredoc_filename, O_RDONLY);
 	if (fd == -1)
