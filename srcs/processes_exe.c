@@ -6,17 +6,14 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:11:25 by heerpark          #+#    #+#             */
-/*   Updated: 2024/06/01 22:54:54 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/06/01 23:34:23 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	set_inout(t_process *process, int **pipes, int i, int close_sig)
+void	set_inout(t_process *process)
 {
-	(void)close_sig;
-	(void)i;
-	(void)pipes;
 	if (process->re_outfile_fd > 0)
 	{
 		dup2(process->re_outfile_fd, STDOUT_FILENO);
@@ -63,7 +60,7 @@ void	start_process(t_head *head, char **envp)
 
 	if (is_builtin(head->processes[0]->exec_cmd))
 	{
-		set_inout(head->processes[0], NULL, 0, 0);
+		set_inout(head->processes[0]);
 		run_builtin(head, head->processes[0]->exec_cmd);
 		return ;
 	}
@@ -73,7 +70,7 @@ void	start_process(t_head *head, char **envp)
 	else if (pid == 0)
 	{
 		temi_print_on();
-		set_inout(head->processes[0], NULL, 0, 0);
+		set_inout(head->processes[0]);
 		run_cmd(head, envp, 0);
 	}
 }
