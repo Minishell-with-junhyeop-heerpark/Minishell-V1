@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export3.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 21:25:38 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/30 14:59:49 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/06/01 15:12:30 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	sort_list(t_list *env, t_list **top)
 	t_env = t_env->next;
 	while (t_env)
 	{
-		printf("%s, %s\n", t_env->key, t_env->value);
+		ft_printf("%s, %s\n", t_env->key, t_env->value);
 		sorting(t_env, top);
 		t_env = t_env->next;
 	}
@@ -82,11 +82,11 @@ void	show_export(t_head *head)
 	tmp = top;
 	while (tmp)
 	{
-		printf("declare -x ");
+		ft_printf("declare -x ");
 		if (tmp->value)
-			printf("%s=\"%s\"\n", tmp->key, tmp->value);
+			ft_printf("%s=\"%s\"\n", tmp->key, tmp->value);
 		else
-			printf("%s\n", tmp->key);
+			ft_printf("%s\n", tmp->key);
 		tmp = tmp->next;
 	}
 	free_show_list(&top);

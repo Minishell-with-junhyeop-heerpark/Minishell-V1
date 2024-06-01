@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:48:41 by junhyeop          #+#    #+#             */
-/*   Updated: 2023/11/03 17:07:39 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/06/01 15:11:25 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,3 @@ char	*ft_strtrim(char const *s1, char const *set)
 	ft_strlcpy(str, s1 + start, end - start + 1);
 	return (str);
 }
-
-// #include <stdio.h>
-// int main()
-// {
-// 	// char *s1 = "****12341234&&&&";
-// 	// char *s2 = "*&";
-// 	char *s3 = ft_strtrim("tripouille   xxx", " x");
-// 	printf("%s %zu\n", s3, ft_strlen(s3));
-// }

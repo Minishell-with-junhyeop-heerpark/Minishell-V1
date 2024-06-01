@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 16:35:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2023/11/03 17:49:49 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/06/01 15:10:46 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,3 @@ int	ft_memcmp(const void *s1, const void *s2, size_t n)
 	}
 	return (0);
 }
-
-// #include <stdio.h>
-// #include <string.h>
-// int main(void)
-// {
-// 	char s[] = {-128, 0, 127, 0};
-// 	char sCpy[] = {-128, 0, 127, 0};
-// 	char s2[] = {0, 0, 127, 0};
-// 	// char s3[] = {0, 0, 42, 0};
-
-// 	printf("%d\n", ft_memcmp(s, sCpy, 4));
-// 	printf("%d\n", ft_memcmp(s, s2, 0));
-// }

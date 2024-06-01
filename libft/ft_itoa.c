@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 18:15:56 by junhyeop          #+#    #+#             */
-/*   Updated: 2023/11/03 18:29:43 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/06/01 15:10:31 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,3 @@ char	*ft_itoa(int n)
 	input_str(str, n);
 	return (str);
 }
-
-// int main()
-// {
-// 	char *s = ft_itoa(0);
-// 	printf("%s\n",s);
-// 	return (0);
-// }
