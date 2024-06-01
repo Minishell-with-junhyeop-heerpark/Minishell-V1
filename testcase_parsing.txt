@@ -1,0 +1,216 @@
+========================================================================
+============================ P A R S I N G =============================
+========================================================================
+
+************************************************************************
+*************************** [BASIC] ************************************
+************************************************************************
+
+nl
+space
+tab
+
+************************************************************************
+************************** [QUOTES] ************************************
+************************************************************************
+echo '1'''
+echo '1'2'3' '1'2'3' 
+echo '1'''"2"
+echo 'M'ini"Sh"el"l" 'M'ini"Sh"el"l"aa
+echo 'M'ini"Sh"el"l" 'M'ini"Sh"el"l"aa''"  ''""        "
+echo '"M"ini''"Sh"el"l"'
+echo '"M"ini''"Sh"el"l"'echo '"M"ini''"Sh"el"l"'
+echo "'1''2'"2
+echo '''''''"1"''2'
+echo '''''''"1"''2'2  '''''''"1"''2'2a
+echo '1'2'3' 'a'
+echo '1'2'3''a'aa ' '
+echo '1'2'3' 'a'' '" "
+echo '1???++++++++++++\\\'2'3' 'a'
+echo ls ''' '""" "
+echo ls ''' '""" "''''" "a'b'" c"d'e'''"f"""
+echo ls """ "''' '  
+echo '1' '2'
+echo '1' '2' "3" 4 '4'
+echo '1'""'2' "3" 4 '4'
+echo '1'""'2' "3" 4""' "' '4'aaa""aa"   "b'"' | ls '-'l"a"''R
+echo '1'""'2' "3" 4""' "' '4'aaa""aa"   "b'"' | ls '-'l"'a'"''R"''""    ''"''
+echo '1'2'3''a'aa ' 'DDDDDDDD""''
+echo '1'2'3''a'aa ' 'DDDDDDDD""'''1'2'3''a'aa ' 'DDDDDDDD""'''1'2'3''a'aa ' 'DDDDDDDD""'''1'2'3''a'aa ' 'DDDDDDDD""'''1'2'3''a'aa ' 'DDDDDDDD""'''1'2'3''a'aa ' 'DDDDDDDD""'''1'2'3''a'aa ' 'DDDDDDDD""'''1'2'3''a'aa ' 'DDDDDDDD""'''1'2'3''a'aa ' 'DDDDDDDD""''
+echo "my homefolder is -->"$HOME"<--" | echo "$PATH"
+echo '"my homefolder is -->'$HOME'<--"'
+echo "my homefolder is -->"''$HOME"<--"
+echo "my homefolder is -->" """$HOME""" "<--"
+echo "my homefolder is -->" "'""$HOME""'" "<--"
+
+echo ";"
+
+echo my homefolder is --> 'HOME' <--
+echo my homefolder is -- 'HOME' --
+
+echo '"' $HOME'"'
+echo '"'    $HOME'"'
+echo '"'     $HOME'"'
+
+********************************************************************
+************************** [REDIRECTIONS] **************************
+********************************************************************
+cat>test
+<a cat>test
+cat test > test
+< a | cat > a
+<a>a
+<a<b<c >a
+<a>>asdf >test ls -laR
+<a>>asdf >test<<< ls -laR
+ls <a>>asdf >test<< ls -laR
+<a>>asdf >>> test<< ls -laR
+
+<a>>asdf >> ls<< ls -laR
+<a>>asdf >> ls<< ls -laR                        --------->   syntax error 면 그냥 에러 처리 (무조건)
+
+echo <<<
+echo <<
+echo <
+
+<'"'<a'"'
+<'<a
+<<'<a'
+
+<"a a"'<a'""
+
+"<<" a
+'<<' a
+<< "'<''<''a'"
+
+<<'<''<''<'a
+'<''<''<''<''<'a
+'<''<'<'<''<'a
+'<''<'
+
+'>''>'<'>!a' | cat
+
+'<''<' ""< '<''<'a
+
+"<<" "a"                                        ---> bash 에서는 안받음
+
+
+'a' <a
+'a'<a
+<'''' a
+< 1"2345"a
+<1"2345"a
+< asdfe""''
+< asdfe""''   asdf
+< asdfe""''   asdf  >''asdf>>asd
+
+
+'<'>>'>>>>'""a
+<a'''>>'>b''>''""c
+
+********************************************************************
+***************************** [ENVP] *******************************
+********************************************************************
+
+$
+
+echo "$."
+
+echo ''$PATH''HOME''
+echo ''"$"HOME''HOME'' cat
+echo ''$HOME''HOME"$HOME"
+echo ''$HOME''HOME
+echo ''$''HOME
+echo ''"$""$''"$''HOME
+echo ''"$""$''"''HOME
+echo ''"$"''HOME
+echo $'HOME' a $HOME
+echo a''$'asdf$asdf' $'HOME' a $HOME
+echo $HOME
+echo ''"$"''HOME
+echo ''"$HOME"''HOME
+echo $''"$''"''HOME
+echo "$''""$'$'$'$'$'$'$'$'$""$''home""$a''"
+echo "$''"$'$'$'$'$'$'$'$'$"$''home""$a''" 
+echo "$''""$''$''$''$''$''$''$''$''$"$''home""$a''
+echo "$''""$''$''$''$''$''$''$''$''$""$''home"$a''
+echo $'PATH'
+echo "$'PATH'"
+echo "$HOME'PATH'"
+echo $HOME a''$HOME'' $b a $HOME
+echo ''"$"''HOME
+echo ''$HOME''HOME
+echo ''$PATH''HOME''
+echo ''$PATH'$"$"$'HOME''
+echo ''$PATH$"$"$HOME'$'$''e
+echo ''"$"HOME''HOME''
+echo ''$HOME''HOME"$HOME"
+echo "$''home"
+echo ''"$as"HOME''HOME''
+echo "$ab''home"
+echo $''"$''""$''home""$a''"
+echo $''1"$''""$''home""$a''"
+echo '$'$HOME"$"
+echo $HOME'$'$HOME
+echo ''$HOME''HOME"$HOME"
+echo "$''home"
+echo ''$''"$''HOMEAlk"$HOME''$HOME"$HOME"
+echo "$""$''home""$a''"
+echo """$"HOME''HOME''
+echo ''"$"HOME''HOME''
+echo "$"HOME''HOME''
+echo "" "$"HOME''HOME''
+echo """$"HOME''HOME''
+echo "   "''"$""$''home""$a''"
+echo "   """"$""$''home""$a''"
+echo asdf$HOME$HOME
+echo $a''asdf$HOME$HOME
+echo $HOME''$a''asdf$HOME$HOME
+echo $'PATH'$''$"$"
+echo a $a a
+echo a $'' a
+echo a $HOME a
+
+echo "$HOME"''$'HOME'
+echo "$HOME"''$'HOME'$''
+echo "$HOME"''$'HOME'$''$'$""'
+echo "$HOME"''$'HOME'$''$'$""'"$""$''$"
+
+********************************************************************
+**************************** [SYNTAX] ******************************
+********************************************************************
+[cat |                  ]
+[cat|'']
+[''|cat]
+[         |cat]
+
+
+asdf<'' | <|
+"c""at"''"'" ''>''""">>">a">>>>"
+
+'>>'>>'''>>'''
+>asdf''
+''>''""">>">a">>>>"  asdf < asdf
+
+''>''""">>">a">>>>"
+
+echo "   ""$$$$$""$''home""$a''"
+echo '   '"$$$$$""$''home""$a''"
+echo "$$$"$"$''home""$a''"
+echo $$$$$$$$"$ab''home"
+echo $$$$'$'$"$"
+echo "$$$"$"''PATH''HOMEAlk"
+echo "$$$$$$$$$""$''home""$a''"
+echo """$$$$$""$''home""$a''"
+echo "$$$$$$$$$""$''home""$a''"
+echo $"$$$$$$$$$""$''home""$a''"
+echo ''$''"$$$$$$$$$""$''home""$a''"
+echo "$''""$$$$$$$$$""$''home""$a''"
+echo "$'A'$qwer$$$"
+
+
+********************************************************************
+****************************** [+@] ********************************
+********************************************************************
+
+<< END wc -l
