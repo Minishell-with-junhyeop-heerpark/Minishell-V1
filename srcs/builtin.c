@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 15:11:29 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/31 21:20:55 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/06/01 17:49:52 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	run_builtin(t_head *head, char **exec_cmd)
 	else if (ft_strncmp(exec_cmd[0], "export", 7) == 0)
 		ft_export(head, exec_cmd);
 	else if (ft_strncmp(exec_cmd[0], "unset", 6) == 0)
-		unset(head, exec_cmd[1]);
+		unset(head, exec_cmd);
 	else if (ft_strncmp(exec_cmd[0], "env", 4) == 0)
 		env(head);
 	else if (ft_strncmp(exec_cmd[0], "exit", 5) == 0)

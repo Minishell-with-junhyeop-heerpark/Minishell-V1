@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envpwdcd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 20:27:15 by heerpark          #+#    #+#             */
-/*   Updated: 2024/06/01 15:59:53 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/06/01 17:50:21 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,16 @@ void	env(t_head *head)
 	g_exit_status = 0;
 }
 
-void	unset(t_head *head, char *key)
+void	unset(t_head *head, char **exec_cmd)
 {
-	if (key != NULL)
-		remove_node(&(head->data->env->next), key);
+	int	i;
+
+	i = 1;
+	while (exec_cmd[i])
+	{
+		if (exec_cmd[i] != NULL)
+			remove_node(&(head->data->env->next), exec_cmd[i]);
+		i++;
+	}
 	g_exit_status = 0;
 }

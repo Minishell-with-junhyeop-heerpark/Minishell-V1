@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/06/01 16:20:16 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/06/01 17:47:04 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,7 +222,7 @@ int			is_exit(char **exec_cmd);
 void		env(t_head *head);
 void		pwd(void);
 void		cd(t_head *head, char *dir);
-void		unset(t_head *head, char *key);
+void		unset(t_head *head, char **exec_cmd);
 void		ft_echo(char **exec_cmd);
 
 	//list_control.c
