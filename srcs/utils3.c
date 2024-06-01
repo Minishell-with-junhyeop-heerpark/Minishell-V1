@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 21:13:55 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/06/01 19:12:40 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/06/02 00:02:24 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_head	*init_head(char **envp, int argc, char **argv)
 	t_head	*head;
 
 	void_argument(argc, argv);
-	ft_printf("Welcome to minishell!\n");
+	printf("Welcome to minishell!\n");
 	set_signal();
 	g_exit_status = 0;
 	head = (t_head *)malloc(sizeof(t_head));

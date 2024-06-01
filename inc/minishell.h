@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/06/01 20:10:23 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/06/02 01:00:21 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -316,9 +316,13 @@ void		change_env(t_head *head);
 void		change_pwd(t_list *env, char *cwd);
 
 // redir_error.c
-void	redir_err_str(char *cmd, t_head *head);
-int	redir_err_flag(char *cmd, t_head *head);
-void	redir_err_check(t_token *token, t_head *head);
+void		redir_err_str(char *cmd, t_head *head);
+int			redir_err_flag(char *cmd, t_head *head);
+void		redir_err_check(t_token *token, t_head *head);
 
+t_token		*ft_token_add2(t_token *lst, t_token *new);
+
+int	check_redir(char *cmd);
+int	is_redir(char cmd);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 16:08:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/31 21:25:51 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/06/02 00:02:24 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ void	get_heredoc_line(char *limiter, int temp_fd)
 		temp = readline("> ");
 		if (temp == NULL)
 		{
-			ft_printf("\033[1A");
-			ft_printf("\033[2C");
+			printf("\033[1A");
+			printf("\033[2C");
 			break ;
 		}
 		if (ft_strncmp(temp, limiter, ft_strlen(limiter) + 1) == 0)

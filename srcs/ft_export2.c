@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 21:23:55 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/06/01 18:02:24 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/06/02 00:02:24 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	free_show_list(t_list **top)
 void	key_error(char *key)
 {
 	g_exit_status = 1;
-	ft_printf("minishell: export: `%s': not a valid identifier\n", key);
+	printf("minishell: export: `%s': not a valid identifier\n", key);
 }
 
 int	key_validate(char *key)

@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 15:11:29 by heerpark          #+#    #+#             */
-/*   Updated: 2024/06/01 19:45:07 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/06/02 00:02:24 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	run_builtin(t_head *head, char **exec_cmd)
 	else if (ft_strncmp(exec_cmd[0], "exit", 5) == 0)
 		ft_exit(exec_cmd);
 	else
-		ft_printf("it is not built in exec_cmd\n");
+		printf("it is not built in exec_cmd\n");
 	dup2(head->data->original_stdout, STDOUT_FILENO);
 	dup2(head->data->original_stdin, STDIN_FILENO);
 }

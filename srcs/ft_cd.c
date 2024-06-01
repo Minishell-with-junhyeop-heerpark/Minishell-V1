@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 15:59:21 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/06/01 18:02:18 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/06/02 00:02:24 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	cd(t_head *head, char *dir)
 		if (tmp == -1)
 		{
 			g_exit_status = 1;
-			ft_printf("minishell: cd: %s: can't implement cd\n", dir);
+			printf("minishell: cd: %s: can't implement cd\n", dir);
 		}
 		change_env(head);
 	}
@@ -65,7 +65,7 @@ void	cd(t_head *head, char *dir)
 		if (tmp == -1)
 		{
 			g_exit_status = 1;
-			ft_printf("minishell: cd: %s: can't implement cd\n", dir);
+			printf("minishell: cd: %s: can't implement cd\n", dir);
 		}
 		change_env(head);
 	}

@@ -6,13 +6,12 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 17:34:35 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/06/01 20:17:28 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/06/01 20:38:40 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-#include <stdio.h>
 void	my_strjoin(char **s1, char *s2)
 {
 	size_t	len;

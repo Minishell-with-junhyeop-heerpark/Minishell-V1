@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 20:00:39 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/06/01 18:00:19 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/06/01 22:36:34 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ t_token	*token_new(char *command, int flag, int quote_flag)
 {
 	t_token	*new;
 
+	if (!command)
+		error_msg(0, NULL);
 	new = (t_token *)malloc(sizeof(t_token));
 	if (!new)
 		error_msg(0, NULL);
@@ -54,13 +56,14 @@ void	ft_token_add(t_token **lst, t_token *new)
 	t_token	*tmp;
 
 	tmp = *lst;
+	printf("x : %p\n", tmp);
+	printf("new: %s\n", new->cmd);
+	if (new == NULL)
+		error_msg(0, NULL);
 	if (tmp == NULL)
 	{
 		*lst = new;
-		return ;
 	}
-	if (tmp == NULL && new == NULL)
-		error_msg(0, NULL);
 	else
 	{
 		while (tmp->next)
@@ -68,6 +71,29 @@ void	ft_token_add(t_token **lst, t_token *new)
 		tmp->next = new;
 		new->prev = tmp;
 	}
+}
+
+t_token	*ft_token_add2(t_token *lst, t_token *new)
+{
+	t_token	*tmp;
+
+	tmp = lst;
+	printf("x : %p\n", tmp);
+	printf("new: %s\n", new->cmd);
+	if (new == NULL)
+		error_msg(0, NULL);
+	if (tmp == NULL)
+	{
+		return (new);
+	}
+	else
+	{
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = new;
+		new->prev = tmp;
+	}
+	return (lst);
 }
 
 void	ft_lst_add(t_head *head, t_list *new)

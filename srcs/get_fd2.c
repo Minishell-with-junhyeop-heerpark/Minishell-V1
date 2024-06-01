@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 21:22:40 by heerpark          #+#    #+#             */
-/*   Updated: 2024/06/01 16:17:38 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/06/02 00:02:24 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	get_infile(t_head *head, char *file_name)
 	if (fd == -1)
 	{
 		head->get_error = 1;
-		ft_printf("minishell: %s: No such file or directory\n", file_name);
+		printf("minishell: %s: No such file or directory\n", file_name);
 	}
 	return (fd);
 }
@@ -48,7 +48,7 @@ int	get_outfile(t_head *head, char *file_name)
 	if (fd == -1)
 	{
 		head->get_error = 1;
-		ft_printf("minishell: %s: No such file or directory\n", file_name);
+		printf("minishell: %s: No such file or directory\n", file_name);
 	}
 	return (fd);
 }
@@ -61,7 +61,7 @@ int	get_append(t_head *head, char *file_name)
 	if (fd == -1)
 	{
 		head->get_error = 1;
-		ft_printf("minishell: %s: No such file or directory\n", file_name);
+		printf("minishell: %s: No such file or directory\n", file_name);
 	}
 	return (fd);
 }
