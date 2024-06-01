@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 15:59:21 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/06/01 16:00:12 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/06/01 21:18:49 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,16 @@
 void	change_pwd(t_list *env, char *cwd)
 {
 	char	*tmp;
+	int		find;
 
+	find = 0;
 	if (cwd == NULL)
 		error_msg(0);
 	while (env)
 	{
 		if (ft_strcmp(env->key, "PWD") == 0)
 		{
+			find = 1;
 			tmp = env->value;
 			env->value = cwd;
 			free(tmp);
@@ -29,6 +32,8 @@ void	change_pwd(t_list *env, char *cwd)
 		}
 		env = env->next;
 	}
+	if (find == 0)
+		free(cwd);
 }
 
 void	change_env(t_head *head)
@@ -42,7 +47,7 @@ void	change_env(t_head *head)
 		change_pwd(env, ft_strdup(cwd));
 	}
 	else
-		error_msg(0);
+		ft_printf("getcwd: cannot access directories\n");
 }
 
 void	cd(t_head *head, char *dir)

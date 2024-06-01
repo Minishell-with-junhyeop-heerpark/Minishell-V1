@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:11:25 by heerpark          #+#    #+#             */
-/*   Updated: 2024/06/01 14:27:07 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/06/01 21:34:30 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ void	exe(t_head *head, char **envp)
 		if (head->get_error)
 		{
 			set_signal();
+			close_all_pipes(head->data->pipes, head->size - 1);
 			return ;
 		}
 		start_processes(head, envp, head->data->pipes);

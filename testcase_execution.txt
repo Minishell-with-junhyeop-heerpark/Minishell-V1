@@ -49,8 +49,8 @@ unset a
 // cd
 cd ~
 cd
-cd -
-echo $OLDPWD
+										cd -
+										echo $OLDPWD
 // ctrl + [d, c, \] 테스트
 // pwd 테스트
 pwd
@@ -60,9 +60,9 @@ by donpark, joonpark :)
 ```
 —
 ```
-bash
-<< HERE_DOC > a.txt | cat a.txt | wc -l
-<< HERE_DOC > a.txt | cat a.txt
+bash								<fd 누수 발생, bash랑 다르게 동작>
+									<< HERE_DOC > a.txt | cat a.txt | wc -l
+									<< HERE_DOC > a.txt | cat a.txt
 ls -al | > a.txt
 ls -al | cat
 ```
@@ -71,8 +71,8 @@ ls -al | cat
 bash
 "echo" "-n" "hello"
 "echo" "-n hello"
-"echo -n" "hello"
-"echo" "-n-n-n-n-n-n-n-n" "hello"
+"echo -n" "hello"					<다르게 동작>
+									"echo" "-n-n-n-n-n-n-n-n" "hello"
 a=ho -n
 ec$a -n hello
 ```
@@ -91,30 +91,31 @@ env | grep SHLVL
 ```
 bash
 echo ' " $HOME " '
-//사라진 경로 테스트
-mkdir test
-cd test
-rm -rf ../test
-pwd
-Cd .
-Env | grep PWD
+				//사라진 경로 테스트
+				mkdir test
+				cd test
+				rm -rf ../test
+				pwd
+				Cd .
+				Env | grep PWD
 ```
 [https://42born2code.slack.com/archives/CNA2Z8RBP/p1642091711022100](https://42born2code.slack.com/archives/CNA2Z8RBP/p1642091711022100)
 ```
 echo $P$P$P$PWD
-<< eof | cat
+															<fd누수>:<< eof | cat
 echo -nnnnnnnnn -n -nnnnnm
 |
 ls | | wc
 echo "''$PWD'''qwere"qwqwer$P$P$PWD"'$PWD'"
 ls |;
 ls |&
-$_ : env | grep SHLVL
-echo $TEST > $TEST
+														$_ : env | grep SHLVL
+														echo $TEST > $TEST
+
 unset PWD
 cd ... x 8
-- [ ] ls /*/
-export a="ls -la"
+- [ ] ls /*/													
+														export a="ls -la" --->skip.....
 $a
 l's'
 export a =asd
@@ -148,7 +149,7 @@ CD TESTS
  cd .. ; pwd
  cd /Users ; pwd
  cd ; pwd
- mkdir test_dir ; cd test_dir ; rm -rf ../test_dir ; cd . ; pwd ; cd . ; pwd ; cd .. ; pwd
+ 											폴더사라지면 malloc error뜨면서 나가짐.		mkdir test_dir ; cd test_dir ; rm -rf ../test_dir ; cd . ; pwd ; cd . ; pwd ; cd .. ; pwd
 PIPE TESTS
  cat tests/lorem.txt | grep arcu | cat -e
  echo test | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e | cat -e| cat -e| cat -e| cat -e| cat -e| cat -e| cat -e| cat -e| cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e|cat -e
@@ -186,7 +187,7 @@ ENV EXPANSIONS
  export TEST=LOL ; echo $TEST
  export TEST=LOL ; echo $TEST$TEST$TEST=lol$TEST
  export TEST=LOL; export TEST+=LOL ; echo $TEST -> +=연산자까지 구현 범위일지 고민
- ENV_SHOW="env | grep SHLVL"
+ ENV_SHOW="env | grep SHLVL"														**********
  EXPORT_SHOW="export | grep SHLVL"
  $ENV_SHOW  -> subject분야가아니라 안함
  $EXPORT_SHOW
@@ -215,12 +216,12 @@ EXIT
  exit -9223372036854775808
  exit 9223372036854775808
  exit -9223372036854775810
- exit -4
+ 																exit -4
  exit wrong_command
  gdagadgag
  ls -Z
  cd gdhahahad
- ls -la | wtf
+ 																ls -la | wtf
 1. Simple Command
 /bin/ls
 /bin/echo
@@ -318,7 +319,7 @@ Cat | cat | ls
 askdfjasdkhakdjfhadfhadjkadhfjkahdfjksdfuiyweuifhweuifhwuihfiwudhfiuwhdfuiwd
 echo a s k d f j a s d k h a k d j f h a d f h a d j k a d h f j k a h d f j k s d f u i y
 echo ' " $HOME " '
-mkdir test
-cd test
-rm -rf ../test
-pwd
+																										mkdir test
+																										cd test
+																										rm -rf ../test
+																										pwd or cd .
