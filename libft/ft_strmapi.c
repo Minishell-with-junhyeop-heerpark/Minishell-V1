@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 15:38:09 by junhyeop          #+#    #+#             */
-/*   Updated: 2023/11/03 17:43:24 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/06/01 15:11:14 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,3 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 	str[i] = 0;
 	return (str);
 }
-
-// char	func(unsigned int i, char c)
-// {
-// 	return (c + (char)i);
-// }
-// #include <stdio.h>
-// int main(void)
-// {
-// 	printf("%s\n", ft_strmapi("abc", func));
-// }
