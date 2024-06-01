@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 02:15:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/06/01 15:02:43 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/06/01 15:03:38 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,25 +51,8 @@ void	check_path(t_process *process, char **path, char **exec_path, int *i)
 void	set_exec(t_head *head, t_process *process, char **path, int i)
 {
 	char	*exec_path;
-	char	*test_path;
 
-	if (path)
-	{
-		while (path[i])
-		{
-			test_path = ft_strjoin(path[i], "/");
-			exec_path = ft_strjoin(test_path, process->exec_cmd[0]);
-			if (access(exec_path, X_OK) == 0)
-			{
-				i = -1;
-				free(test_path);
-				break ;
-			}
-			free(test_path);
-			free(exec_path);
-			i++;
-		}
-	}
+	check_path(process, path, &exec_path, &i);
 	if (path == NULL || i != -1)
 	{
 		exec_path = NULL;
