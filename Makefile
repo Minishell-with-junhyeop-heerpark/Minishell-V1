@@ -18,6 +18,9 @@ SRC	= $(SRC_DIR)/cmd_list.c \
 		$(SRC_DIR)/exe_utils.c \
 		$(SRC_DIR)/processes_exe.c \
 		$(SRC_DIR)/list_to_process.c \
+		$(SRC_DIR)/list_to_process_utils1.c \
+		$(SRC_DIR)/list_to_process_utils2.c \
+		$(SRC_DIR)/list_to_process_utils3.c \
 		$(SRC_DIR)/envpwdcd.c \
 		$(SRC_DIR)/builtin.c \
 		$(SRC_DIR)/list_control.c \

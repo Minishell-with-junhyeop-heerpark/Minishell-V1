@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/31 21:33:56 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/06/01 14:43:02 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,13 +180,27 @@ char		*get_temp_name(void);
 void		make_infile(char *limiter, char *file_name);
 void		make_temp(char *limiter, char *file_name);
 
-	//list_to_processes_utils
+	//list_to_processes
 void		fill_elem(t_head *head, t_token *temp, \
 					t_process *process, char **cmd);
 void		set_fd(t_head *head, t_process *process, \
 					char *file_name, int redir_flag);
+void		close_unused_input(t_process *process);
+void		close_unused_output(t_process *process);
+char		*getkey(char *str);
+char		*env_find_value(char *key, t_list *envp);
+void		replace_value(char *new_cmd, int *ind, char *value);
+char		*replace_cmd(char *cmd, char *key, char *value, int *ind);
+char		*apply_env(char *cmd, t_list *env, int *ind);
+char		*apply_exit_status(char *cmd, int *ind);
+void		check_env(t_token *token, t_process *process);
+void		concat_cmd(t_token *temp, t_process *process, char **cmd, char **str);
+int			no_cmd(t_head *head, t_process *process);
+void		set_builtin(t_head *head, t_process *process, char **exec_cmd);
+void		set_exec(t_head *head, t_process *process, char **path, int i);
 int			get_redir_flag(char	*token);
 void		set_process(t_head *head, t_process *process, char **path);
+void		init_process(t_process *process);
 t_process	*get_process(t_head *head, t_list *line, char **path);
 
 	//processes_exe
