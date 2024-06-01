@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envpwdcd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 20:27:15 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/31 21:21:19 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/06/01 12:05:28 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,11 @@ void	env(t_head *head)
 	first = head->data->env->next;
 	while (first)
 	{
-		if (first->value != NULL)
-			ft_printf("%s=%s\n", first->key, first->value);
+		if (first->key != NULL && first->value != NULL)
+		{
+			if (*(first->key) != '_')
+				ft_printf("%s=%s\n", first->key, first->value);
+		}
 		first = first->next;
 	}
 	g_exit_status = 0;

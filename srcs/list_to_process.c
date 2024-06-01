@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_to_process.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 02:15:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/31 19:08:00 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/06/01 11:54:02 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,15 +165,12 @@ char	*apply_env(char *cmd, t_list *env, int *ind)
 	char	*key;
 	char	*value;
 
-	// printf("cmd : %s\n", cmd);
-	key = getkey(&cmd[*ind + 1]);	// 하나 지나서 보내기 $HOME 이면 H부터!
+	key = getkey(&cmd[*ind + 1]);
 	value = env_find_value(key, env);
-	// printf("key : %s\nvalue: %s\n", key, value);
 	if (!value)
 		error_msg(0);
 	changed = replace_cmd(cmd, key, value, ind);
 	*ind = *ind + ft_strlen(value);
-	// printf("ind : %d\n", *ind);
 	free(key);
 	free(value);
 	free(cmd);

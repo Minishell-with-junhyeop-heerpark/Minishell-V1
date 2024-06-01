@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 21:23:55 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/30 14:59:57 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/06/01 11:54:24 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	free_show_list(t_list **top)
 void	key_error(char *key)
 {
 	g_exit_status = 1;
-	printf("minishell: export: `%s': not a valid identifier\n", key);
+	ft_printf("minishell: export: `%s': not a valid identifier\n", key);
 }
 
 int	key_validate(char *key)

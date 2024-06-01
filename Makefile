@@ -33,7 +33,9 @@ SRC	= $(SRC_DIR)/cmd_list.c \
 		$(SRC_DIR)/utils3.c \
 		$(SRC_DIR)/signal2.c \
 		$(SRC_DIR)/ft_export2.c \
-		$(SRC_DIR)/ft_export3.c
+		$(SRC_DIR)/ft_export3.c \
+		$(SRC_DIR)/wait_process.c \
+		$(SRC_DIR)/processes_exe_utils.c 
 
 LIBDIR = ./libft/
 LIBNAME = ft
@@ -50,8 +52,8 @@ CFLAGS = -Wall -Wextra -Werror $(foreach D, $(INCDIRS), -I$(D))
 ARFLAGS = rs
 
 # READFLAGS = -lreadline -I/Users/junhyeop/.brew/opt/readline/include -L/Users/junhyeop/.brew/opt/readline/lib #jh cluster
-# READFLAGS = -lreadline -I/opt/homebrew/opt/readline/include -L/opt/homebrew/opt/readline/lib #heerpark notebook
-READFLAGS = -lreadline -I/Users/heerpark/.brew/opt/readline/include -L/Users/heerpark/.brew/opt/readline/lib #heerpark cluster
+READFLAGS = -lreadline -I/opt/homebrew/opt/readline/include -L/opt/homebrew/opt/readline/lib #heerpark notebook
+# READFLAGS = -lreadline -I/Users/heerpark/.brew/opt/readline/include -L/Users/heerpark/.brew/opt/readline/lib #heerpark cluster
 
 
 all: $(NAME)
