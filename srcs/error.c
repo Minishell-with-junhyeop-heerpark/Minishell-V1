@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 06:30:07 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/06/01 15:58:10 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/06/01 22:55:07 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,16 @@ void	print_bash_error(char *input, char *msg, int exit_status)
 	else
 		ft_printf("minishell: %s: %s\n", input, msg);
 	g_exit_status = exit_status;
+}
+
+int	error_check(t_head *head, int close_pipes)
+{
+	if (head->get_error)
+	{
+		set_signal();
+		if (close_pipes)
+			close_all_pipes(head->data->pipes, head->size - 1);
+		return (1);
+	}
+	return (0);
 }

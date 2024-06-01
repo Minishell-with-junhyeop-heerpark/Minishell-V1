@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/06/01 17:47:04 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/06/01 22:57:55 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -278,6 +278,7 @@ char		*export_getvalue(char *cmd);
 // error.c
 void		print_error(char *cmd, char *input, char *msg, int exit_status);
 void		print_bash_error(char *input, char *msg, int exit_status);
+int			error_check(t_head *head, int close_pipes);
 
 //free.c
 void		clear_processes(t_head *head);

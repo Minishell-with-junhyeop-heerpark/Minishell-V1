@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:11:25 by heerpark          #+#    #+#             */
-/*   Updated: 2024/06/01 22:48:45 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/06/01 22:54:54 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,28 +105,13 @@ void	start_processes(t_head *head, char **envp, int **pipes)
 	}
 }
 
-int	error_check(t_head *head, int close_pipes)
-{
-	if (head->get_error)
-	{
-		set_signal();
-		if (close_pipes)
-			close_all_pipes(head->data->pipes, head->size - 1);
-		return (1);
-	}
-	return (0);
-}
-
 void	exe(t_head *head, char **envp)
 {
 	if (head->size == 1)
 	{
 		get_processes(head, envp);
-		if (head->get_error)
-		{
-			set_signal();
+		if (error_check(head, 0))
 			return ;
-		}
 		start_process(head, envp);
 		if (!is_builtin(head->processes[0]->exec_cmd))
 			wait_process(head->size);
@@ -135,12 +120,8 @@ void	exe(t_head *head, char **envp)
 	{
 		head->data->pipes = make_pipe(head->size - 1);
 		get_processes(head, envp);
-		if (head->get_error)
-		{
-			set_signal();
-			close_all_pipes(head->data->pipes, head->size - 1);
+		if (error_check(head, 1))
 			return ;
-		}
 		start_processes(head, envp, head->data->pipes);
 		wait_process(head->size);
 	}
