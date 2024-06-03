@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 16:48:30 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/03/23 17:21:32 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/06/01 15:11:18 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,3 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 	}
 	return (NULL);
 }
-
-// #include <string.h>
-// #include <stdio.h>
-// int main() {
-
-// 	// char haystack[30] = "aaabcabcd";
-// 	char needle[10] = "cd";
-// 	printf("%s\n", strnstr(needle,0 , 0));
-// }

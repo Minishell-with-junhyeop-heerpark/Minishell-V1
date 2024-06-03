@@ -6,225 +6,119 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:05:39 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/23 16:00:26 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/30 15:56:10 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_show_list(t_list **top)
+void	export_update(t_head *head, t_list **lst, char *key, char *value)
+{
+	t_list	*env;
+	char	*str;
+
+	env = *lst;
+	while (env)
+	{
+		if (ft_strcmp(env->key, key) == 0)
+		{
+			if (!env->value)
+			{
+				env->value = value;
+				return ;
+			}
+			else if (!value)
+				return ;
+			else
+				str = export_strjoin(env->value, value);
+			export_update_free(env->value, value, key);
+			env->value = str;
+			return ;
+		}
+		env = env->next;
+	}
+	lstadd_back(&head->data->env->next, lst_new(key, value));
+}
+
+void	export_ext(t_head *head, t_list **lst, char *key, char *value)
 {
 	t_list	*tmp;
-	t_list	*rmv;
 
-	tmp = *top;
+	tmp = *lst;
 	while (tmp)
 	{
-		rmv = tmp;
-		free(rmv->key);
-		if (rmv->value)
-			free(rmv->value);
-		tmp = rmv->next;
-		free(rmv);
-	}
-}
-
-// 1. key 값 유효성 체크하기 
-// 2. 왜 env하면 LS_COLORS가 여러개 나오는지?
-char	*export_getkey(char **exec_cmd, t_head *head)
-{
-	int		n;
-	int		i;
-	char	*str;
-	char	*key;
-
-	(void)exec_cmd;
-	n = 0;
-	i = 0;
-	str = head->top->token->next->cmd;
-	while (str[n] && str[n] != '=')
-	{
-		if (str[n] == ' ')
-			return (NULL);
-		n++;
-	}
-	key = (char *)malloc(sizeof(char) * n + 1);
-	while (i < n)
-	{
-		key[i] = str[i];
-		i++;
-	}
-	key[i] = 0;
-	return (key);
-}
-
-typedef struct s_value_var
-{
-	int n;
-	int i;
-	int s;
-}	t_value_var;
-
-char	*export_getvalue(t_head *head)
-{
-	t_value_var	v;
-	char		*value;
-	char		*cmd;
-
-	v = (struct s_value_var){0, 0, 0};
-	cmd = head->top->token->next->cmd;
-	while (cmd[v.i] && cmd[v.i] != '=')
-		v.i++;
-	if (cmd[v.i] == '\0')
-		return (NULL);
-	while (cmd[v.i++])
-		v.n++;
-	value = (char *)malloc(sizeof(char) * v.n + 1);
-	if (!value)
-		error_msg(1);
-	while (v.s < v.n)
-	{
-		value[v.s] = cmd[v.i - v.n + v.s];
-		v.s++;
-	}
-	value[v.s] = 0;
-	return (value);
-}
-
-void	export_add_prev(t_list **lst, t_list *new, t_list **top)
-{
-	t_list	*tmp;
-
-	(void)top;
-	tmp = *lst;
-	if (!new)
-		error_msg(1);
-	// if (ft_strcmp(tmp->key, (*top)->key) == 0)
-	// {
-	// 	printf("push first node\n");
-	// 	new->next = tmp;
-	// 	tmp->prev = new;
-	// 	*top = new;
-	// 	return ;
-	// }
-	// printf("push here\n");
-	new->next = tmp;
-	new->prev = tmp->prev;
-	tmp->prev->next = new;
-	tmp->prev = new;
-	// printf("push here\n");
-
-}
-void	sorting(t_list *t_env, t_list **top)
-{
-	t_list	*tmp;
-	t_list	*new;
-	
-	tmp = *top;
-	if (tmp->next == NULL || ft_strcmp(tmp->key, t_env->key) > 0) //tmp->key 가 더 위에 있어야하는 경우
-	{
-		// printf("\nadd_first_prev\n");
-		// export_add_prev(&tmp, lst_new(ft_strdup(t_env->key), ft_strdup(t_env->value)), top);
-		new = lst_new(ft_strdup(t_env->key), ft_strdup(t_env->value));
-		tmp->prev = new;
-		new->next = tmp;
-		*top = new;
-		return ;
-	}
-	while (tmp->next)
-	{
-		if (ft_strcmp(tmp->key, t_env->key) > 0)
+		if (ft_strcmp(tmp->key, key) == 0)
 		{
-			// printf("\nadd_prev\n");
-			export_add_prev(&tmp, lst_new(ft_strdup(t_env->key), ft_strdup(t_env->value)), top);
+			if (tmp->value)
+				free(tmp->value);
+			free(key);
+			tmp->value = value;
 			return ;
 		}
 		tmp = tmp->next;
 	}
-	// if (ft_strcmp(tmp->next->key, t_env->key) > 0)
-	// 	export_add_prev(&tmp->next, lst_new(ft_strdup(t_env->key), ft_strdup(t_env->value)), top);
-	// else
-	// 여기가 문제!!!!!!!!!!!!
-	lstadd_back(top, lst_new(ft_strdup(t_env->key), ft_strdup(t_env->value)));
-	printf("===================safe=====================\n");
+	lstadd_back(&head->data->env->next, lst_new(key, value));
 }
 
-// void	print_top(t_list **top)
-// {
-// 	t_list *tmp;
-
-// 	tmp = *top;
-// 	printf("-----------------test ----------\n");
-// 	while (tmp)
-// 	{
-// 		printf("> %s=%s\n", tmp->key, tmp->value);
-// 		tmp = tmp->next;
-// 	}
-// }
-
-
-void	sort_list(t_list *env, t_list **top)
+int	get_op(char *cmd)
 {
-	t_list	*t_env;
-	// t_list	*new;
-	// t_list	*top;
+	int		i;
 
-	t_env = env;
-	*top = lst_new(ft_strdup(t_env->key), ft_strdup(t_env->value)); 
-	t_env = t_env->next;
-	while (t_env)
+	i = 0;
+	while (cmd[i])
 	{
-		printf("%s, %s\n", t_env->key, t_env->value);
-		sorting(t_env, top);
-		// print_top(top);
-		t_env = t_env->next;
+		if (cmd[i] == ' ')
+			return (-1);
+		if (cmd[i] == '=')
+			break ;
+		if (cmd[i] == '+' && cmd[i + 1] == '=')
+			return (1);
+		i++;
 	}
+	return (0);
 }
 
-
-void	show_export(t_head *head)
+void	ft_export_ext(t_head *head, t_list *env, int op)
 {
-	t_list	*env;
-	t_list	*top;
-	t_list	*tmp;
+	t_token	*tmp;
+	char	*cmd;
+	char	*key;
+	char	*value;
 
-	top = NULL;
-	env = head->data->env->next;
-	sort_list(env, &top);
-	if (!top)
-		error_msg(1);
-	tmp = top;
+	tmp = head->top->token->next;
 	while (tmp)
 	{
-		printf("declare -x ");
-		if (tmp->value)
-			printf("%s=\"%s\"\n", tmp->key, tmp->value);
+		cmd = tmp->cmd;
+		key = export_getkey(cmd, &op);
+		if (key == NULL)
+		{
+			key_error(cmd);
+			head->get_error = 1;
+			tmp = tmp->next;
+			continue ;
+		}
+		value = export_getvalue(cmd);
+		if (op == 1)
+			export_update(head, &env, key, value);
 		else
-			printf("%s\n",tmp->key);
+			export_ext(head, &env, key, value);
 		tmp = tmp->next;
 	}
-	free_show_list(&top);
 }
 
 void	ft_export(t_head *head, char **exec_cmd)
 {
 	t_list	*tmp;
-	char	*key;
-	char	*value;
-	int		i;
 
+	(void)exec_cmd;
 	if (head->top->token->next == NULL)
 	{
 		show_export(head);
+		g_exit_status = 0;
 		return ;
 	}
 	tmp = head->data->env->next;
-	while (tmp->next)
-		tmp = tmp->next;
-	i = 0;
-	key = export_getkey(exec_cmd, head);
-	value = export_getvalue(head);
-	printf("key: %s, value : %s\n", key, value);
-	lstadd_back(&tmp, lst_new(key, value));
-	
+	ft_export_ext(head, tmp, 0);
+	if (head->get_error)
+		g_exit_status = 1;
 }

@@ -6,22 +6,11 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 22:41:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/15 18:44:51 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/06/01 15:57:43 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	ft_putstr_fd(char *s, int fd)
-{
-	if (!s || fd < 0)
-		return ;
-	while (*s)
-	{
-		write(fd, s, 1);
-		s++;
-	}
-}
 
 char	**freeall(char **strs)
 {
@@ -32,29 +21,6 @@ char	**freeall(char **strs)
 		free(strs[i++]);
 	free(strs);
 	return (NULL);
-}
-
-int	strcnt(char const *s, char c)
-{
-	int	n;
-	int	pipe_flag;
-
-	pipe_flag = 0;
-	n = 0;
-	while (*s)
-	{
-		if (*s != ' ' && *s != c)
-			pipe_flag = 0;
-		if (*s == c)
-		{
-			if (pipe_flag == 1)
-				ft_putstr_fd("bash: syntax error near unexpected token `||'", 2);
-			n++;
-			pipe_flag = 1;
-		}
-		s++;
-	}
-	return (n + 1);
 }
 
 char	*split_str(char const *s, char c)
@@ -80,82 +46,37 @@ char	*split_str(char const *s, char c)
 	str[i] = 0;
 	return (str);
 }
-
-int	s_quote_check(char c, t_split_var *flag)
+typedef struct s_make_cmd_var
 {
-	if (c == '\'')
-	{
-		flag->quote = 1;
-		flag->dquote = 0;
-	}
-	else if (c == '\"')
-	{
-		flag->quote = 0;
-		flag->dquote = 1;
-	}
-	else
-		return (0);
-	return (1);
-}
+	int	i;
+	int	s;
+	int	ind;
+}	t_make_cmd_var;
 
-int	s_dquote_check(char c, t_split_var *flag)
+char	*make_cmd(char *cmd, t_split_var *sv, char q)
 {
-	if (flag->dquote == 1)
-		return (1);
-	if (c == '\"' && flag->dquote == 0)
-	{
-		flag->dquote = 1;
-		return (1);
-	}
-	if ((c == '\"') && flag->dquote == 1)
-	{
-		flag->dquote = 0;
-		return (0);
-	}
-	return (flag->dquote);
-}
+	char			*p_cmd;
+	t_make_cmd_var	v;
 
-int	set_len(char *str, int i, char q)
-{
-	i++;	while (str[i])
+	v = (t_make_cmd_var){set_len(cmd, sv->i, q), sv->start, 0};
+	if (v.i - v.s <= 1)
 	{
-		if (str[i] == q)
-			return (i);
-		i++;
-	}
-	return (-1);
-}
-
-char	*make_cmd(char *cmd, t_split_var *v, char q)
-{
-	char	*p_cmd;
-	int		i;
-	int		s;
-	int		ind;
-
-	s = v->start;
-	i = set_len(cmd, v->i, q);
-	if (i == -1)
-		error_msg(2);
-	if (i - s <= 1)
-	{
-		v->i = i + 1;
-		v->start = i + 1;
+		sv->i = v.i + 1;
+		sv->start = v.i + 1;
 		return (NULL);
 	}
-	ind = 0;
-	p_cmd = (char *)malloc(sizeof(char) * (i - s - 2) + 1);
+	p_cmd = (char *)malloc(sizeof(char) * (v.i - v.s - 2) + 1);
 	if (!p_cmd)
-		error_msg(1);
-	while (s < i)
+		error_msg(0);
+	while (v.s < v.i)
 	{
-		if (cmd[s] != q)
-			p_cmd[ind++] = cmd[s];
-		s++;
+		if (cmd[v.s] != q)
+			p_cmd[v.ind++] = cmd[v.s];
+		v.s++;
 	}
-	p_cmd[ind] = 0;
-	v->i = i + 1;
-	v->start = i + 1;
+	p_cmd[v.ind] = 0;
+	sv->i = v.i + 1;
+	sv->start = v.i + 1;
 	return (p_cmd);
 }
 
@@ -164,7 +85,7 @@ void	split_space_ext(t_split_var *v, char *cmd)
 	if (cmd[v->i] == '\0')
 		v->flag = 1;
 	cmd[v->i] = '\0';
-	if (v->i > v->start && v->backup)	// backup이 있었다면 둘이합치기
+	if (v->i > v->start && v->backup)
 		v->backup = ft_strjoin(v->backup, &cmd[v->start]);
 	if (!v->backup)
 		add_token(&v->lst, &cmd[v->start]);
@@ -201,13 +122,5 @@ t_token	*split_space(char *cmd, char space)
 		}
 		split_space_ext(&v, cmd);
 	}
-
-	t_token *tmp = v.lst;
-	while (tmp)
-	{
-		printf(".... %s %d\n", tmp->cmd, tmp->redir_flag);
-		tmp = tmp->next;
-	}
-	printf(".... |\n");
 	return (v.lst);
 }

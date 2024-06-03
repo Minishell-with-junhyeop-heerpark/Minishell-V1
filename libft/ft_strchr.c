@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 18:55:14 by junhyeop          #+#    #+#             */
-/*   Updated: 2023/11/05 19:32:36 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/06/01 15:11:05 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,24 +24,3 @@ char	*ft_strchr(const char *string, int c)
 		return ((char *)string);
 	return ((char *) NULL);
 }
-
-// #include <stdio.h>
-// #include <string.h>
-
-// #define SIZE 40
-
-// int main(void)
-// {
-// 	char buffer1[SIZE] = "computer program";
-// 	char * ptr;
-// 	int    ch = 'z';
-
-// 	ptr = ft_strchr( buffer1, 't' + 256 );
-// 	printf( "The first occurrence of %c in '%s' is '%s'\n",ch, buffer1, ptr );
-
-// }
-
-/*****************  Output should be similar to:  *****************
-
-The first occurrence of p in 'computer program' is 'puter program'
-*/

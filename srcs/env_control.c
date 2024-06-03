@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env_control.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 22:07:00 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/23 15:13:09 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/31 21:21:15 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
 
 void	set_env(t_list **head, char **envp)
 {
@@ -55,7 +53,8 @@ char	*get_envp_line(t_list *head)
 		temp2 = ft_strjoin(temp, node->value);
 		free(temp);
 		temp = ft_strjoin(temp2, " ");
-		free(temp2);
+		if (node->value != NULL)
+			free(temp2);
 		temp2 = envp;
 		envp = ft_strjoin(envp, temp);
 		free(temp2);
@@ -69,25 +68,9 @@ void	update_envp(t_head *head)
 {
 	char	*envp_line;
 
-	envp_line = get_envp_line(head->data->env);
-	free_splited(head->data->envp);
+	envp_line = get_envp_line(head->data->env->next);
+	if (head->data->envp != NULL)
+		free_splited(head->data->envp);
 	head->data->envp = ft_split(envp_line, ' ');
 	free(envp_line);
-
-	for (int i=0; head->data->envp[i]; i++)
-	{
-		printf("%s\n",head->data->envp[i]);
-	}
 }
-
-// int	main(int argc, char **argv, char **envp)
-// {
-// 	t_list	*head;
-// 	char	*envp_line;
-// 	char	**my_envp;
-
-// 	set_env(&head, envp);
-
-// 	envp_line = get_envp_line(head);
-// 	update_envp()
-// }

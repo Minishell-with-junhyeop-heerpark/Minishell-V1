@@ -6,121 +6,61 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:11:25 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/23 15:34:21 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/06/01 23:34:23 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	get_processes(t_head *head, char **envp)
-{
-	t_process	**processes;
-	t_list		*node;
-	char		**path;
-	int			i;
-
-	processes = (t_process **)malloc(sizeof(t_process *) * (head->size + 1));
-	node = head->top;
-	path = ft_split(get_envpath(envp), ':');
-	if (!path)
-		perror_exit("get_processes-split");
-	i = 0;
-	while (node)
-	{
-		processes[i] = get_process(head, node, path);
-		node = node->next;
-		i++;
-	}
-	processes[i] = NULL;
-	free_splited(path);
-	head->processes = processes;
-	return ;
-}
-
-void	 set_inout(t_process *process, int **pipes, int i, int close_sig)
+void	set_inout(t_process *process)
 {
 	if (process->re_outfile_fd > 0)
 	{
 		dup2(process->re_outfile_fd, STDOUT_FILENO);
-		if (close_sig)
-			close(pipes[i][1]);
 	}
 	if (process->re_append_fd > 0)
 	{
 		dup2(process->re_append_fd, STDOUT_FILENO);
-		if (close_sig)
-			close(pipes[i][1]);
 	}
 	if (process->re_infile_fd > 0)
 	{
 		dup2(process->re_infile_fd, STDIN_FILENO);
-		if (close_sig)
-			close(pipes[i][0]);
 	}
 	if (process->heredoc_fd > 0)
 	{
 		dup2(process->heredoc_fd, STDIN_FILENO);
-		if (close_sig)
-			close(pipes[i][0]);
 	}
 }
-
-// void	start_process(t_head *head, char **envp)
-// {
-// 	pid_t	pid;
-
-// 	if (is_builtin(head->processes[0]->exec_cmd))
-// 	{
-// 		set_inout(head->processes[0], NULL, 0, 0);
-// 		run_builtin(head, head->processes[0]->exec_cmd);
-// 		dup2(head->data->original_stdout, STDOUT_FILENO);
-// 		dup2(head->data->original_stdin, STDIN_FILENO);
-// 		return ;
-// 	}
-// 	if (is_filepath(head->processes[0]->exec_cmd))
-// 	{
-// 		set_inout(head->processes[0], NULL, 0, 0);
-// 		if (execve(head->processes[0]->exec_cmd[0], \
-// 		head->processes[0]->exec_cmd, envp) == -1)
-// 			perror_exit("file exe execve error");
-// 		// return ;
-// 	}
-// 	pid = fork();
-// 	if (pid == -1)
-// 		perror_exit("start_process fork error");
-// 	else if (pid == 0)
-// 	{
-// 		set_inout(head->processes[0], NULL, 0, 0);
-// 		if (execve(head->processes[0]->exec_path, \
-// 		head->processes[0]->exec_cmd, envp) == -1)
-// 			perror_exit("execve error");
-// 	}
-// }
 
 void	run_cmd(t_head *head, char **envp, int i)
 {
 	if (is_builtin(head->processes[i]->exec_cmd))
 	{
 		run_builtin(head, head->processes[i]->exec_cmd);
+		exit(g_exit_status);
 	}
 	if (is_filepath(head->processes[i]->exec_cmd))
 	{
 		if (execve(head->processes[i]->exec_cmd[0], \
 		head->processes[i]->exec_cmd, envp) == -1)
+		{
 			perror_exit("file exe execve error");
+		}
 	}
 	if (execve(head->processes[i]->exec_path, \
 	head->processes[i]->exec_cmd, envp) == -1)
+	{
 		perror_exit("execve error");
+	}
 }
 
-void	start_process(t_head *head, char **envp) 
+void	start_process(t_head *head, char **envp)
 {
 	pid_t	pid;
 
 	if (is_builtin(head->processes[0]->exec_cmd))
 	{
-		set_inout(head->processes[0], NULL, 0, 0);
+		set_inout(head->processes[0]);
 		run_builtin(head, head->processes[0]->exec_cmd);
 		return ;
 	}
@@ -130,18 +70,18 @@ void	start_process(t_head *head, char **envp)
 	else if (pid == 0)
 	{
 		temi_print_on();
-		set_inout(head->processes[0], NULL, 0, 0);
+		set_inout(head->processes[0]);
 		run_cmd(head, envp, 0);
 	}
 }
 
-void	start_processes(t_head *head, char **envp, int **pipes, int n)
+void	start_processes(t_head *head, char **envp, int **pipes)
 {
 	int		i;
 	pid_t	pid;
 
 	i = 0;
-	while (i < n)
+	while (i < head->size)
 	{
 		pid = fork();
 		if (pid == -1)
@@ -149,9 +89,9 @@ void	start_processes(t_head *head, char **envp, int **pipes, int n)
 		else if (pid == 0)
 		{
 			temi_print_on();
-			if (i == 0) 
+			if (i == 0)
 				first_child(head, pipes, envp, i);
-			else if (i == n - 1)
+			else if (i == head->size - 1)
 				last_child(head, pipes, envp, i);
 			else
 				mid_child(head, pipes, envp, i);
@@ -162,48 +102,25 @@ void	start_processes(t_head *head, char **envp, int **pipes, int n)
 	}
 }
 
-
-
 void	exe(t_head *head, char **envp)
 {
-	int			**pipes;
-
-	printf("head size: %d\n", head->size);
-	head->get_error = 0;
-	if (head->size < 1)
-	{
-		// exit(EXIT_FAILURE);
-		// head size 0인 경우는 이미 준형이 파싱에서 걸러지는듯?
-		return ;
-	}
-	else if (head->size == 1)
+	if (head->size == 1)
 	{
 		get_processes(head, envp);
-		if (head->get_error)
-		{
-			// kill_heredoc(head, envp);
-			set_signal();
+		if (error_check(head, 0))
 			return ;
-		}
 		start_process(head, envp);
 		if (!is_builtin(head->processes[0]->exec_cmd))
 			wait_process(head->size);
 	}
 	else
 	{
-		pipes = make_pipe(head->size - 1);
-		// close_all_pipes(pipes, head->size - 1);
+		head->data->pipes = make_pipe(head->size - 1);
 		get_processes(head, envp);
-		if (head->get_error)
-		{
-			// kill_heredoc(head, envp);
-			set_signal();
+		if (error_check(head, 1))
 			return ;
-		}
-		start_processes(head, envp, pipes, head->size);
+		start_processes(head, envp, head->data->pipes);
 		wait_process(head->size);
 	}
-	kill_heredoc(head, envp);
 	set_signal();
 }
-//have to free malloced variable

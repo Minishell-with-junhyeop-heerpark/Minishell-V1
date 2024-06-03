@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:10:35 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/16 13:38:35 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/06/01 21:23:32 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-// gcc testsignal.c -lreadline -L/Users/sham/.brew/opt/readline/lib -I/Users/sham/.brew/opt/readline/include
 
 int	check_white_space(char *str)
 {
@@ -33,16 +32,18 @@ void	void_argument(int argc, char **argv)
 	(void)argv;
 }
 
+void	parse_error(char *str, t_head *head)
+{
+	error_msg(head->get_error + 1);
+	free_list(head, str);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char	*str;
 	t_head	*head;
 
-	void_argument(argc, argv);
-	set_signal();
-	g_exit_status = 0;
-	head = init_head(envp);
-	printf("Welcome to minishell!\n");
+	head = init_head(envp, argc, argv);
 	while (1)
 	{
 		str = readline("minishell$ ");
@@ -53,10 +54,14 @@ int	main(int argc, char **argv, char **envp)
 		else
 		{
 			add_history(str);
-			parse(str, head);
-			exe(head, envp);
-			free_list(head);
-			free(str); 
+			if (parse(str, head) == 0)
+			{
+				parse_error(str, head);
+				continue ;
+			}
+			update_envp(head);
+			exe(head, head->data->envp);
+			clear(head, str);
 		}
 	}
 	return (0);

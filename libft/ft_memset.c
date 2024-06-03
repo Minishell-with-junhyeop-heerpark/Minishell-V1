@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 15:10:29 by junhyeop          #+#    #+#             */
-/*   Updated: 2023/11/03 17:47:59 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/06/01 15:11:00 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,3 @@ void	*ft_memset(void *dest, int c, size_t count)
 		f_dest[i++] = (unsigned char)c;
 	return ((void *)f_dest);
 }
-
-// #include <stdio.h>
-// #include <string.h>
-// int main() {
-// 	void *dest = " ";
-// 	if (ft_memset(dest, 0, 0) == NULL)
-// 		printf("sdaf");
-// }

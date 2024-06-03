@@ -43,9 +43,10 @@ if (exec_cmd[0] == NULL)
 cat << end | cat << quit
 이런식으로 입력할 때 파이프로 넘어온 내용보다 자식프레스의 heredoc의 내용이 우선시되어 출력됨.
 확인해보자.
+heredoc 경로를 temp 로 할지 현재 폴더로 할지 정하기.
 
 <0515 발견된 에러들>
-1. builtin exit status 세팅
+1. builtin exit status 세팅 -O
 2. echo "a           a" 케이스. 해결법 -> char **cmd를 echo\na               a\n 이런식으로 개행을 cmd구분자로 두고 split('\n')
 3. env list랑 parsing list 분리.
 
@@ -55,3 +56,20 @@ cat << end | cat << quit
 2. heredoc 자식 프로세스에서 받고 처리하기 - clear
 3. 코드 구조랑 norm 맞추면서 leak, fd 처리하기.
 
+
+
+* execve에 넣는 envp를 업데이트 해줘야할지 말아야할지 정하기 업데이트 한다면 update_envp()를 사용하자.
+* 파싱 중간에 '들어오면 미니쉘 먹통됨 ex) echo', 다른 케이스들도 있을듯
+* echo echo a | ./minishell 케이스에서 자식 프로세스 종료 안되는거 check
+* no file perror check
+
+# hyunjunl의 도움으로 올바른 길을 가기 위한 시작된 AGU 대장정.
+1. lsof | grep ^minishell 로 하면 fd 0,1,2 이외에도 뭐가 떠있음. 누수인거 같으니까 확인해보자.
+2. wait process는 가장 마지막 프로세스의 exit status를 가져와야하는데 내껀 wait으로 받아서 그냥 종료된 순서로 받아옴.
+3. echo echo a | ./minishell 에서 프로세스 잘 닫히게하기
+   << end | cat 에서 cat의 교착 없애기
+   << HERE_DOC > a.txt | cat a.txt | wc -l
+
+4. << end | cat | cat 이런거 실행되어야 하는데 내꺼는 << end에서 nocmd로 받아서 뒤에거도 실행이안됨.
+
+5. pipe가 process실행전에 터져있는 경우들이 있다. 그런 경우에는  dup인자를 받아서 -1인치 체크해보자

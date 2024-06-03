@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 13:36:54 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/15 18:50:53 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/30 15:55:39 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,25 +33,24 @@ int	n_option_check(char *cmd)
 void	ft_echo(char **exec_cmd)
 {
 	int	i;
-	int flag;	// n option flag
+	int	flag;
 
 	i = 1;
 	flag = 0;
 	while (n_option_check(exec_cmd[i]))
 	{
-		flag = 1; // -n
+		flag = 1;
 		i++;
 	}
 	while (exec_cmd[i])
 	{
 		ft_printf("%s", exec_cmd[i]);
 		i++;
-		
 		if (!exec_cmd[i])
 			break ;
-		// printf("\n\necho : %s\n\n", exec_cmd[i]);
 		ft_printf(" ");
 	}
 	if (!flag)
 		ft_printf("\n");
+	g_exit_status = 0;
 }

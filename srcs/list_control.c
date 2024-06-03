@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_control.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:40:07 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/18 19:54:21 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/31 21:26:55 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	lstadd_back(t_list **lst, t_list *new)
 	t_list	*current;
 
 	if (!new)
-		error_msg(1);
+		error_msg(0);
 	if (!lst)
 	{
 		*lst = new;
@@ -109,13 +109,4 @@ void	lst_clear(t_list **lst)
 		current = next;
 	}
 	*lst = NULL;
-}
-
-void	lst_print(t_list *head)
-{
-	while (head)
-	{
-		ft_printf("%s=%s\n", head->key, head->value);
-		head = head->next;
-	}
 }

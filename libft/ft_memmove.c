@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 16:17:22 by junhyeop          #+#    #+#             */
-/*   Updated: 2023/11/03 17:48:46 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/06/01 15:10:57 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,22 +40,3 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 	}
 	return (dst);
 }
-
-// #include<string.h>
-// #include<stdio.h>
-
-// int main(void)
-// {
-//         char array[10];
-
-//         memset(array, 0, sizeof(array));
-//         strcpy(array, "test");
-
-//         printf("original : %s\n", array);
-
-//         ft_memmove(array+2, array, strlen("test"));
-
-//         printf("after memmove : %s\n", array);
-
-//         return 0;
-// }

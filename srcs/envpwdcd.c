@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   envpwdcd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 20:27:15 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/16 14:21:59 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/06/01 17:50:21 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-//pwd 마지막에 개행을 넣어 말어 (현재 x)
 void	pwd(void)
 {
 	char	cwd[1024];
@@ -20,10 +19,12 @@ void	pwd(void)
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 	{
 		ft_printf("%s\n", cwd);
+		g_exit_status = 0;
 	}
 	else
 	{
-		perror_exit("pwd() error");
+		print_bash_error("", "can't implement pwd", 1);
+		g_exit_status = 1;
 	}
 }
 
@@ -34,26 +35,23 @@ void	env(t_head *head)
 	first = head->data->env->next;
 	while (first)
 	{
-		ft_printf("%s=%s\n", first->key, first->value);
+		if (first->value != NULL)
+			ft_printf("%s=%s\n", first->key, first->value);
 		first = first->next;
 	}
+	g_exit_status = 0;
 }
 
-void	unset(t_head *head, char *key)
+void	unset(t_head *head, char **exec_cmd)
 {
-	remove_node(&(head->data->env->next), key);
-}
+	int	i;
 
-void	cd(t_head *head, char *dir)
-{
-	if (dir == NULL)
+	i = 1;
+	while (exec_cmd[i])
 	{
-		if (chdir(head->data->home) == -1)
-			perror_exit("cd");
+		if (exec_cmd[i] != NULL)
+			remove_node(&(head->data->env->next), exec_cmd[i]);
+		i++;
 	}
-	else
-	{
-		if (chdir(dir) == -1)
-			perror_exit("cd");
-	}
+	g_exit_status = 0;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 22:43:50 by heerpark          #+#    #+#             */
-/*   Updated: 2024/03/28 15:55:33 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/06/01 14:27:31 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,90 +24,52 @@ char	*get_envpath(char **envp)
 		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
 		{
 			path = envp[i];
+			path = path + 5;
+			return (path);
 			break ;
 		}
 		i++;
 	}
-	path = path + 5;
+	return (NULL);
+}
+
+char	**get_path(char **envp)
+{
+	char		*env_path;
+	char		**path;
+
+	env_path = get_envpath(envp);
+	if (env_path == NULL)
+		path = NULL;
+	else
+	{
+		path = ft_split(env_path, ':');
+		if (!path)
+			perror_exit("get_processes-split");
+	}
 	return (path);
 }
 
-char	**get_cmd_head(char **argv, int start_idx, int end_idx)
+void	get_processes(t_head *head, char **envp)
 {
-	char	**cmds;
-	char	**splited_argv;
-	int		cmds_count;
+	t_process	**processes;
+	t_list		*node;
+	char		**path;
+	int			i;
 
-	cmds_count = 0;
-	cmds = (char **)malloc(sizeof(char *) * (end_idx - start_idx + 2));
-	if (!cmds)
-		exit (1);
-	while (start_idx <= end_idx)
+	processes = (t_process **)malloc(sizeof(t_process *) * (head->size + 1));
+	path = get_path(envp);
+	i = 0;
+	node = head->top;
+	while (node)
 	{
-		splited_argv = ft_split(argv[start_idx], ' ');
-		if (!splited_argv)
-			exit (1);
-		cmds[cmds_count++] = splited_argv[0];
-		start_idx++;
+		processes[i] = get_process(head, node, path);
+		node = node->next;
+		i++;
 	}
-	cmds[cmds_count] = NULL;
-	return (cmds);
-}
-
-void	make_path(char ***res, char **path, char **cmds, int count)
-{
-	int		path_idx;
-	char	*now_path;
-	char	*exec_path;
-
-	path_idx = 0;
-	while (path[path_idx])
-	{
-		now_path = ft_strjoin(path[path_idx], "/");
-		exec_path = ft_strjoin(now_path, cmds[count]);
-		free(now_path);
-		if (access(exec_path, X_OK) == 0)
-		{
-			(*res)[count] = exec_path;
-			path_idx = -1;
-			break ;
-		}
-		free(exec_path);
-		path_idx++;
-	}
-	// if (path_idx != -1)
-	// {
-	// 		sig = 1;
-	// 		reutrn (sig)
-	// 	// perror_exit("command not found");
-	// }
-}
-
-void	find_valid_path(char ***res, char **path, char **cmds, int n)
-{
-	int		count;
-
-	count = 0;
-	while (count < n)
-	{
-		make_path(res, path, cmds, count);
-		count++;
-	}
-	(*res)[count] = NULL;
-}
-
-char	**get_exec_paths(char **envp, char **cmds, int path_size)
-{
-	char	**path;
-	char	**res;
-
-	res = (char **)malloc(sizeof(char *) * (path_size + 1));
-	if (!res)
-		exit (1);
-	path = ft_split(get_envpath(envp), ':');
-	if (!path)
-		exit (1);
-	find_valid_path(&res, path, cmds, path_size);
-	free_splited(path);
-	return (res);
+	processes[i] = NULL;
+	if (path)
+		free_splited(path);
+	head->processes = processes;
+	return ;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file_exe.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 14:28:58 by heerpark          #+#    #+#             */
-/*   Updated: 2024/04/06 22:34:48 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/05/31 21:21:37 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ char	*get_pwd(void)
 	return (cwd);
 }
 
-// if only_home is true, whole path is replaced with home_path, 
-// otherwise first ~ is replaced with home_path
 void	add_homepath(t_head *head, char **exec_cmd, int only_home)
 {
 	char	*res;
