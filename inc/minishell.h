@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
 /*   Updated: 2024/06/02 01:00:21 by junhyeop         ###   ########.fr       */
@@ -216,7 +216,7 @@ t_process	*get_process(t_head *head, t_list *line, char **path);
 //processes_exe
 void		run_cmd(t_head *head, char **envp, int i);
 void		get_processes(t_head *head, char **envp);
-void		set_inout(t_process *process, int **pipes, int i, int close_sig);
+void		set_inout(t_process *process);
 void		start_process(t_head *head, char **envp);
 void		start_processes(t_head *head, char **envp, int **pipes);
 void		exe(t_head *head, char **envp);
@@ -230,7 +230,7 @@ int			is_exit(char **exec_cmd);
 void		env(t_head *head);
 void		pwd(void);
 void		cd(t_head *head, char *dir);
-void		unset(t_head *head, char *key);
+void		unset(t_head *head, char **exec_cmd);
 void		ft_echo(char **exec_cmd);
 
 	//list_control.c
@@ -288,6 +288,8 @@ void		print_error(char *cmd, char *input, char *msg, int exit_status);
 void		print_bash_error(char *input, char *msg, int exit_status);
 int			error_msg_ext(int type, t_head *head);
 void		error_msg(int type, t_head *head);
+int			error_check(t_head *head, int close_pipes);
+
 
 //free.c
 void		clear_processes(t_head *head);

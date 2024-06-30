@@ -51,7 +51,7 @@ void	run_builtin(t_head *head, char **exec_cmd)
 	else if (ft_strncmp(exec_cmd[0], "export", 7) == 0)
 		ft_export(head, exec_cmd);
 	else if (ft_strncmp(exec_cmd[0], "unset", 6) == 0)
-		unset(head, exec_cmd[1]);
+		unset(head, exec_cmd);
 	else if (ft_strncmp(exec_cmd[0], "env", 4) == 0)
 		env(head);
 	else if (ft_strncmp(exec_cmd[0], "exit", 5) == 0)

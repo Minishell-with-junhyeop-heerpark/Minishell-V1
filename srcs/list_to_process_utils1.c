@@ -48,6 +48,7 @@ void	close_unused_input(t_process *process)
 			close(process->heredoc_fd);
 			unlink(process->heredoc_filename);
 			free(process->heredoc_filename);
+			process->heredoc_filename = NULL;
 		}
 		process->heredoc_fd = -42;
 	}

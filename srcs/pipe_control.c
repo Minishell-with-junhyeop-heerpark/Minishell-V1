@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 13:13:59 by heerpark          #+#    #+#             */
-/*   Updated: 2024/06/01 14:20:58 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/06/01 23:34:39 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	first_child(t_head *head, int **pipes, char **envp, int i)
 {
 	dup2(pipes[i][1], STDOUT_FILENO);
 	close_all_pipes(pipes, head->size - 1);
-	set_inout(head->processes[i], pipes, i, 1);
+	set_inout(head->processes[i]);
 	run_cmd(head, envp, i);
 }
 
@@ -38,7 +38,7 @@ void	last_child(t_head *head, int **pipes, char **envp, int i)
 	
 	dup2(pipes[i - 1][0], STDIN_FILENO);
 	close_all_pipes(pipes, head->size - 1);
-	set_inout(head->processes[i], pipes, i, 0);
+	set_inout(head->processes[i]);
 	run_cmd(head, envp, i);
 }
 
@@ -47,7 +47,7 @@ void	mid_child(t_head *head, int **pipes, char **envp, int i)
 	dup2(pipes[i - 1][0], STDIN_FILENO);
 	dup2(pipes[i][1], STDOUT_FILENO);
 	close_all_pipes(pipes, head->size - 1);
-	set_inout(head->processes[i], pipes, i, 1);
+	set_inout(head->processes[i]);
 	run_cmd(head, envp, i);
 }
 

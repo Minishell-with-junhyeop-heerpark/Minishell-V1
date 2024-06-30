@@ -6,17 +6,14 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:11:25 by heerpark          #+#    #+#             */
-/*   Updated: 2024/06/01 14:27:07 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/06/01 23:34:23 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	set_inout(t_process *process, int **pipes, int i, int close_sig)
+void	set_inout(t_process *process)
 {
-	(void)close_sig;
-	(void)i;
-	(void)pipes;
 	if (process->re_outfile_fd > 0)
 	{
 		dup2(process->re_outfile_fd, STDOUT_FILENO);
@@ -63,7 +60,7 @@ void	start_process(t_head *head, char **envp)
 
 	if (is_builtin(head->processes[0]->exec_cmd))
 	{
-		set_inout(head->processes[0], NULL, 0, 0);
+		set_inout(head->processes[0]);
 		run_builtin(head, head->processes[0]->exec_cmd);
 		return ;
 	}
@@ -73,7 +70,7 @@ void	start_process(t_head *head, char **envp)
 	else if (pid == 0)
 	{
 		temi_print_on();
-		set_inout(head->processes[0], NULL, 0, 0);
+		set_inout(head->processes[0]);
 		run_cmd(head, envp, 0);
 	}
 }
@@ -110,11 +107,8 @@ void	exe(t_head *head, char **envp)
 	if (head->size == 1)
 	{
 		get_processes(head, envp);
-		if (head->get_error)
-		{
-			set_signal();
+		if (error_check(head, 0))
 			return ;
-		}
 		start_process(head, envp);
 		if (!is_builtin(head->processes[0]->exec_cmd))
 			wait_process(head->size);
@@ -123,12 +117,8 @@ void	exe(t_head *head, char **envp)
 	{
 		head->data->pipes = make_pipe(head->size - 1);
 		get_processes(head, envp);
-		if (head->get_error)
-		{
-
-			set_signal();
+		if (error_check(head, 1))
 			return ;
-		}
 		start_processes(head, envp, head->data->pipes);
 		wait_process(head->size);
 	}

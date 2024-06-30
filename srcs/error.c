@@ -69,3 +69,15 @@ void	print_bash_error(char *input, char *msg, int exit_status)
 	g_exit_status = exit_status;
 	printf("hello\n");
 }
+
+int	error_check(t_head *head, int close_pipes)
+{
+	if (head->get_error)
+	{
+		set_signal();
+		if (close_pipes)
+			close_all_pipes(head->data->pipes, head->size - 1);
+		return (1);
+	}
+	return (0);
+}
