@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 20:03:35 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/30 14:48:24 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/06/02 00:02:24 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ void	do_sigint_heredoc(int signum)
 
 void	exit_signal(void)
 {
-	ft_printf("\033[1A");
-	ft_printf("\033[10C");
-	ft_printf(" exit\n");
+	printf("\033[1A");
+	printf("\033[10C");
+	printf(" exit\n");
 	exit(255);
 }

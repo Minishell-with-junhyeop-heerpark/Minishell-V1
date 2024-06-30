@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 20:27:15 by heerpark          #+#    #+#             */
-/*   Updated: 2024/06/01 17:50:21 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/06/02 00:02:24 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	pwd(void)
 
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 	{
-		ft_printf("%s\n", cwd);
+		printf("%s\n", cwd);
 		g_exit_status = 0;
 	}
 	else
@@ -36,7 +36,7 @@ void	env(t_head *head)
 	while (first)
 	{
 		if (first->value != NULL)
-			ft_printf("%s=%s\n", first->key, first->value);
+			printf("%s=%s\n", first->key, first->value);
 		first = first->next;
 	}
 	g_exit_status = 0;

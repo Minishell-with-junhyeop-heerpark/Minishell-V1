@@ -19,7 +19,7 @@ void	change_pwd(t_list *env, char *cwd)
 
 	find = 0;
 	if (cwd == NULL)
-		error_msg(0);
+		error_msg(0, NULL);
 	while (env)
 	{
 		if (ft_strcmp(env->key, "PWD") == 0)
@@ -60,7 +60,7 @@ void	cd(t_head *head, char *dir)
 		if (tmp == -1)
 		{
 			g_exit_status = 1;
-			ft_printf("minishell: cd: %s: can't implement cd\n", dir);
+			printf("minishell: cd: %s: can't implement cd\n", dir);
 		}
 		change_env(head);
 	}
@@ -70,7 +70,7 @@ void	cd(t_head *head, char *dir)
 		if (tmp == -1)
 		{
 			g_exit_status = 1;
-			ft_printf("minishell: cd: %s: can't implement cd\n", dir);
+			printf("minishell: cd: %s: can't implement cd\n", dir);
 		}
 		change_env(head);
 	}

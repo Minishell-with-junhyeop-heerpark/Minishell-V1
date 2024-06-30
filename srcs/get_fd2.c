@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 21:22:40 by heerpark          #+#    #+#             */
-/*   Updated: 2024/06/01 16:41:45 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/06/02 00:02:24 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	get_infile(t_head *head, char *file_name)
 	if (fd == -1)
 	{
 		head->get_error = 1;
-		ft_printf("minishell: %s: No such file or directory\n", file_name);
+		printf("minishell: %s: No such file or directory\n", file_name);
 	}
 	return (fd);
 }
@@ -42,12 +42,11 @@ int	get_heredoc(t_head *head, t_process *process, char *limiter)
 int	get_outfile(t_head *head, char *file_name)
 {
 	int	fd;
-
 	fd = open(file_name, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 	{
 		head->get_error = 1;
-		ft_printf("minishell: %s: No such file or directory\n", file_name);
+		printf("minishell: %s: No such file or directory\n", file_name);
 	}
 	return (fd);
 }
@@ -60,7 +59,7 @@ int	get_append(t_head *head, char *file_name)
 	if (fd == -1)
 	{
 		head->get_error = 1;
-		ft_printf("minishell: %s: No such file or directory\n", file_name);
+		printf("minishell: %s: No such file or directory\n", file_name);
 	}
 	return (fd);
 }

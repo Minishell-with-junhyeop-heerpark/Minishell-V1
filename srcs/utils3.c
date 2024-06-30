@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 21:13:55 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/06/01 15:12:39 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/06/02 00:02:24 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,22 @@ t_head	*init_head(char **envp, int argc, char **argv)
 	t_head	*head;
 
 	void_argument(argc, argv);
-	ft_printf("Welcome to minishell!\n");
+	printf("Welcome to minishell!\n");
 	set_signal();
 	g_exit_status = 0;
 	head = (t_head *)malloc(sizeof(t_head));
 	head->data = (t_data *)malloc(sizeof(t_data));
 	if (!head)
-		error_msg(0);
+		error_msg(0, NULL);
+	head->get_error = 0;
+	head->filtered = (t_list *)malloc(sizeof(t_list));
 	head->top = NULL;
 	head->data->envp = NULL;
 	head->size = 0;
 	head->data->original_stdin = dup(STDOUT_FILENO);
 	head->data->original_stdout = dup(STDOUT_FILENO);
 	head->data->env = (t_list *)malloc(sizeof(t_list));
+	head->error_str = NULL;
 	set_env(&(head->data->env), envp);
 	set_home(head);
 	return (head);

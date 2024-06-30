@@ -122,5 +122,6 @@ void	exe(t_head *head, char **envp)
 		start_processes(head, envp, head->data->pipes);
 		wait_process(head->size);
 	}
+
 	set_signal();
 }

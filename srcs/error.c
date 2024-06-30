@@ -3,16 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 06:30:07 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/06/01 22:55:07 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/06/02 00:02:24 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	error_msg(int type)
+int	error_msg_ext(int type, t_head *head)
+{
+	if (type == 11)
+	{
+		printf("minishell: syntax error near unexpected token `%s'\n", head->error_str);
+		g_exit_status = 258;
+		return (0);
+	}
+	return (1);
+}
+
+void	error_msg(int type, t_head *head)
 {
 	if (type == 0)
 		ft_putstr_fd("malloc error\n", 2);
@@ -35,25 +46,28 @@ void	error_msg(int type)
 		g_exit_status = 258;
 		return ;
 	}
+	if (error_msg_ext(type, head) == 0)
+		return ;
 	exit(1);
 }
 
 void	print_error(char *cmd, char *input, char *msg, int exit_status)
 {
 	if (input == NULL)
-		ft_printf("%s: %s: %s\n", cmd, "", msg);
+		printf("%s: %s: %s\n", cmd, "", msg);
 	else
-		ft_printf("%s: %s: %s\n", cmd, input, msg);
+		printf("%s: %s: %s\n", cmd, input, msg);
 	g_exit_status = exit_status;
 }
 
 void	print_bash_error(char *input, char *msg, int exit_status)
 {
 	if (input == NULL)
-		ft_printf("minishell: %s: %s\n", "", msg);
+		printf("minishell: %s: %s\n", "", msg);
 	else
-		ft_printf("minishell: %s: %s\n", input, msg);
+		printf("minishell: %s: %s\n", input, msg);
 	g_exit_status = exit_status;
+	printf("hello\n");
 }
 
 int	error_check(t_head *head, int close_pipes)

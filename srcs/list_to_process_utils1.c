@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_to_process_utils1.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 21:53:55 by heerpark          #+#    #+#             */
-/*   Updated: 2024/06/01 16:57:58 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/06/01 16:41:36 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void	close_unused_output(t_process *process)
 void	set_fd(t_head *head, t_process *process, \
 		char *file_name, int redir_flag)
 {
+	// printf("redir flag %d\n", redir_flag);
 	if (redir_flag == 1)
 	{
 		close_unused_output(process);

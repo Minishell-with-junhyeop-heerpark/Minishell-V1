@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 18:17:19 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/06/01 16:47:08 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/06/01 19:21:23 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,30 @@ void	free_token(t_token *token)
 	}
 }
 
+void	free_filterd(t_head *head)
+{
+	t_token	*tmp;
+	t_token *rmv;
+
+	tmp = head->filtered->token;
+	while (tmp)
+	{
+		rmv = tmp;
+		tmp = tmp->next;
+		if (rmv->cmd)
+			free(rmv->cmd);
+		free(rmv);
+	}
+	head->filtered->token = NULL;
+}
+
 void	free_list(t_head *head, char *str)
 {
 	t_list	*tmp;
 	t_list	*rmv;
 
 	tmp = head->top;
+	free_filterd(head);
 	while (tmp)
 	{
 		rmv = tmp;
@@ -41,6 +59,9 @@ void	free_list(t_head *head, char *str)
 	}
 	if (head->processes)
 		clear_processes(head);
+	if (head->error_str)		
+		free(head->error_str);
+	head->error_str = NULL;
 	head->size = 0;
 	head->top = NULL;
 	head->get_error = 0;

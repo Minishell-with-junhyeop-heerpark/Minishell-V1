@@ -20,6 +20,8 @@ char	*ft_strndup(const char *str, size_t n)
 
 	len = 0;
 	i = 0;
+	if (n <= 0)
+		return (NULL);
 	while (len < n && str[len])
 		len++;
 	copy = (char *)malloc(len + 1);

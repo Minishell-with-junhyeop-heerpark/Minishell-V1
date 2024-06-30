@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_control.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:40:07 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/31 21:26:55 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/06/01 18:02:36 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	lstadd_back(t_list **lst, t_list *new)
 	t_list	*current;
 
 	if (!new)
-		error_msg(0);
+		error_msg(0, NULL);
 	if (!lst)
 	{
 		*lst = new;

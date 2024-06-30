@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_2.c                                          :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 19:54:44 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/27 19:58:35 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/06/02 03:24:18 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,25 @@ int	s_quote_check(char c, t_split_var *flag)
 {
 	if (c == '\'')
 	{
-		flag->quote = 1;
-		flag->dquote = 0;
+		if (flag->dquote)
+			return (1);
+		if (flag->quote == 1)
+			flag->quote = 0;
+		else
+			flag->quote = 1;
+		return (flag->quote);
 	}
 	else if (c == '\"')
 	{
-		flag->quote = 0;
-		flag->dquote = 1;
+		if (flag->quote)
+			return (1);
+		if (flag->dquote == 1)
+			flag->dquote = 0;
+		else
+			flag->dquote = 1;
+		return (flag->dquote);
 	}
-	else
-		return (0);
-	return (1);
+	return (0);
 }
 
 int	s_dquote_check(char c, t_split_var *flag)
@@ -73,7 +81,7 @@ int	set_len(char *str, int i, char q)
 	while (str[i])
 	{
 		if (str[i] == q)
-			return (i);
+			return (i + 1);
 		i++;
 	}
 	return (-1);
