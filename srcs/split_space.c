@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../inc/minishell.h"
 
 char	**freeall(char **strs)
 {
@@ -135,9 +135,9 @@ int	is_quote(char c)
 
 void	split_space_ext(t_split_var *v, char *cmd)
 {
-	int	i;
+	// int	i;
 
-	i = 0;
+	// i = 0;
 	printf("origin backup: %s\n", v->backup);
 	printf("----------------cmd[v->i] %c  %d\n",cmd[v->i - v->start], v->i);
 	if (cmd[v->i - v->start] == '\0')
@@ -176,6 +176,7 @@ void	split_space_ext(t_split_var *v, char *cmd)
 	printf("after: %s\n", v->lst->cmd);
 }
 
+
 t_token	*split_space(char *cmd, char space)
 {
 	t_split_var	v;
@@ -184,29 +185,19 @@ t_token	*split_space(char *cmd, char space)
 	v = (t_split_var){NULL, NULL, 0, 0, 0, 0, 0};
 	v.dquote = 0;
 	v.quote = 0;
+	printf("split_space: %s\n", cmd);
 	while (v.flag == 0 && cmd[v.i])
 	{
-		while (cmd[v.start] == space)
+		while (cmd[v.start] == space)	// 맨앞 공백 넘김
 			v.start++;
 		v.i = v.start;
-		while (cmd[v.i] != space && cmd[v.i])
+		while ((v.dquote || v.quote || cmd[v.i] != space) && cmd[v.i])	// space 전까지 계속 넘기는데, quote 내부라면 space만나도 계속 넘길 수 있음.
 		{
-			if (s_quote_check(cmd[v.i], &v))
-			{
-				if (!v.backup)
-					v.backup = make_cmd(cmd, &v, cmd[v.i]);
-				else
-					my_strjoin(&v.backup, make_cmd(cmd, &v, cmd[v.i]));
-			}
-			else
-				v.i++;
+			my_quote_check(cmd[v.i], &v.quote, &v.dquote);
+			v.i++;
 		}
-
-		if (v.lst)
-			printf("before: %s\n", v.lst->cmd);
-		printf("start %d\n", v.start);
-		split_space_ext(&v, ft_strdup(&cmd[v.start]));
-		printf("afffter : %s\n", v.lst->cmd);
+		add_token(&v.lst, ft_strndup(&cmd[v.start], v.i - v.start));
+		v.start = v.i;
 	}
 
 	t_token *a = v.lst;

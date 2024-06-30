@@ -28,7 +28,7 @@ void	set_builtin(t_head *head, t_process *process, char **exec_cmd)
 void	check_path(t_process *process, char **path, char **exec_path, int *i)
 {
 	char	*test_path;
-
+	
 	if (path)
 	{
 		while (path[*i])
@@ -70,6 +70,8 @@ void	set_process(t_head *head, t_process *process, char **path)
 
 	exec_cmd = ft_split(process->cmd, '\n');
 	process->exec_cmd = exec_cmd;
+	// while (*exec_cmd)
+	// printf("exec_cmd: %s\n", *exec_cmd++);
 	if (no_cmd(head, process))
 		return ;
 	if (is_builtin(exec_cmd))

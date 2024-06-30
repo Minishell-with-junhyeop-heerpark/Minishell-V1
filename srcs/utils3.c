@@ -43,6 +43,7 @@ t_head	*init_head(char **envp, int argc, char **argv)
 	if (!head)
 		error_msg(0, NULL);
 	head->get_error = 0;
+	head->filtered = (t_list *)malloc(sizeof(t_list));
 	head->top = NULL;
 	head->data->envp = NULL;
 	head->size = 0;

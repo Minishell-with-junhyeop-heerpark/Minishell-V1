@@ -62,3 +62,10 @@ heredoc 경로를 temp 로 할지 현재 폴더로 할지 정하기.
 * 파싱 중간에 '들어오면 미니쉘 먹통됨 ex) echo', 다른 케이스들도 있을듯
 * echo echo a | ./minishell 케이스에서 자식 프로세스 종료 안되는거 check
 * no file perror check
+
+
+# Junhyeop 할거
+
+### export를 filtered 로 바꾸기 !
+### 에러 체크해보기 !
+### `ls > a ` 이거 왜 안될까

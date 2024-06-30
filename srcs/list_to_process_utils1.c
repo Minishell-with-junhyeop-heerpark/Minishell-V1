@@ -80,6 +80,7 @@ void	close_unused_output(t_process *process)
 void	set_fd(t_head *head, t_process *process, \
 		char *file_name, int redir_flag)
 {
+	// printf("redir flag %d\n", redir_flag);
 	if (redir_flag == 1)
 	{
 		close_unused_output(process);

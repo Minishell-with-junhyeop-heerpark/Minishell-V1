@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../inc/minishell.h"
+
+int g_exit_status;
 
 int	check_white_space(char *str)
 {
@@ -43,8 +45,8 @@ int	main(int argc, char **argv, char **envp)
 	char	*str;
 	t_head	*head;
 
-	if (ft_strcmp(">>", ">>>") == 0)
-		printf("hi\n");
+	// if (ft_strcmp(">>", ">>>") == 0)
+	// 	printf("hi\n");
 	head = init_head(envp, argc, argv);
 	while (1)
 	{

@@ -123,6 +123,7 @@ typedef struct s_head {
 	int				get_error;
 	char			*error_str;
 	struct s_list	*top;
+	t_list			*filtered;
 	t_data			*data;
 	t_process		**processes;
 }	t_head;
@@ -134,7 +135,7 @@ typedef struct s_value_var
 	int	s;
 }	t_value_var;
 
-int			g_exit_status;
+extern int			g_exit_status;
 int			check_white_space(char *str);
 
 //parsing func
@@ -144,7 +145,7 @@ void		add_token(t_token **lst, char *cmd);
 char		*make_cmd(char *cmd, t_split_var *sv, char q);
 t_token		*make_token(char *command, t_head *head);
 t_head		*init_head(char **envp, int argc, char **argv);
-t_token		*token_new(char *command, int flag, int dquote_flag);
+t_token		*token_new(char *command, int flag);
 void		void_argument(int argc, char **argv);
 t_list		*cmd_list_new(char *command, t_head *head);
 void		ft_lst_add(t_head *head, t_list *new);
@@ -321,8 +322,12 @@ int			redir_err_flag(char *cmd, t_head *head);
 void		redir_err_check(t_token *token, t_head *head);
 
 t_token		*ft_token_add2(t_token *lst, t_token *new);
+void		add_token2(t_token **lst, char *cmd, int qf);
 
-int	check_redir(char *cmd);
-int	is_redir(char cmd);
+int		check_redir(char *cmd);
+int		is_redir(char cmd);
+void	my_quote_check(char c, int *q_flag, int *dq_flag);
+int		redir_size(char *cmd);
+char	*replace_str(char *str, int end, int start);
 
 #endif

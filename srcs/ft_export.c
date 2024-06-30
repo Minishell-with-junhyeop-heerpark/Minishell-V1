@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../inc/minishell.h"
 
 void	export_update(t_head *head, t_list **lst, char *key, char *value)
 {
@@ -85,7 +85,7 @@ void	ft_export_ext(t_head *head, t_list *env, int op)
 	char	*key;
 	char	*value;
 
-	tmp = head->top->token->next;
+	tmp = head->filtered->token->next;
 	while (tmp)
 	{
 		cmd = tmp->cmd;
@@ -111,7 +111,7 @@ void	ft_export(t_head *head, char **exec_cmd)
 	t_list	*tmp;
 
 	(void)exec_cmd;
-	if (head->top->token->next == NULL)
+	if (head->filtered->token->next == NULL)
 	{
 		show_export(head);
 		g_exit_status = 0;

@@ -35,6 +35,7 @@ void	first_child(t_head *head, int **pipes, char **envp, int i)
 
 void	last_child(t_head *head, int **pipes, char **envp, int i)
 {
+	
 	dup2(pipes[i - 1][0], STDIN_FILENO);
 	close_all_pipes(pipes, head->size - 1);
 	set_inout(head->processes[i], pipes, i, 0);

@@ -67,4 +67,5 @@ void	print_bash_error(char *input, char *msg, int exit_status)
 	else
 		printf("minishell: %s: %s\n", input, msg);
 	g_exit_status = exit_status;
+	printf("hello\n");
 }

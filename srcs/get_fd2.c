@@ -43,7 +43,6 @@ int	get_heredoc(t_head *head, t_process *process, char *limiter)
 int	get_outfile(t_head *head, char *file_name)
 {
 	int	fd;
-
 	fd = open(file_name, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 	{

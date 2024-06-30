@@ -25,7 +25,7 @@ t_list	*cmd_list_new(char *command, t_head *head)
 	return (newnode);
 }
 
-t_token	*token_new(char *command, int flag, int quote_flag)
+t_token	*token_new(char *command, int flag)
 {
 	t_token	*new;
 
@@ -38,7 +38,7 @@ t_token	*token_new(char *command, int flag, int quote_flag)
 	new->next = NULL;
 	new->cmd = command;
 	new->redir_flag = flag;
-	new->quote_flag = quote_flag;
+	new->quote_flag = 0;
 	return (new);
 }
 
@@ -56,8 +56,7 @@ void	ft_token_add(t_token **lst, t_token *new)
 	t_token	*tmp;
 
 	tmp = *lst;
-	printf("x : %p\n", tmp);
-	printf("new: %s\n", new->cmd);
+	// printf("new: %s\n", new->cmd);
 	if (new == NULL)
 		error_msg(0, NULL);
 	if (tmp == NULL)

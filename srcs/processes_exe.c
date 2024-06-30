@@ -125,11 +125,13 @@ void	exe(t_head *head, char **envp)
 		get_processes(head, envp);
 		if (head->get_error)
 		{
+
 			set_signal();
 			return ;
 		}
 		start_processes(head, envp, head->data->pipes);
 		wait_process(head->size);
 	}
+
 	set_signal();
 }

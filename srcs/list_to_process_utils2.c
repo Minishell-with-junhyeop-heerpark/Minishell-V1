@@ -20,7 +20,7 @@ char	*getkey(char *str)
 
 	n = 0;
 	i = 0;
-	while (str[n] && key_check(str[n]) && str[n] != '$')
+	while (str[n] && str[n] != '$' && str[n] != '\'' && str[n] != '\"')
 		n++;
 	dest = (char *)malloc(sizeof(char) * n + 1);
 	while (i < n)
