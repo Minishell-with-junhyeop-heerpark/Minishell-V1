@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:11:25 by heerpark          #+#    #+#             */
-/*   Updated: 2024/07/01 17:43:13 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/07/01 18:06:03 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ void	set_inout(t_process *process)
 
 void	run_cmd(t_head *head, char **envp, int i)
 {
+	if (head->processes[i]->is_error)
+	{
+		printf("error process: %d\n", i);
+		exit(head->processes[i]->is_error);
+	}
 	if (is_builtin(head->processes[i]->exec_cmd))
 	{
 		run_builtin(head, head->processes[i]->exec_cmd);
@@ -120,8 +125,8 @@ void	exe(t_head *head, char **envp)
 	{
 		head->data->pipes = make_pipe(head->size - 1);
 		get_processes(head, envp);
-		if (error_check(head, 1))
-			return ;
+		// if (error_check(head, 1))
+		// 	return ;
 		start_processes(head, envp, head->data->pipes);
 		wait_process(head->size, head->data->last_pid);
 	}

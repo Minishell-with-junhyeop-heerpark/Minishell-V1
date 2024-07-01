@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 21:53:55 by heerpark          #+#    #+#             */
-/*   Updated: 2024/06/01 16:57:58 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/07/01 17:59:46 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	init_process(t_process *process)
 	process->cmd = NULL;
 	process->exec_cmd = NULL;
 	process->exec_cmd = NULL;
+	process->is_error = 0;
 }
 
 int	get_redir_flag(char	*token)
@@ -84,17 +85,17 @@ void	set_fd(t_head *head, t_process *process, \
 	if (redir_flag == 1)
 	{
 		close_unused_output(process);
-		process->re_outfile_fd = get_outfile(head, file_name);
+		process->re_outfile_fd = get_outfile(head, process, file_name);
 	}
 	else if (redir_flag == 2)
 	{
 		close_unused_output(process);
-		process->re_append_fd = get_append(head, file_name);
+		process->re_append_fd = get_append(head, process, file_name);
 	}
 	else if (redir_flag == 3)
 	{
 		close_unused_input(process);
-		process->re_infile_fd = get_infile(head, file_name);
+		process->re_infile_fd = get_infile(head, process, file_name);
 	}
 	else if (redir_flag == 4)
 	{

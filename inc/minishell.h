@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/07/01 17:37:19 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/07/01 18:00:44 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ typedef struct s_process
 	int		re_outfile_fd;
 	int		re_append_fd;
 	int		heredoc_fd;
+	int		is_error;
 	char	*heredoc_filename;
 	char	*cmd;
 	char	*exec_path;
@@ -170,10 +171,10 @@ void		close_all_pipes(int **pipes, int n);
 
 	//get_fd
 int			check_redir_heredoc(t_process *process);
-int			get_infile(t_head *head, char *file_name);
+int			get_infile(t_head *head, t_process *process, char *file_name);
 int			get_heredoc(t_head *head, t_process *process, char *limiter);
-int			get_outfile(t_head *head, char *file_name);
-int			get_append(t_head *head, char *file_name);
+int			get_outfile(t_head *head, t_process *process, char *file_name);
+int			get_append(t_head *head, t_process *process, char *file_name);
 void		init_fd(t_process *process);
 
 	//here_doc
