@@ -65,7 +65,8 @@ heredoc 경로를 temp 로 할지 현재 폴더로 할지 정하기.
 
 # hyunjunl의 도움으로 올바른 길을 가기 위한 시작된 AGU 대장정.
 1. lsof | grep ^minishell 로 하면 fd 0,1,2 이외에도 뭐가 떠있음. 누수인거 같으니까 확인해보자.
-2. wait process는 가장 마지막 프로세스의 exit status를 가져와야하는데 내껀 wait으로 받아서 그냥 종료된 순서로 받아옴.
+2. wait process는 가장 마지막 프로세스의 exit status를 가져와야하는데 내껀 wait으로 받아서 그냥 종료된 순서로 받아옴. -clear
+
 3. echo echo a | ./minishell 에서 프로세스 잘 닫히게하기
    << end | cat 에서 cat의 교착 없애기
    << HERE_DOC > a.txt | cat a.txt | wc -l

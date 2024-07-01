@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/06/01 23:33:49 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/07/01 17:37:19 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ typedef struct s_data //heredoc 파일 경로 여기로 옮기기.
 {
 	int		original_stdin;
 	int		original_stdout;
+	int		last_pid;
 	int		**pipes;
 	char	*home;
 	char	**envp;
@@ -160,7 +161,7 @@ int			**make_pipe(int child_num);
 void		free_pipe(int **pipe, int child_num);
 
 	//pipe_control
-void		wait_process(int child_num);
+void		wait_process(int child_num, int last_pid);
 void		first_child(t_head *head, int **pipes, char **envp, int i);
 void		last_child(t_head *head, int **pipes, char **envp, int i);
 void		mid_child(t_head *head, int **pipes, char **envp, int i);

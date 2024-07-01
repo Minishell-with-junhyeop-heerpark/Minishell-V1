@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 16:08:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/31 21:25:51 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/07/01 17:40:17 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,5 +100,5 @@ void	make_temp(char *limiter, char *file_name)
 	else if (pid == 0)
 		make_infile(limiter, file_name);
 	else
-		wait_process(1);
+		wait_process(1, pid);
 }
