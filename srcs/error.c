@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 06:30:07 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/07/01 18:01:31 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/07/01 22:57:17 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ void	print_error(char *cmd, char *input, char *msg, int exit_status)
 void	print_bash_error(char *input, char *msg, int exit_status)
 {
 	if (input == NULL)
-		ft_printf("minishell: %s: %s\n", "", msg);
+		printf("minishell: %s: %s\n", "", msg);
 	else
-		ft_printf("minishell: %s: %s\n", input, msg);
+		printf("minishell: %s: %s\n", input, msg);
 	g_exit_status = exit_status;
 }
 
