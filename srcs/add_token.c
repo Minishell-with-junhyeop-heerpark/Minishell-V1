@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_token.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 17:25:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/06/02 03:36:48 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/07/01 13:07:55 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void 	add_token(t_token **lst, char *cmd)
 	s = 0;
 	q_flag = 0;
 	dq_flag = 0;
-	printf("add_token : %s\n", cmd);
+	// printf("add_token : %s\n", cmd);
 	if (!cmd)
 		return ;
 	while (cmd[i])

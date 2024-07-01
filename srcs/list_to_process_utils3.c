@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 21:53:55 by heerpark          #+#    #+#             */
-/*   Updated: 2024/06/01 20:06:50 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/07/01 13:08:33 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,7 +256,7 @@ void	fill_elem(t_head *head, t_token *temp, t_process *process, char **cmd)
 	// 	printf(".... %s %d %d\n", a->cmd, a->redir_flag, a->quote_flag);
 	// 	a = a->next;
 	// }
-	printf(".... |\n");
+	// printf(".... |\n");
 	// printf("filter next : %s\n")
 	while (filtered)
 	{

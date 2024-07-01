@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_space.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 22:41:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/06/02 03:33:27 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/07/01 13:08:21 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,7 +185,7 @@ t_token	*split_space(char *cmd, char space)
 	v = (t_split_var){NULL, NULL, 0, 0, 0, 0, 0};
 	v.dquote = 0;
 	v.quote = 0;
-	printf("split_space: %s\n", cmd);
+	// printf("split_space: %s\n", cmd);
 	while (v.flag == 0 && cmd[v.i])
 	{
 		while (cmd[v.start] == space)	// 맨앞 공백 넘김
@@ -200,13 +200,13 @@ t_token	*split_space(char *cmd, char space)
 		v.start = v.i;
 	}
 
-	t_token *a = v.lst;
-	while (a)
-	{
-		printf(".... %s %d %d\n", a->cmd, a->redir_flag, a->quote_flag);
-		a = a->next;
-	}
-	printf(".... |\n");
+	// t_token *a = v.lst;
+	// while (a)
+	// {
+	// 	printf(".... %s %d %d\n", a->cmd, a->redir_flag, a->quote_flag);
+	// 	a = a->next;
+	// }
+	// printf(".... |\n");
 
 	return (v.lst);
 }
