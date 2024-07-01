@@ -70,9 +70,11 @@ heredoc 경로를 temp 로 할지 현재 폴더로 할지 정하기.
 
 3. echo echo a | ./minishell 에서 프로세스 잘 닫히게하기
    << end | cat 에서 cat의 교착 없애기
-   << HERE_DOC > a.txt | cat a.txt | wc -l
+   << HERE_DOC > a.txt | cat a.txt | wc -l   --> 해결
 
 4. << end | cat | cat 이런거 실행되어야 하는데 내꺼는 << end에서 nocmd로 받아서 뒤에거도 실행이안됨.
 
 5. pipe가 process실행전에 터져있는 경우들이 있다. 그런 경우에는  dup인자를 받아서 -1인치 체크해보자
 -> head > 1 조기 종료 되는 부분을 없애고 파이프 지우는걸 clear에서 하자 !.
+
+* 지금 << heredoc 이런거 실행할 때 no_cmd에서 127 에러 주는데 이거 잘 체크해서 에러 안주게 바꾸자.
