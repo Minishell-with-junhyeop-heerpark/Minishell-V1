@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 14:21:01 by heerpark          #+#    #+#             */
-/*   Updated: 2024/07/01 17:38:11 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/07/02 13:52:50 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,14 @@ int	make_exit_status(int statloc)
 	if ((statloc & 255) == 0)
 		return ((statloc >> 8) & 255);
 	return ((statloc & 127) + 128);
+}
+
+void	update_exit_status(int pid, int last_pid, int status)
+{
+	if (pid == last_pid)
+		g_exit_status = status;
+	else
+		g_exit_status = 0;
 }
 
 void	wait_process(int child_num, int last_pid)
@@ -35,13 +43,11 @@ void	wait_process(int child_num, int last_pid)
 			perror_exit("wait error");
 		else if (WIFSIGNALED(org_status))
 		{
-			if (pid == last_pid)
-				g_exit_status = status;
+			update_exit_status(pid, last_pid, status);
 		}
 		else if (WIFEXITED(org_status))
 		{
-			if (pid == last_pid)
-				g_exit_status = WEXITSTATUS(org_status);
+			update_exit_status(pid, last_pid, status);
 		}
 		count++;
 	}
