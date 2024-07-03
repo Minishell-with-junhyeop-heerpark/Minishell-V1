@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 21:53:55 by heerpark          #+#    #+#             */
-/*   Updated: 2024/07/03 16:40:26 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/07/03 17:54:09 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,13 +121,13 @@ int	no_cmd(t_head *head, t_process *process)
 		if (check_redir_heredoc(process) == 1)
 			process->is_error = 42;
 		else if (check_redir_heredoc(process) == -1)
-		{
 			process->is_error = 1;
-		}
 		else
 			process->is_error = 127;
-		if (*(process->cmd) == '\n')
+		if (*(process->cmd) == '\n' && check_redir_heredoc(process) != -1)
+		{
 			print_bash_error(process->exec_cmd[0], "command not found", 127);
+		}
 		process->exec_path = NULL;
 		return (1);
 	}
