@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:05:39 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/07/03 19:11:22 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/07/03 20:31:25 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	ft_export_ext(t_head *head, t_list *env, int op, t_process *process)
 	char	*key;
 	char	*value;
 
-	tmp = process->filtered;
+	tmp = process->filtered->next;
 	while (tmp)
 	{
 		cmd = tmp->cmd;
@@ -111,8 +111,6 @@ void	ft_export(t_head *head, char **exec_cmd, t_process *process)
 	t_list	*tmp;
 
 	(void)exec_cmd;
-	printf("exec_cmd : %s\n", *exec_cmd);
-	// printf("filtered token : %s\n", he);
 	if (process->filtered->next == NULL)
 	{
 		show_export(head);
