@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 21:53:55 by heerpark          #+#    #+#             */
-/*   Updated: 2024/07/03 21:15:14 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/07/03 21:31:23 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ char	*add_env(char *cmd, t_list *env, int *ind, int *cnt)
 		error_msg(0, NULL);
 	changed = replace_cmd(cmd, key, value, ind);
 	*ind = *ind + (ft_strlen(value) - 1 - ft_strlen(key));
+	if (*ind < 0)
+		*ind = 0;
 	*cnt = *cnt + (ft_strlen(value) - 1 - ft_strlen(key));
 	free(key);
 	free(value);
