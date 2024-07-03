@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 20:03:35 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/30 14:48:24 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/07/03 19:21:12 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,5 @@ void	exit_signal(void)
 	ft_printf("\033[1A");
 	ft_printf("\033[10C");
 	ft_printf(" exit\n");
-	exit(255);
+	exit(0);
 }
