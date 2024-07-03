@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 21:53:55 by heerpark          #+#    #+#             */
-/*   Updated: 2024/07/03 20:15:16 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/07/03 21:16:28 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ char	*add_exit_status(char *cmd, int *ind, int *cnt)
 	free(cmd);
 	free(str_exit);
 	*cnt = *cnt + (ft_strlen(str_exit) - 2);
-	*ind = 0;
+	*ind = *ind + (ft_strlen(str_exit) - 2);
 	return (changed);
 }
 
@@ -179,6 +179,7 @@ char	*dquote_parsing(char *str, t_process *process, int *ind)
 	env = process->env->next;
 	while (str[i])
 	{
+		// printf("%s\n", &str[i]);
 		if (str[i] == '\"')
 			break ;
 		if (str[i] == '$' && str[i + 1] == '?')
@@ -193,7 +194,7 @@ char	*dquote_parsing(char *str, t_process *process, int *ind)
 			i++;
 	}
 	str = replace_str(str, i, *ind);
-	*ind = *ind + cnt;
+	*ind = i;
 	return (str);
 }
 

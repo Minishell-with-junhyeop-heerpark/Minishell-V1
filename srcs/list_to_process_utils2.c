@@ -6,11 +6,23 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 21:53:55 by heerpark          #+#    #+#             */
-/*   Updated: 2024/07/03 20:02:42 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/07/03 21:15:14 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+
+int	key_isalnum(char c)
+{
+	if (c >= '0' && c <= '9')
+		return (1);
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+		return (1);
+	if (c == '_')
+		return (1);
+	return (0);
+}
 
 char	*getkey(char *str)
 {
@@ -21,7 +33,7 @@ char	*getkey(char *str)
 	n = 0;
 	i = 0;
 	while (str[n] && str[n] != '$' && str[n] != '\'' && str[n] != '\"' \
-	&& str[n] != ' ')
+	&& str[n] != ' ' && key_isalnum(str[n]))
 		n++;
 	dest = (char *)malloc(sizeof(char) * n + 1);
 	while (i < n)
