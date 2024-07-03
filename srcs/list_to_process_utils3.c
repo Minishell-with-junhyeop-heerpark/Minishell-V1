@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 21:53:55 by heerpark          #+#    #+#             */
-/*   Updated: 2024/07/03 21:44:10 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/07/03 21:52:45 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,8 +179,8 @@ char	*dquote_parsing(char *str, t_process *process, int *ind)
 	env = process->env->next;
 	while (str[i])
 	{
-		printf("%s\n", &str[i]);
-		printf("%s\n\n", str);
+		// printf("%s\n", &str[i]);
+		// printf("%s\n\n", str);
 		if (str[i] == '\"')
 			break ;
 		if (str[i] == '$' && str[i + 1] == '?')
@@ -195,7 +195,7 @@ char	*dquote_parsing(char *str, t_process *process, int *ind)
 			i++;
 	}
 	str = replace_str(str, i, *ind);
-	*ind = i;
+	*ind = i - 2;
 	return (str);
 }
 
