@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:05:39 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/07/03 19:11:22 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/07/03 20:26:03 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,6 @@ void	ft_export(t_head *head, char **exec_cmd, t_process *process)
 	t_list	*tmp;
 
 	(void)exec_cmd;
-	printf("exec_cmd : %s\n", *exec_cmd);
-	// printf("filtered token : %s\n", he);
 	if (process->filtered->next == NULL)
 	{
 		show_export(head);

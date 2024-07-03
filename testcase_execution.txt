@@ -8,7 +8,6 @@ echo $USERname
 echo $USER name
 echo "$USER na"me
 echo '$USER na'me
-						echo "$$USER"
 echo hi$USER
 echo hi"$USER"
 echo $USEEER
@@ -19,6 +18,7 @@ echo "$USER ?"
 ls
 ls -l
 ls -al
+								./wtf -> echo $? = 127
 // quit, 반환값 테스트
 ./minishell
 quit 113
