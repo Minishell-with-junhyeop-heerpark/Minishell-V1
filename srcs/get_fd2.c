@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 21:22:40 by heerpark          #+#    #+#             */
-/*   Updated: 2024/07/01 17:55:20 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/07/03 14:31:16 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	get_infile(t_head *head, t_process *process, char *file_name)
 	{
 		head->get_error = 1;
 		process->is_error = 1;
+		g_exit_status = 1;
 		ft_printf("minishell: %s: No such file or directory\n", file_name);
 	}
 	return (fd);
@@ -37,6 +38,7 @@ int	get_heredoc(t_head *head, t_process *process, char *limiter)
 	{
 		head->get_error = 1;
 		process->is_error = 1;
+		g_exit_status = 1;
 	}
 	return (fd);
 }
@@ -50,6 +52,7 @@ int	get_outfile(t_head *head, t_process *process, char *file_name)
 	{
 		head->get_error = 1;
 		process->is_error = 1;
+		g_exit_status = 1;
 		ft_printf("minishell: %s: No such file or directory\n", file_name);
 	}
 	return (fd);
@@ -64,6 +67,7 @@ int	get_append(t_head *head, t_process *process, char *file_name)
 	{
 		head->get_error = 1;
 		process->is_error = 1;
+		g_exit_status = 1;
 		ft_printf("minishell: %s: No such file or directory\n", file_name);
 	}
 	return (fd);
