@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 22:41:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/06/02 03:33:27 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/07/03 20:16:57 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ char	*make_cmd(char *cmd, t_split_var *sv, char q)
 	p_cmd[v.ind] = 0;
 	sv->i = v.i;
 	// sv->start = v.i;
-	printf("cmd : %s\n", p_cmd);
-	printf("cmd[i] : %c\n", cmd[v.i]);
+	// printf("cmd : %s\n", p_cmd);
+	// printf("cmd[i] : %c\n", cmd[v.i]);
 	return (p_cmd);
 }
 
@@ -185,7 +185,6 @@ t_token	*split_space(char *cmd, char space)
 	v = (t_split_var){NULL, NULL, 0, 0, 0, 0, 0};
 	v.dquote = 0;
 	v.quote = 0;
-	printf("split_space: %s\n", cmd);
 	while (v.flag == 0 && cmd[v.i])
 	{
 		while (cmd[v.start] == space)	// 맨앞 공백 넘김
@@ -200,13 +199,13 @@ t_token	*split_space(char *cmd, char space)
 		v.start = v.i;
 	}
 
-	t_token *a = v.lst;
-	while (a)
-	{
-		printf(".... %s %d %d\n", a->cmd, a->redir_flag, a->quote_flag);
-		a = a->next;
-	}
-	printf(".... |\n");
+	// t_token *a = v.lst;
+	// while (a)
+	// {
+	// 	printf(".... %s %d %d\n", a->cmd, a->redir_flag, a->quote_flag);
+	// 	a = a->next;
+	// }
+	// printf(".... |\n");
 
 	return (v.lst);
 }

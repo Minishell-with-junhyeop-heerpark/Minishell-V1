@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 21:53:55 by heerpark          #+#    #+#             */
-/*   Updated: 2024/07/03 20:11:00 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/07/03 20:15:16 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,7 +250,6 @@ char	*token_to_cmd(char *str, t_process *process)
 	i = 0;
 	while (str[i])
 	{
-		printf("str:%s %d\n",str, i);
 		if (str[i] == '\'')
 			str = quote_parsing(str, &i);
 		else if (str[i] == '\"')
@@ -308,13 +307,13 @@ void	fill_elem(t_head *head, t_token *temp, t_process *process, char **cmd)
 	flag = 0;
 	is_filename = 0;
 	filtered = filtering(temp, process, cmd);
-	t_token *a = filtered;
-	while (a)
-	{
-		printf(".... %s %d %d\n", a->cmd, a->redir_flag, a->quote_flag);
-		a = a->next;
-	}
-	printf(".... |\n");
+	// t_token *a = filtered;
+	// while (a)
+	// {
+	// 	printf(".... %s %d %d\n", a->cmd, a->redir_flag, a->quote_flag);
+	// 	a = a->next;
+	// }
+	// printf(".... |\n");
 	while (filtered)
 	{
 		if (is_filename == 1)
@@ -326,7 +325,7 @@ void	fill_elem(t_head *head, t_token *temp, t_process *process, char **cmd)
 		else if (filtered->redir_flag == 0)
 		{
 			// concat_cmd(temp, process, cmd, &temp_str);
-			printf("filler->cmd: %s\n", filtered->cmd);
+			// printf("filler->cmd: %s\n", filtered->cmd);
 			my_strjoin(cmd, ft_strdup(filtered->cmd));
 			my_strjoin(cmd, ft_strdup("\n"));
 		}

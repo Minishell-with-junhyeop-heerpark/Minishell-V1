@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 17:25:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/06/02 03:36:48 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/07/03 20:16:42 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ void 	add_token(t_token **lst, char *cmd)
 	s = 0;
 	q_flag = 0;
 	dq_flag = 0;
-	printf("add_token : %s\n", cmd);
 	if (!cmd)
 		return ;
 	while (cmd[i])
@@ -103,12 +102,10 @@ void 	add_token(t_token **lst, char *cmd)
 		my_quote_check(cmd[i], &q_flag, &dq_flag); // quote 체크
 		if (is_redir(cmd[i]) && !q_flag && !dq_flag)
 		{
-			printf("reidr len: %zu\n", ft_strlen(&cmd[i]));
 			if (i - s > 0)
 				ft_token_add(lst, token_new(ft_strndup(&cmd[s], i - s), 0));
 			ft_token_add(lst, token_new(ft_strndup(&cmd[i], redir_size(&cmd[i])), 1));
 			i += redir_size(&cmd[i]);
-			printf("reidr size: %d\n", i);
 			s = i;
 		}
 		else
