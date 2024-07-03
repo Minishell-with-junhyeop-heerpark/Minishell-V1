@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   processes_exe.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:11:25 by heerpark          #+#    #+#             */
-/*   Updated: 2024/07/03 15:19:42 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/07/03 19:13:48 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	run_cmd(t_head *head, char **envp, int i)
 	}
 	if (is_builtin(head->processes[i]->exec_cmd))
 	{
-		run_builtin(head, head->processes[i]->exec_cmd);
+		run_builtin(head, head->processes[i]->exec_cmd, head->processes[i]);
 		exit(g_exit_status);
 	}
 	if (is_filepath(head->processes[i]->exec_cmd))
@@ -67,7 +67,7 @@ void	start_process(t_head *head, char **envp)
 	if (is_builtin(head->processes[0]->exec_cmd))
 	{
 		set_inout(head->processes[0]);
-		run_builtin(head, head->processes[0]->exec_cmd);
+		run_builtin(head, head->processes[0]->exec_cmd, head->processes[0]);
 		return ;
 	}
 	pid = fork();

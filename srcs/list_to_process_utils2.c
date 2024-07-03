@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 21:53:55 by heerpark          #+#    #+#             */
-/*   Updated: 2024/06/01 19:58:12 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/07/03 20:02:42 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ char	*getkey(char *str)
 
 	n = 0;
 	i = 0;
-	while (str[n] && str[n] != '$' && str[n] != '\'' && str[n] != '\"')
+	while (str[n] && str[n] != '$' && str[n] != '\'' && str[n] != '\"' \
+	&& str[n] != ' ')
 		n++;
 	dest = (char *)malloc(sizeof(char) * n + 1);
 	while (i < n)
@@ -76,19 +77,19 @@ char	*replace_cmd(char *cmd, char *key, char *value, int *ind)
 	return (new_cmd);
 }
 
-char	*apply_env(char *cmd, t_list *env, int *ind)
+char	*add_env(char *cmd, t_list *env, int *ind, int *cnt)
 {
 	char	*changed;
 	char	*key;
 	char	*value;
 
 	key = getkey(&cmd[*ind + 1]);
-	printf("key: %s\n",key);
 	value = env_find_value(key, env);
 	if (!value)
 		error_msg(0, NULL);
 	changed = replace_cmd(cmd, key, value, ind);
-	*ind = *ind + ft_strlen(value);
+	*ind = *ind + (ft_strlen(value) - 1 - ft_strlen(key));
+	*cnt = *cnt + (ft_strlen(value) - 1 - ft_strlen(key));
 	free(key);
 	free(value);
 	free(cmd);

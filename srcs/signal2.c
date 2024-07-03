@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 20:03:35 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/06/02 00:02:24 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/07/03 19:19:57 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,5 @@ void	exit_signal(void)
 	printf("\033[1A");
 	printf("\033[10C");
 	printf(" exit\n");
-	exit(255);
+	exit(0);
 }

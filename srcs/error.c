@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 06:30:07 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/07/03 16:06:43 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/07/03 17:58:56 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	print_bash_error(char *input, char *msg, int exit_status)
 	else
 		printf("minishell: %s: %s\n", input, msg);
 	g_exit_status = exit_status;
-	printf("hello\n");
+	// printf("hello\n");
 }
 
 int	error_check(t_head *head, int close_pipes)

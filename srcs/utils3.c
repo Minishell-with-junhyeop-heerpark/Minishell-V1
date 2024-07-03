@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 21:13:55 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/07/03 16:14:22 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/07/03 17:03:03 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_head	*init_head(char **envp, int argc, char **argv)
 	if (!head)
 		error_msg(0, NULL);
 	head->get_error = 0;
-	head->filtered = (t_list *)malloc(sizeof(t_list));
+	head->filtered = NULL;
 	head->top = NULL;
 	head->data->envp = NULL;
 	head->size = 0;

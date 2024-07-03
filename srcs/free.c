@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 17:50:59 by heerpark          #+#    #+#             */
-/*   Updated: 2024/07/03 16:06:52 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/07/03 17:50:21 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	free_process(t_process *process)
 		free(process->exec_path);
 	if (process->exec_cmd != NULL)
 		free_splited(process->exec_cmd);
+	if (process->filtered != NULL)
+		free_token(process->filtered);
 }
 
 void	close_fds(t_process *process)

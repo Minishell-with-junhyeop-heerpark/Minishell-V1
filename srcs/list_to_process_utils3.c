@@ -6,11 +6,45 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 21:53:55 by heerpark          #+#    #+#             */
-/*   Updated: 2024/07/03 16:13:26 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/07/03 19:58:03 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+void	filter_lst_add(t_head *head, t_list *new)
+{
+	t_list	*tmp;
+
+	tmp = head->filtered;
+	if (tmp == NULL)
+	{
+		head->filtered = new;
+		return ;
+	}
+	else if (tmp == NULL && new == NULL)
+		return ;
+	else
+	{
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = new;
+		new->prev = tmp;
+	}
+}
+
+t_list	*list_new(t_token *token)
+{
+	t_list	*newnode;
+
+	newnode = (t_list *)malloc(sizeof(t_list));
+	if (!newnode)
+		error_msg(0, NULL);
+	newnode->next = NULL;
+	newnode->prev = NULL;
+	newnode->token = token;
+	return (newnode);
+}
 
 char	*apply_exit_status(char *cmd, int *ind)
 {
@@ -36,7 +70,7 @@ char	*apply_exit_status(char *cmd, int *ind)
 	changed[i] = 0;
 	free(cmd);
 	free(str_exit);
-	*ind = *ind + 2;
+	*ind = *ind + ft_strlen(str_exit) - 2;
 	return (changed);
 }
 
@@ -85,8 +119,25 @@ void	concat_cmd(t_token *temp, t_process *process, char **cmd, char **str)
 	}
 }
 
+char	*apply_env(char *cmd, t_list *env, int *ind)
+{
+	char	*changed;
+	char	*key;
+	char	*value;
 
-char	*add_exit_status(char *cmd, int *ind)
+	key = getkey(&cmd[*ind + 1]);
+	value = env_find_value(key, env);
+	if (!value)
+		error_msg(0, NULL);
+	changed = replace_cmd(cmd, key, value, ind);
+	*ind = *ind + (ft_strlen(value) - 1 - ft_strlen(key));
+	free(key);
+	free(value);
+	free(cmd);
+	return (changed);
+}
+
+char	*add_exit_status(char *cmd, int *ind, int *cnt)
 {
 	char	*changed;
 	char	*str_exit;
@@ -110,7 +161,8 @@ char	*add_exit_status(char *cmd, int *ind)
 	changed[i] = 0;
 	free(cmd);
 	free(str_exit);
-	// *ind = *ind + 2;
+	*cnt = *cnt + (ft_strlen(str_exit) - 2);
+	*ind = 0;
 	return (changed);
 }
 
@@ -118,8 +170,10 @@ char	*add_exit_status(char *cmd, int *ind)
 char	*dquote_parsing(char *str, t_process *process, int *ind)
 {
 	int 		i;
-	t_list	*env;
+	int			cnt;
+	t_list		*env;
 
+	cnt = 0;
 	*ind = *ind + 1;
 	i = *ind;
 	env = process->env->next;
@@ -129,20 +183,19 @@ char	*dquote_parsing(char *str, t_process *process, int *ind)
 			break ;
 		if (str[i] == '$' && str[i + 1] == '?')
 		{
-			str = add_exit_status(str, &i);
+			str = add_exit_status(str, &i, &cnt);
 		}
 		else if (str[i] == '$' && key_check(str[i + 1]) && str[i + 1] != '\"')
 		{
-			str = apply_env(str, env, &i);
+			str = add_env(str, env, &i, &cnt);
 		}
 		else
 			i++;
 	}
 	str = replace_str(str, i, *ind);
-	*ind = 0;
+	*ind = *ind + cnt;
 	return (str);
 }
-
 
 char	*replace_str(char *str, int end, int start)
 {
@@ -183,7 +236,7 @@ char	*quote_parsing(char *str, int *ind)
 	str = replace_str(str, i, *ind);
 	// ft_token_add(&filtered, token_new(ft_strndup(str, i - 2), 0));
 	// my_strjoin(&tmp, ft_strndup(&str[1], i - 1));
-	*ind = 0;
+	// *ind -= 2;
 	return (str);
 }
 
@@ -197,6 +250,7 @@ char	*token_to_cmd(char *str, t_process *process)
 	i = 0;
 	while (str[i])
 	{
+		printf("str:%s %d\n",str, i);
 		if (str[i] == '\'')
 			str = quote_parsing(str, &i);
 		else if (str[i] == '\"')
@@ -207,14 +261,16 @@ char	*token_to_cmd(char *str, t_process *process)
 			str = apply_env(str, env, &i);
 		else
 			i++;
+		if (i < 0)
+			i = 0;
 	}
 	return str;
 }
 
 // 토큰이랑 cmd함께 만들기?
-t_token	*filtering(t_token *token, t_process *process, char **cmd, t_head *head)
+t_token	*filtering(t_token *token, t_process *process, char **cmd)
 {
-	t_token	*filtered;
+	t_token		*filtered;
 	char		*str;
 	char		*tmp;
 
@@ -235,7 +291,9 @@ t_token	*filtering(t_token *token, t_process *process, char **cmd, t_head *head)
 		token = token->next;
 		free(tmp);
 	}
-	head->filtered->token = filtered;
+	// printf("ih\n");
+	// filter_lst_add(head, list_new(filtered));
+	process->filtered = filtered;
 	return (filtered);
 }
 // echo 'a''b''c''d'''sdf''''''''df''''
@@ -249,15 +307,14 @@ void	fill_elem(t_head *head, t_token *temp, t_process *process, char **cmd)
 
 	flag = 0;
 	is_filename = 0;
-	filtered = filtering(temp, process, cmd, head);
-	// t_token *a = head->filtered->token;
-	// while (a)
-	// {
-	// 	printf(".... %s %d %d\n", a->cmd, a->redir_flag, a->quote_flag);
-	// 	a = a->next;
-	// }
+	filtered = filtering(temp, process, cmd);
+	t_token *a = filtered;
+	while (a)
+	{
+		printf(".... %s %d %d\n", a->cmd, a->redir_flag, a->quote_flag);
+		a = a->next;
+	}
 	printf(".... |\n");
-	// printf("filter next : %s\n")
 	while (filtered)
 	{
 		if (is_filename == 1)
@@ -269,6 +326,7 @@ void	fill_elem(t_head *head, t_token *temp, t_process *process, char **cmd)
 		else if (filtered->redir_flag == 0)
 		{
 			// concat_cmd(temp, process, cmd, &temp_str);
+			printf("filler->cmd: %s\n", filtered->cmd);
 			my_strjoin(cmd, ft_strdup(filtered->cmd));
 			my_strjoin(cmd, ft_strdup("\n"));
 		}

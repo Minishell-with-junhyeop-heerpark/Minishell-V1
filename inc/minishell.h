@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/07/03 16:05:54 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/07/03 19:54:24 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ typedef struct s_process
 	char	*exec_path;
 	char	**exec_cmd;
 	t_list	*env;
+	t_token	*filtered;
 }	t_process;
 
 typedef struct s_data //heredoc 파일 경로 여기로 옮기기.
@@ -202,7 +203,7 @@ char		*getkey(char *str);
 char		*env_find_value(char *key, t_list *envp);
 void		replace_value(char *new_cmd, int *ind, char *value);
 char		*replace_cmd(char *cmd, char *key, char *value, int *ind);
-char		*apply_env(char *cmd, t_list *env, int *ind);
+char		*add_env(char *cmd, t_list *env, int *ind, int *cnt);
 char		*apply_exit_status(char *cmd, int *ind);
 void		check_env(t_token *token, t_process *process);
 void		concat_cmd(t_token *temp, t_process *process, \
@@ -225,7 +226,7 @@ void		exe(t_head *head, char **envp);
 
 	//builtin.c
 int			is_builtin(char **exec_cmd);
-void		run_builtin(t_head *head, char **exec_cmd);
+void		run_builtin(t_head *head, char **exec_cmd, t_process *process);
 int			is_exit(char **exec_cmd);
 
 	//envpwd.c ft_echo.c
@@ -268,10 +269,10 @@ void		exit_signal(void);
 int			ft_exit(char **exec_cmd);
 
 // ft_export.c
-void		ft_export(t_head *head, char **exec_cmd);
+void		ft_export(t_head *head, char **exec_cmd, t_process *process);
 void		export_update(t_head *head, t_list **lst, char *key, char *value);
 int			get_op(char *cmd);
-void		ft_export_ext(t_head *head, t_list *env, int op);
+void		ft_export_ext(t_head *head, t_list *env, int op, t_process *process);
 
 void		export_add_prev(t_list **lst, t_list *new, t_list **top);
 void		sorting(t_list *t_env, t_list **top);
@@ -291,7 +292,6 @@ void		print_bash_error(char *input, char *msg, int exit_status);
 int			error_msg_ext(int type, t_head *head);
 void		error_msg(int type, t_head *head);
 int			error_check(t_head *head, int close_pipes);
-
 
 //free.c
 void		clear_processes(t_head *head);
@@ -328,10 +328,13 @@ void		redir_err_check(t_token *token, t_head *head);
 t_token		*ft_token_add2(t_token *lst, t_token *new);
 void		add_token2(t_token **lst, char *cmd, int qf);
 
-int		check_redir(char *cmd);
-int		is_redir(char cmd);
-void	my_quote_check(char c, int *q_flag, int *dq_flag);
-int		redir_size(char *cmd);
-char	*replace_str(char *str, int end, int start);
+int			check_redir(char *cmd);
+int			is_redir(char cmd);
+void		my_quote_check(char c, int *q_flag, int *dq_flag);
+int			redir_size(char *cmd);
+char		*replace_str(char *str, int end, int start);
+void		free_filterd(t_head *head);
+void		free_token(t_token *token);
+char		*apply_env(char *cmd, t_list *env, int *ind);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 21:25:38 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/06/02 00:02:24 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/07/03 19:16:09 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	sort_list(t_list *env, t_list **top)
 	t_env = t_env->next;
 	while (t_env)
 	{
-		printf("%s, %s\n", t_env->key, t_env->value);
+		// printf("%s, %s\n", t_env->key, t_env->value);
 		sorting(t_env, top);
 		t_env = t_env->next;
 	}

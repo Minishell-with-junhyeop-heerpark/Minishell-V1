@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 22:43:50 by heerpark          #+#    #+#             */
-/*   Updated: 2024/06/01 14:27:31 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/07/03 17:37:44 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	get_processes(t_head *head, char **envp)
 		processes[i] = get_process(head, node, path);
 		node = node->next;
 		i++;
+		// free_filterd(head);
 	}
 	processes[i] = NULL;
 	if (path)
