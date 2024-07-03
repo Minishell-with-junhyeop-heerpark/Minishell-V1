@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 17:50:59 by heerpark          #+#    #+#             */
-/*   Updated: 2024/07/01 18:04:36 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/07/03 16:39:43 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ void	free_process(t_process *process)
 
 void	close_fds(t_process *process)
 {
-	if (process->re_infile_fd != -42)
+	if (process->re_infile_fd > 0)
 		close(process->re_infile_fd);
-	if (process->re_outfile_fd != -42)
+	if (process->re_outfile_fd > 0)
 		close(process->re_outfile_fd);
-	if (process->re_append_fd != -42)
+	if (process->re_append_fd > 0)
 		close(process->re_append_fd);
-	if (process->heredoc_fd != -42)
+	if (process->heredoc_fd > 0)
 		close(process->heredoc_fd);
 }
 
