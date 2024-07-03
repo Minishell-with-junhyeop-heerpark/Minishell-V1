@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 21:53:55 by heerpark          #+#    #+#             */
-/*   Updated: 2024/07/03 21:52:45 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/07/03 22:05:51 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ char	*apply_env(char *cmd, t_list *env, int *ind)
 	return (changed);
 }
 
-char	*add_exit_status(char *cmd, int *ind, int *cnt)
+char	*add_exit_status(char *cmd, int *ind)
 {
 	char	*changed;
 	char	*str_exit;
@@ -161,7 +161,6 @@ char	*add_exit_status(char *cmd, int *ind, int *cnt)
 	changed[i] = 0;
 	free(cmd);
 	free(str_exit);
-	*cnt = *cnt + (ft_strlen(str_exit) - 2);
 	*ind = *ind + (ft_strlen(str_exit) - 2);
 	return (changed);
 }
@@ -185,16 +184,19 @@ char	*dquote_parsing(char *str, t_process *process, int *ind)
 			break ;
 		if (str[i] == '$' && str[i + 1] == '?')
 		{
-			str = add_exit_status(str, &i, &cnt);
+			str = add_exit_status(str, &i);
 		}
 		else if (str[i] == '$' && key_check(str[i + 1]) && str[i + 1] != '\"')
 		{
-			str = add_env(str, env, &i, &cnt);
+			str = add_env(str, env, &i, *ind);
 		}
 		else
 			i++;
 	}
+	// printf("%d\n", *ind);
 	str = replace_str(str, i, *ind);
+	// printf("dq str:%s\n", str);
+	// printf("i : %d\n", i);
 	*ind = i - 2;
 	return (str);
 }
@@ -253,6 +255,7 @@ char	*token_to_cmd(char *str, t_process *process)
 	i = 0;
 	while (str[i])
 	{
+		// printf("str:%s\n", str);
 		if (str[i] == '\'')
 			str = quote_parsing(str, &i);
 		else if (str[i] == '\"')

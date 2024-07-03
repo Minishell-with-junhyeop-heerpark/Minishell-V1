@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/07/03 20:15:07 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/07/03 22:11:53 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,7 +205,7 @@ char		*getkey(char *str);
 char		*env_find_value(char *key, t_list *envp);
 void		replace_value(char *new_cmd, int *ind, char *value);
 char		*replace_cmd(char *cmd, char *key, char *value, int *ind);
-char		*add_env(char *cmd, t_list *env, int *ind, int *cnt);
+char		*add_env(char *cmd, t_list *env, int *ind, int origin);
 char		*apply_exit_status(char *cmd, int *ind);
 void		check_env(t_token *token, t_process *process);
 void		concat_cmd(t_token *temp, t_process *process, \

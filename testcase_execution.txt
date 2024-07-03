@@ -160,7 +160,7 @@ ENV EXPANSIONS + ESCAPE
  echo test \ test
  echo "test
  echo $TEST
- echo "$TEST"
+ echo "$TEST"  			-x
  echo '$TEST'"
  echo "$TEST$TEST$TEST"
  echo "$TEST$TEST=lol$TEST"
@@ -172,11 +172,11 @@ ENV EXPANSIONS + ESCAPE
 image
  echo "$=TEST"
  echo "$"
- echo "$?TEST"
+ echo "$?TEST" 			-x
  echo $TEST $TEST
- echo "$1TEST"
+ echo "$1TEST"			-x
 image
- echo "$T1TEST"
+ echo "$T1TEST"			-x
 ENV EXPANSIONS
  export =
  export 1TEST=
