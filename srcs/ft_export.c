@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:05:39 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/07/03 20:26:03 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/07/03 20:33:11 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	ft_export_ext(t_head *head, t_list *env, int op, t_process *process)
 	char	*key;
 	char	*value;
 
-	tmp = process->filtered;
+	tmp = process->filtered->next;
 	while (tmp)
 	{
 		cmd = tmp->cmd;
