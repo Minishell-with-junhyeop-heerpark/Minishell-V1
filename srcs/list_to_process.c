@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 02:15:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/07/03 16:13:47 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/07/03 20:11:16 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,12 @@ void	set_exec(t_head *head, t_process *process, char **path, int i)
 	if (path == NULL || i != -1)
 	{
 		exec_path = NULL;
-		print_bash_error(process->exec_cmd[0], "command not found", 127);
-		head->get_error = 1;
-		process->is_error = 127;
+		if (check_redir_heredoc(process) != -1)
+		{
+			print_bash_error(process->exec_cmd[0], "command not found", 127);
+			head->get_error = 1;
+			process->is_error = 127;
+		}
 		if (process->heredoc_fd != -42)
 			unlink(process->heredoc_filename);
 	}

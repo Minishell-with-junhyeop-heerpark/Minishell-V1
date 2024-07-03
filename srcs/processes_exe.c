@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:11:25 by heerpark          #+#    #+#             */
-/*   Updated: 2024/07/03 19:13:48 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/07/03 20:11:27 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@ void	run_cmd(t_head *head, char **envp, int i)
 	if (head->processes[i]->is_error)
 	{
 		if (head->processes[i]->is_error == 42)
+		{
 			exit(0);
+		}
 		exit(head->processes[i]->is_error);
 	}
 	if (is_builtin(head->processes[i]->exec_cmd))

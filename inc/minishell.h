@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/07/03 19:54:24 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/07/03 20:10:07 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,7 @@ void		free_pipe(int **pipe, int child_num);
 
 	//pipe_control
 void		wait_process(int child_num, int last_pid);
+int			heredoc_wait(void);
 void		first_child(t_head *head, int **pipes, char **envp, int i);
 void		last_child(t_head *head, int **pipes, char **envp, int i);
 void		mid_child(t_head *head, int **pipes, char **envp, int i);
@@ -190,7 +191,7 @@ void		init_fd(t_process *process);
 void		kill_heredoc(t_head *head);
 char		*get_temp_name(void);
 void		make_infile(char *limiter, char *file_name);
-void		make_temp(char *limiter, char *file_name);
+int			make_temp(char *limiter, char *file_name);
 
 	//list_to_processes
 void		fill_elem(t_head *head, t_token *temp, \

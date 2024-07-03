@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 14:21:01 by heerpark          #+#    #+#             */
-/*   Updated: 2024/07/03 14:39:25 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/07/03 16:13:50 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,25 @@ void	wait_process(int child_num, int last_pid)
 		}
 		count++;
 	}
+}
+
+int	heredoc_wait(void)
+{
+	int	status;
+	int	org_status;
+	int	pid;
+
+	pid = wait(&org_status);
+	status = make_exit_status(org_status);
+	if (pid == -1)
+		perror_exit("wait error");
+	else if (WIFSIGNALED(org_status))
+	{
+		g_exit_status = status;
+	}
+	else if (WIFEXITED(org_status))
+	{
+		g_exit_status = status;
+	}
+	return (status);
 }

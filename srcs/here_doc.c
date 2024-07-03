@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 16:08:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/07/03 16:12:33 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/07/03 20:10:34 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,15 +90,21 @@ void	make_infile(char *limiter, char *file_name)
 	exit(0);
 }
 
-void	make_temp(char *limiter, char *file_name)
+int	make_temp(char *limiter, char *file_name)
 {
 	pid_t	pid;
+	int		status;
 
+	pid = 0;
+	status = 0;
 	pid = fork();
 	if (pid == -1)
 		perror_exit("fork error");
 	else if (pid == 0)
 		make_infile(limiter, file_name);
 	else
-		wait_process(1, pid);
+	{
+		status = heredoc_wait();
+	}
+	return (status);
 }

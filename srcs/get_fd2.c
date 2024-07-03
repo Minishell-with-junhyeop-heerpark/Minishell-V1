@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 21:22:40 by heerpark          #+#    #+#             */
-/*   Updated: 2024/07/03 16:12:07 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/07/03 20:10:30 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,14 @@ int	get_heredoc(t_head *head, t_process *process, char *limiter)
 	int	fd;
 
 	process->heredoc_filename = get_temp_name();
-	make_temp(limiter, process->heredoc_filename);
+	if (make_temp(limiter, process->heredoc_filename) == 1)
+	{
+		head->get_error = 1;
+		process->is_error = 1;
+		close(process->heredoc_fd);
+		unlink(process->heredoc_filename);
+		return (-1);
+	}
 	fd = open(process->heredoc_filename, O_RDONLY);
 	if (fd == -1)
 	{
