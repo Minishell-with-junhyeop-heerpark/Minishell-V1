@@ -55,6 +55,7 @@ RM = rm -f
 CFLAGS = -Wall -Wextra -Werror $(foreach D, $(INCDIRS), -I$(D))
 ARFLAGS = rs
 
+# READFLAGS = -lreadline -I/home/linuxbrew/.linuxbrew/opt/readline/include -L/home/linuxbrew/.linuxbrew/opt/readline/lib
 READFLAGS = -lreadline -I/Users/junhyeop/.brew/opt/readline/include -L/Users/junhyeop/.brew/opt/readline/lib #jh cluster
 #READFLAGS = -lreadline -I/opt/homebrew/opt/readline/include -L/opt/homebrew/opt/readline/lib #heerpark notebook
 # READFLAGS = -lreadline -I/Users/heerpark/.brew/opt/readline/include -L/Users/heerpark/.brew/opt/readline/lib #heerpark cluster
@@ -66,7 +67,8 @@ all: $(NAME)
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 $(NAME): $(LIB) $(OBJS)
-		$(CC) -o $(NAME) $(READFLAGS) $(OBJS) -L$(LIBDIR) -l$(LIBNAME)
+		$(CC) -o $(NAME) $(OBJS) -L$(LIBDIR) -l$(LIBNAME) $(READFLAGS)
+# $(CC) -o $(NAME) $(READFLAGS) $(OBJS) -L$(LIBDIR) -l$(LIBNAME)
 
 $(LIB):
 	$(MAKE) -C $(LIBDIR) all

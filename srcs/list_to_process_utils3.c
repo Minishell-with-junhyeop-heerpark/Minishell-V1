@@ -68,9 +68,9 @@ char	*apply_exit_status(char *cmd, int *ind)
 	while (cmd[j])
 		changed[i++] = cmd[j++];
 	changed[i] = 0;
+	*ind = *ind + ft_strlen(str_exit) - 2;
 	free(cmd);
 	free(str_exit);
-	*ind = *ind + ft_strlen(str_exit) - 2;
 	return (changed);
 }
 
@@ -159,9 +159,9 @@ char	*add_exit_status(char *cmd, int *ind)
 	while (cmd[j])
 		changed[i++] = cmd[j++];
 	changed[i] = 0;
+	*ind = *ind + (ft_strlen(str_exit) - 2);
 	free(cmd);
 	free(str_exit);
-	*ind = *ind + (ft_strlen(str_exit) - 2);
 	return (changed);
 }
 
@@ -169,17 +169,13 @@ char	*add_exit_status(char *cmd, int *ind)
 char	*dquote_parsing(char *str, t_process *process, int *ind)
 {
 	int 		i;
-	int			cnt;
 	t_list		*env;
 
-	cnt = 0;
 	*ind = *ind + 1;
 	i = *ind;
 	env = process->env->next;
 	while (str[i])
 	{
-		// printf("%s\n", &str[i]);
-		// printf("%s\n\n", str);
 		if (str[i] == '\"')
 			break ;
 		if (str[i] == '$' && str[i + 1] == '?')
@@ -192,12 +188,11 @@ char	*dquote_parsing(char *str, t_process *process, int *ind)
 		}
 		else
 			i++;
+		if (i <= 0)
+			i = *ind;
 	}
-	// printf("%d\n", *ind);
 	str = replace_str(str, i, *ind);
-	// printf("dq str:%s\n", str);
-	// printf("i : %d\n", i);
-	*ind = i - 2;
+	*ind = i - 1;
 	return (str);
 }
 
@@ -241,7 +236,7 @@ char	*quote_parsing(char *str, int *ind)
 	// ft_token_add(&filtered, token_new(ft_strndup(str, i - 2), 0));
 	// my_strjoin(&tmp, ft_strndup(&str[1], i - 1));
 	// *ind -= 2;
-	*ind = i;
+	*ind = i - 1;
 	return (str);
 }
 
@@ -249,6 +244,7 @@ char	*quote_parsing(char *str, int *ind)
 char	*token_to_cmd(char *str, t_process *process)
 {
 	int			i;
+	int 		max;
 	t_list	*env;
 
 	env = process->env->next;
@@ -268,6 +264,9 @@ char	*token_to_cmd(char *str, t_process *process)
 			i++;
 		if (i < 0)
 			i = 0;
+		max = ft_strlen(str);
+		if (i >= max)
+			break ;
 	}
 	return str;
 }
