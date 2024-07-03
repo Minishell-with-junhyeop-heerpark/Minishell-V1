@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 21:53:55 by heerpark          #+#    #+#             */
-/*   Updated: 2024/07/03 21:28:12 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/07/03 21:44:10 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,6 +239,7 @@ char	*quote_parsing(char *str, int *ind)
 	// ft_token_add(&filtered, token_new(ft_strndup(str, i - 2), 0));
 	// my_strjoin(&tmp, ft_strndup(&str[1], i - 1));
 	// *ind -= 2;
+	*ind = i;
 	return (str);
 }
 
