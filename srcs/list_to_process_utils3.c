@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_to_process_utils3.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 21:53:55 by heerpark          #+#    #+#             */
-/*   Updated: 2024/06/01 20:06:50 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/07/03 16:13:26 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -285,7 +285,14 @@ int	no_cmd(t_head *head, t_process *process)
 {
 	if (process->exec_cmd[0] == NULL)
 	{
+		printf("no_cmd!\n");
 		head->get_error = 1;
+		if (check_redir_heredoc(process) == 1)
+			process->is_error = 42;
+		else if (check_redir_heredoc(process) == -1)
+			process->is_error = 1;
+		else
+			process->is_error = 127;
 		if (*(process->cmd) == '\n')
 			print_bash_error(process->exec_cmd[0], "command not found", 127);
 		process->exec_path = NULL;

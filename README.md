@@ -73,12 +73,25 @@ heredoc 경로를 temp 로 할지 현재 폴더로 할지 정하기.
 
 # hyunjunl의 도움으로 올바른 길을 가기 위한 시작된 AGU 대장정.
 1. lsof | grep ^minishell 로 하면 fd 0,1,2 이외에도 뭐가 떠있음. 누수인거 같으니까 확인해보자.
+# hyunjunl의 도움으로 올바른 길을 가기 위해 시작된 AGU 대장정. 1, 2, 4, 5
+1. lsof | grep ^minishell 로 하면 fd 0,1,2 이외에도 뭐가 떠있음. 누수인거 같으니까 확인해보자. --> original fd 복사해 놓은 것들.
+
 2. wait process는 가장 마지막 프로세스의 exit status를 가져와야하는데 내껀 wait으로 받아서 그냥 종료된 순서로 받아옴.
+
 3. echo echo a | ./minishell 에서 프로세스 잘 닫히게하기
    << end | cat 에서 cat의 교착 없애기
-   << HERE_DOC > a.txt | cat a.txt | wc -l
+   << HERE_DOC > a.txt | cat a.txt | wc -l 
 
 4. << end | cat | cat 이런거 실행되어야 하는데 내꺼는 << end에서 nocmd로 받아서 뒤에거도 실행이안됨.
 
 5. pipe가 process실행전에 터져있는 경우들이 있다. 그런 경우에는  dup인자를 받아서 -1인치 체크해보자
+-> head > 1 조기 종료 되는 부분을 없애고 파이프 지우는걸 clear에서 하자 !.
 
+6. 지금 << heredoc 이런거 실행할 때 no_cmd에서 127 에러 주는데 이거 잘 체크해서 에러 안주게 바꾸자.
+
+qq < z, cat < z 이런것도 bash 는 1인데 내껀 127, ls -la | wtf 도 현재 0 뜸,
+--> bash의 경우 < z 에서 명령어가 끝나기에 1 이 뜨는거임 내꺼는 < z, qq 도 체크
+
+cat < z 처럼 < 오류 체킹이 잘 안됨
+
+7. 현재 < ㄷ

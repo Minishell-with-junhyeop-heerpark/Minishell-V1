@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/06/02 01:00:21 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/07/03 16:05:54 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ typedef struct s_process
 	int		re_outfile_fd;
 	int		re_append_fd;
 	int		heredoc_fd;
+	int		is_error;
 	char	*heredoc_filename;
 	char	*cmd;
 	char	*exec_path;
@@ -102,6 +103,7 @@ typedef struct s_data //heredoc 파일 경로 여기로 옮기기.
 {
 	int		original_stdin;
 	int		original_stdout;
+	int		last_pid;
 	int		**pipes;
 	char	*home;
 	char	**envp;
@@ -135,7 +137,7 @@ typedef struct s_value_var
 	int	s;
 }	t_value_var;
 
-extern int			g_exit_status;
+extern int	g_exit_status;
 int			check_white_space(char *str);
 
 //parsing func
@@ -168,7 +170,7 @@ int			**make_pipe(int child_num);
 void		free_pipe(int **pipe, int child_num);
 
 	//pipe_control
-void		wait_process(int child_num);
+void		wait_process(int child_num, int last_pid);
 void		first_child(t_head *head, int **pipes, char **envp, int i);
 void		last_child(t_head *head, int **pipes, char **envp, int i);
 void		mid_child(t_head *head, int **pipes, char **envp, int i);
@@ -177,10 +179,10 @@ void		close_all_pipes(int **pipes, int n);
 
 	//get_fd
 int			check_redir_heredoc(t_process *process);
-int			get_infile(t_head *head, char *file_name);
+int			get_infile(t_head *head, t_process *process, char *file_name);
 int			get_heredoc(t_head *head, t_process *process, char *limiter);
-int			get_outfile(t_head *head, char *file_name);
-int			get_append(t_head *head, char *file_name);
+int			get_outfile(t_head *head, t_process *process, char *file_name);
+int			get_append(t_head *head, t_process *process, char *file_name);
 void		init_fd(t_process *process);
 
 	//here_doc

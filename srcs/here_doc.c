@@ -6,11 +6,11 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 16:08:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/06/02 00:02:24 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/07/03 16:12:33 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../inc/minishell.h"
 
 char	*get_temp_name(void)
 {
@@ -100,5 +100,5 @@ void	make_temp(char *limiter, char *file_name)
 	else if (pid == 0)
 		make_infile(limiter, file_name);
 	else
-		wait_process(1);
+		wait_process(1, pid);
 }

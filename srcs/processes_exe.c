@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:11:25 by heerpark          #+#    #+#             */
-/*   Updated: 2024/06/01 23:34:23 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/07/03 15:19:42 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,12 @@ void	set_inout(t_process *process)
 
 void	run_cmd(t_head *head, char **envp, int i)
 {
+	if (head->processes[i]->is_error)
+	{
+		if (head->processes[i]->is_error == 42)
+			exit(0);
+		exit(head->processes[i]->is_error);
+	}
 	if (is_builtin(head->processes[i]->exec_cmd))
 	{
 		run_builtin(head, head->processes[i]->exec_cmd);
@@ -65,6 +71,7 @@ void	start_process(t_head *head, char **envp)
 		return ;
 	}
 	pid = fork();
+	head->data->last_pid = pid;
 	if (pid == -1)
 		perror_exit("start_process fork error");
 	else if (pid == 0)
@@ -84,6 +91,8 @@ void	start_processes(t_head *head, char **envp, int **pipes)
 	while (i < head->size)
 	{
 		pid = fork();
+		if (i == head->size - 1)
+			head->data->last_pid = pid;
 		if (pid == -1)
 			perror_exit("fork error");
 		else if (pid == 0)
@@ -111,16 +120,16 @@ void	exe(t_head *head, char **envp)
 			return ;
 		start_process(head, envp);
 		if (!is_builtin(head->processes[0]->exec_cmd))
-			wait_process(head->size);
+			wait_process(head->size, head->data->last_pid);
 	}
 	else
 	{
 		head->data->pipes = make_pipe(head->size - 1);
 		get_processes(head, envp);
-		if (error_check(head, 1))
-			return ;
+		// if (error_check(head, 1))
+		// 	return ;
 		start_processes(head, envp, head->data->pipes);
-		wait_process(head->size);
+		wait_process(head->size, head->data->last_pid);
 	}
 
 	set_signal();

@@ -6,11 +6,11 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 02:15:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/06/01 20:06:59 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/07/03 16:13:47 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../inc/minishell.h"
 
 void	set_builtin(t_head *head, t_process *process, char **exec_cmd)
 {
@@ -58,6 +58,7 @@ void	set_exec(t_head *head, t_process *process, char **path, int i)
 		exec_path = NULL;
 		print_bash_error(process->exec_cmd[0], "command not found", 127);
 		head->get_error = 1;
+		process->is_error = 127;
 		if (process->heredoc_fd != -42)
 			unlink(process->heredoc_filename);
 	}
