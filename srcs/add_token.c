@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_token.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: junhyeong <junhyeong@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 17:25:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/06/02 03:36:48 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/07/07 17:55:53 by junhyeong        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,24 +31,6 @@ int	check_redir(char *cmd)
 		i++;
 	}
 	return (0);
-}
-
-int	add_token_ext(t_token **lst, char *cmd, int *i, int *s)
-{
-	if (is_redir(cmd[*i]) && *i > *s)
-	{
-		ft_token_add(lst, token_new(ft_strndup(&cmd[*s], *i - *s), 0));
-		*s = *i;
-	}
-	if (is_redir(cmd[*i]) && *i <= *s)
-	{
-		while (is_redir(cmd[*i]))
-			*i += 1;
-		ft_token_add(lst, token_new(ft_strndup(&cmd[*s], *i - *s), 1));
-		*s = *i;
-		return (0);
-	}
-	return (1);
 }
 
 int	redir_size(char *cmd)
@@ -83,103 +65,30 @@ void	my_quote_check(char c, int *q_flag, int *dq_flag)
 	}
 }
 
-// cmd 분리하면서 `>` 신경쓰기? -> quote 내부이면 신경 안씀!
-void 	add_token(t_token **lst, char *cmd)
+void	add_token(t_token **lst, char *cmd)
 {
-	int	i;
-	int q_flag;
-	int dq_flag;
-	int	s;
+	t_token_var	t;
 
-	i = 0;
-	s = 0;
-	q_flag = 0;
-	dq_flag = 0;
-	printf("add_token : %s\n", cmd);
+	t = (t_token_var){0, 0, 0, 0};
 	if (!cmd)
 		return ;
-	while (cmd[i])
+	while (cmd[t.i])
 	{
-		my_quote_check(cmd[i], &q_flag, &dq_flag); // quote 체크
-		if (is_redir(cmd[i]) && !q_flag && !dq_flag)
+		my_quote_check(cmd[t.i], &t.q_flag, &t.dq_flag);
+		if (is_redir(cmd[t.i]) && !t.q_flag && !t.dq_flag)
 		{
-			printf("reidr len: %zu\n", ft_strlen(&cmd[i]));
-			if (i - s > 0)
-				ft_token_add(lst, token_new(ft_strndup(&cmd[s], i - s), 0));
-			ft_token_add(lst, token_new(ft_strndup(&cmd[i], redir_size(&cmd[i])), 1));
-			i += redir_size(&cmd[i]);
-			printf("reidr size: %d\n", i);
-			s = i;
+			if (t.i - t.s > 0)
+				ft_token_add(lst, token_new(ft_strndup(&cmd[t.s], \
+				t.i - t.s), 0));
+			ft_token_add(lst, token_new(ft_strndup(&cmd[t.i], \
+			redir_size(&cmd[t.i])), 1));
+			t.i += redir_size(&cmd[t.i]);
+			t.s = t.i;
 		}
 		else
-			i++;
+			t.i++;
 	}
-	if (i - s > 0)
-		ft_token_add(lst, token_new(ft_strndup(&cmd[s], i - s), 0));
-	free(cmd);
-}
-
-// void	add_token(t_token **lst, char *cmd)
-// {
-// 	int		s;
-// 	int		i;
-
-// 	i = 0;
-// 	s = 0;
-// 	// if (!check_redir(cmd)) // 나중에 quote 제거할 때 해주기 
-// 	// {
-// 	// 	ft_token_add(lst, token_new(ft_strdup(cmd), 0, 0));
-// 	// 	free(cmd);
-// 	// 	return ;
-// 	// }
-// 	while (cmd[i])
-// 	{
-// 		if (add_token_ext(lst, cmd, &i, &s))
-// 			i++;
-// 	}
-// 	if (i > s)
-// 		ft_token_add(lst, token_new(ft_strndup(&cmd[s], i - s), 0, 0));
-// 	free(cmd);
-// }
-
-int	add_token_ext2(t_token **lst, char *cmd, int *i, int *s)
-{
-	if (is_redir(cmd[*i]) && *i > *s)
-	{
-		ft_token_add(lst, token_new(ft_strndup(&cmd[*s], *i - *s), 0));
-		*s = *i;
-	}
-	if (is_redir(cmd[*i]) && *i <= *s)
-	{
-		while (is_redir(cmd[*i]))
-			*i += 1;
-		ft_token_add(lst, token_new(ft_strndup(&cmd[*s], *i - *s), 1));
-		*s = *i;
-		return (0);
-	}
-	return (1);
-}
-
-void	add_token2(t_token **lst, char *cmd, int qf)
-{
-	int		s;
-	int		i;
-
-	i = 0;
-	s = 0;
-	(void)qf; // 
-	if (!check_redir(cmd))
-	{
-		ft_token_add(lst, token_new(ft_strdup(cmd), 0));
-		free(cmd);
-		return ;
-	}
-	while (cmd[i])
-	{
-		if (add_token_ext2(lst, cmd, &i, &s))
-			i++;
-	}
-	if (i > s)
-		ft_token_add(lst, token_new(ft_strndup(&cmd[s], i - s), 0));
+	if (t.i - t.s > 0)
+		ft_token_add(lst, token_new(ft_strndup(&cmd[t.s], t.i - t.s), 0));
 	free(cmd);
 }

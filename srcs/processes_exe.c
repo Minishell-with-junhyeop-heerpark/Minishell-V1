@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   processes_exe.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeong <junhyeong@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:11:25 by heerpark          #+#    #+#             */
-/*   Updated: 2024/06/01 23:34:23 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/07/07 18:01:20 by junhyeong        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,15 @@ void	set_inout(t_process *process)
 
 void	run_cmd(t_head *head, char **envp, int i)
 {
+	if (head->processes[i]->is_error)
+	{
+		if (head->processes[i]->is_error == 42)
+			exit(0);
+		exit(head->processes[i]->is_error);
+	}
 	if (is_builtin(head->processes[i]->exec_cmd))
 	{
-		run_builtin(head, head->processes[i]->exec_cmd);
+		run_builtin(head, head->processes[i]->exec_cmd, head->processes[i]);
 		exit(g_exit_status);
 	}
 	if (is_filepath(head->processes[i]->exec_cmd))
@@ -44,7 +50,8 @@ void	run_cmd(t_head *head, char **envp, int i)
 		if (execve(head->processes[i]->exec_cmd[0], \
 		head->processes[i]->exec_cmd, envp) == -1)
 		{
-			perror_exit("file exe execve error");
+			perror("file exe execve error");
+			exit(127);
 		}
 	}
 	if (execve(head->processes[i]->exec_path, \
@@ -61,10 +68,11 @@ void	start_process(t_head *head, char **envp)
 	if (is_builtin(head->processes[0]->exec_cmd))
 	{
 		set_inout(head->processes[0]);
-		run_builtin(head, head->processes[0]->exec_cmd);
+		run_builtin(head, head->processes[0]->exec_cmd, head->processes[0]);
 		return ;
 	}
 	pid = fork();
+	head->data->last_pid = pid;
 	if (pid == -1)
 		perror_exit("start_process fork error");
 	else if (pid == 0)
@@ -84,6 +92,8 @@ void	start_processes(t_head *head, char **envp, int **pipes)
 	while (i < head->size)
 	{
 		pid = fork();
+		if (i == head->size - 1)
+			head->data->last_pid = pid;
 		if (pid == -1)
 			perror_exit("fork error");
 		else if (pid == 0)
@@ -111,17 +121,14 @@ void	exe(t_head *head, char **envp)
 			return ;
 		start_process(head, envp);
 		if (!is_builtin(head->processes[0]->exec_cmd))
-			wait_process(head->size);
+			wait_process(head->size, head->data->last_pid);
 	}
 	else
 	{
 		head->data->pipes = make_pipe(head->size - 1);
 		get_processes(head, envp);
-		if (error_check(head, 1))
-			return ;
 		start_processes(head, envp, head->data->pipes);
-		wait_process(head->size);
+		wait_process(head->size, head->data->last_pid);
 	}
-
 	set_signal();
 }

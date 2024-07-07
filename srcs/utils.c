@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeong <junhyeong@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 18:17:19 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/06/01 19:21:23 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/07/07 18:07:59 by junhyeong        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../inc/minishell.h"
 
 void	free_token(t_token *token)
 {
@@ -26,21 +26,37 @@ void	free_token(t_token *token)
 	}
 }
 
+// void	free_filterd(t_head *head)
+// {
+// 	t_token	*tmp;
+// 	t_token *rmv;
+
+// 	tmp = head->filtered->token;
+// 	while (tmp)
+// 	{
+// 		rmv = tmp;
+// 		tmp = tmp->next;
+// 		if (rmv->cmd)
+// 			free(rmv->cmd);
+// 		free(rmv);
+// 	}
+// 	head->filtered->token = NULL;
+// }
+
 void	free_filterd(t_head *head)
 {
-	t_token	*tmp;
-	t_token *rmv;
+	t_list	*tmp;
+	t_list	*rmv;
 
-	tmp = head->filtered->token;
+	tmp = head->filtered;
 	while (tmp)
 	{
 		rmv = tmp;
 		tmp = tmp->next;
-		if (rmv->cmd)
-			free(rmv->cmd);
+		free_token(rmv->token);
 		free(rmv);
 	}
-	head->filtered->token = NULL;
+	head->filtered = NULL;
 }
 
 void	free_list(t_head *head, char *str)
@@ -59,7 +75,7 @@ void	free_list(t_head *head, char *str)
 	}
 	if (head->processes)
 		clear_processes(head);
-	if (head->error_str)		
+	if (head->error_str)
 		free(head->error_str);
 	head->error_str = NULL;
 	head->size = 0;

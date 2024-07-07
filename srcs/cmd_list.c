@@ -56,7 +56,6 @@ void	ft_token_add(t_token **lst, t_token *new)
 	t_token	*tmp;
 
 	tmp = *lst;
-	// printf("new: %s\n", new->cmd);
 	if (new == NULL)
 		error_msg(0, NULL);
 	if (tmp == NULL)
@@ -70,29 +69,6 @@ void	ft_token_add(t_token **lst, t_token *new)
 		tmp->next = new;
 		new->prev = tmp;
 	}
-}
-
-t_token	*ft_token_add2(t_token *lst, t_token *new)
-{
-	t_token	*tmp;
-
-	tmp = lst;
-	printf("x : %p\n", tmp);
-	printf("new: %s\n", new->cmd);
-	if (new == NULL)
-		error_msg(0, NULL);
-	if (tmp == NULL)
-	{
-		return (new);
-	}
-	else
-	{
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = new;
-		new->prev = tmp;
-	}
-	return (lst);
 }
 
 void	ft_lst_add(t_head *head, t_list *new)

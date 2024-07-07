@@ -6,11 +6,11 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 02:15:47 by heerpark          #+#    #+#             */
-/*   Updated: 2024/06/01 20:06:59 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/07/03 20:11:16 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../inc/minishell.h"
 
 void	set_builtin(t_head *head, t_process *process, char **exec_cmd)
 {
@@ -28,7 +28,7 @@ void	set_builtin(t_head *head, t_process *process, char **exec_cmd)
 void	check_path(t_process *process, char **path, char **exec_path, int *i)
 {
 	char	*test_path;
-	
+
 	if (path)
 	{
 		while (path[*i])
@@ -56,8 +56,12 @@ void	set_exec(t_head *head, t_process *process, char **path, int i)
 	if (path == NULL || i != -1)
 	{
 		exec_path = NULL;
-		print_bash_error(process->exec_cmd[0], "command not found", 127);
-		head->get_error = 1;
+		if (check_redir_heredoc(process) != -1)
+		{
+			print_bash_error(process->exec_cmd[0], "command not found", 127);
+			head->get_error = 1;
+			process->is_error = 127;
+		}
 		if (process->heredoc_fd != -42)
 			unlink(process->heredoc_filename);
 	}
@@ -70,8 +74,6 @@ void	set_process(t_head *head, t_process *process, char **path)
 
 	exec_cmd = ft_split(process->cmd, '\n');
 	process->exec_cmd = exec_cmd;
-	// while (*exec_cmd)
-	// printf("exec_cmd: %s\n", *exec_cmd++);
 	if (no_cmd(head, process))
 		return ;
 	if (is_builtin(exec_cmd))

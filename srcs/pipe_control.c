@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_control.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeong <junhyeong@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 13:13:59 by heerpark          #+#    #+#             */
-/*   Updated: 2024/06/01 23:34:39 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/07/07 18:17:19 by junhyeong        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	first_child(t_head *head, int **pipes, char **envp, int i)
 
 void	last_child(t_head *head, int **pipes, char **envp, int i)
 {
-	
 	dup2(pipes[i - 1][0], STDIN_FILENO);
 	close_all_pipes(pipes, head->size - 1);
 	set_inout(head->processes[i]);

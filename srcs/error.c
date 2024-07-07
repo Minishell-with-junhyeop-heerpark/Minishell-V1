@@ -3,20 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: junhyeong <junhyeong@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 06:30:07 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/06/02 00:02:24 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/07/07 18:04:27 by junhyeong        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../inc/minishell.h"
 
 int	error_msg_ext(int type, t_head *head)
 {
 	if (type == 11)
 	{
-		printf("minishell: syntax error near unexpected token `%s'\n", head->error_str);
+		printf("minishell: syntax error near unexpected token `%s'\n", \
+		head->error_str);
 		g_exit_status = 258;
 		return (0);
 	}
@@ -67,7 +68,6 @@ void	print_bash_error(char *input, char *msg, int exit_status)
 	else
 		printf("minishell: %s: %s\n", input, msg);
 	g_exit_status = exit_status;
-	printf("hello\n");
 }
 
 int	error_check(t_head *head, int close_pipes)

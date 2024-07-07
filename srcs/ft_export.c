@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:05:39 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/30 15:56:10 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/07/03 20:33:11 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,14 @@ int	get_op(char *cmd)
 	return (0);
 }
 
-void	ft_export_ext(t_head *head, t_list *env, int op)
+void	ft_export_ext(t_head *head, t_list *env, int op, t_process *process)
 {
 	t_token	*tmp;
 	char	*cmd;
 	char	*key;
 	char	*value;
 
-	tmp = head->filtered->token->next;
+	tmp = process->filtered->next;
 	while (tmp)
 	{
 		cmd = tmp->cmd;
@@ -106,19 +106,19 @@ void	ft_export_ext(t_head *head, t_list *env, int op)
 	}
 }
 
-void	ft_export(t_head *head, char **exec_cmd)
+void	ft_export(t_head *head, char **exec_cmd, t_process *process)
 {
 	t_list	*tmp;
 
 	(void)exec_cmd;
-	if (head->filtered->token->next == NULL)
+	if (process->filtered->next == NULL)
 	{
 		show_export(head);
 		g_exit_status = 0;
 		return ;
 	}
 	tmp = head->data->env->next;
-	ft_export_ext(head, tmp, 0);
+	ft_export_ext(head, tmp, 0, process);
 	if (head->get_error)
 		g_exit_status = 1;
 }

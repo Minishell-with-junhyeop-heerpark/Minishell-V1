@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   list_to_process_utils1.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: junhyeong <junhyeong@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 21:53:55 by heerpark          #+#    #+#             */
-/*   Updated: 2024/06/01 16:41:36 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/07/07 17:46:54 by junhyeong        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../inc/minishell.h"
 
 void	init_process(t_process *process)
 {
@@ -18,10 +18,12 @@ void	init_process(t_process *process)
 	process->cmd = NULL;
 	process->exec_cmd = NULL;
 	process->exec_cmd = NULL;
+	process->is_error = 0;
 }
 
-int	get_redir_flag(char	*token)
+int	get_redir_flag(char	*token, int *is_filename)
 {
+	*is_filename = 1;
 	if (ft_strlen(token) == 1)
 	{
 		if (ft_strncmp(token, ">", 2) == 0)
@@ -81,21 +83,20 @@ void	close_unused_output(t_process *process)
 void	set_fd(t_head *head, t_process *process, \
 		char *file_name, int redir_flag)
 {
-	// printf("redir flag %d\n", redir_flag);
 	if (redir_flag == 1)
 	{
 		close_unused_output(process);
-		process->re_outfile_fd = get_outfile(head, file_name);
+		process->re_outfile_fd = get_outfile(head, process, file_name);
 	}
 	else if (redir_flag == 2)
 	{
 		close_unused_output(process);
-		process->re_append_fd = get_append(head, file_name);
+		process->re_append_fd = get_append(head, process, file_name);
 	}
 	else if (redir_flag == 3)
 	{
 		close_unused_input(process);
-		process->re_infile_fd = get_infile(head, file_name);
+		process->re_infile_fd = get_infile(head, process, file_name);
 	}
 	else if (redir_flag == 4)
 	{

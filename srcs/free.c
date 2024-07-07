@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42.kr>          +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 17:50:59 by heerpark          #+#    #+#             */
-/*   Updated: 2024/05/28 13:27:43 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/07/03 20:10:25 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../inc/minishell.h"
 
 void	free_process(t_process *process)
 {
@@ -22,17 +22,19 @@ void	free_process(t_process *process)
 		free(process->exec_path);
 	if (process->exec_cmd != NULL)
 		free_splited(process->exec_cmd);
+	if (process->filtered != NULL)
+		free_token(process->filtered);
 }
 
 void	close_fds(t_process *process)
 {
-	if (process->re_infile_fd != -42)
+	if (process->re_infile_fd > 0)
 		close(process->re_infile_fd);
-	if (process->re_outfile_fd != -42)
+	if (process->re_outfile_fd > 0)
 		close(process->re_outfile_fd);
-	if (process->re_append_fd != -42)
+	if (process->re_append_fd > 0)
 		close(process->re_append_fd);
-	if (process->heredoc_fd != -42)
+	if (process->heredoc_fd > 0)
 		close(process->heredoc_fd);
 }
 
