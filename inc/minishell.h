@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeong <junhyeong@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/07/03 22:11:53 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/07/07 18:31:49 by junhyeong        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,13 @@ typedef struct s_list
 	struct s_list	*prev;	
 }	t_list;
 
+typedef struct s_token_var {
+	int	i;
+	int	q_flag;
+	int	dq_flag;
+	int	s;
+}	t_token_var;
+
 typedef struct s_process
 {
 	int		re_infile_fd;
@@ -100,7 +107,7 @@ typedef struct s_process
 	t_token	*filtered;
 }	t_process;
 
-typedef struct s_data //heredoc 파일 경로 여기로 옮기기.
+typedef struct s_data
 {
 	int		original_stdin;
 	int		original_stdout;
@@ -208,15 +215,19 @@ char		*replace_cmd(char *cmd, char *key, char *value, int *ind);
 char		*add_env(char *cmd, t_list *env, int *ind, int origin);
 char		*apply_exit_status(char *cmd, int *ind);
 void		check_env(t_token *token, t_process *process);
-void		concat_cmd(t_token *temp, t_process *process, \
-			char **cmd, char **str);
 int			no_cmd(t_head *head, t_process *process);
 void		set_builtin(t_head *head, t_process *process, char **exec_cmd);
 void		set_exec(t_head *head, t_process *process, char **path, int i);
-int			get_redir_flag(char	*token);
+int			get_redir_flag(char	*token, int *is_filename);
 void		set_process(t_head *head, t_process *process, char **path);
 void		init_process(t_process *process);
 t_process	*get_process(t_head *head, t_list *line, char **path);
+void		filter_lst_add(t_head *head, t_list *new);
+t_list		*list_new(t_token *token);
+char		*dquote_parsing(char *str, t_process *process, int *ind);
+char		*quote_parsing(char *str, int *ind);
+char		*token_to_cmd(char *str, t_process *process);
+t_token		*filtering(t_token *token, t_process *process, char **cmd);
 
 //processes_exe
 void		run_cmd(t_head *head, char **envp, int i);
@@ -274,7 +285,8 @@ int			ft_exit(char **exec_cmd);
 void		ft_export(t_head *head, char **exec_cmd, t_process *process);
 void		export_update(t_head *head, t_list **lst, char *key, char *value);
 int			get_op(char *cmd);
-void		ft_export_ext(t_head *head, t_list *env, int op, t_process *process);
+void		ft_export_ext(t_head *head, t_list *env, \
+int op, t_process *process);
 
 void		export_add_prev(t_list **lst, t_list *new, t_list **top);
 void		sorting(t_list *t_env, t_list **top);
@@ -327,9 +339,6 @@ void		redir_err_str(char *cmd, t_head *head);
 int			redir_err_flag(char *cmd, t_head *head);
 void		redir_err_check(t_token *token, t_head *head);
 
-t_token		*ft_token_add2(t_token *lst, t_token *new);
-void		add_token2(t_token **lst, char *cmd, int qf);
-
 int			check_redir(char *cmd);
 int			is_redir(char cmd);
 void		my_quote_check(char c, int *q_flag, int *dq_flag);
@@ -338,5 +347,6 @@ char		*replace_str(char *str, int end, int start);
 void		free_filterd(t_head *head);
 void		free_token(t_token *token);
 char		*apply_env(char *cmd, t_list *env, int *ind);
+char		*add_exit_status(char *cmd, int *ind);
 
 #endif

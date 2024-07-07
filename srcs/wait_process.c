@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wait_process.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeong <junhyeong@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 14:21:01 by heerpark          #+#    #+#             */
-/*   Updated: 2024/07/03 16:13:50 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/07/07 18:05:11 by junhyeong        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ void	update_exit_status(int pid, int last_pid, int status)
 {
 	if (pid == last_pid)
 		g_exit_status = status;
-	// else
-	// 	g_exit_status = 0;
 }
 
 void	wait_process(int child_num, int last_pid)

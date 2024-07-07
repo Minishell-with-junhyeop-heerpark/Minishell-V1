@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: junhyeong <junhyeong@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 06:30:07 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/07/03 20:17:04 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/07/07 18:04:27 by junhyeong        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ int	error_msg_ext(int type, t_head *head)
 {
 	if (type == 11)
 	{
-		printf("minishell: syntax error near unexpected token `%s'\n", head->error_str);
+		printf("minishell: syntax error near unexpected token `%s'\n", \
+		head->error_str);
 		g_exit_status = 258;
 		return (0);
 	}

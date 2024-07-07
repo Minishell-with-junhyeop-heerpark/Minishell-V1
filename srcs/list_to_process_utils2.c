@@ -3,47 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   list_to_process_utils2.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: junhyeong <junhyeong@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 21:53:55 by heerpark          #+#    #+#             */
-/*   Updated: 2024/07/03 22:10:04 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/07/07 18:35:02 by junhyeong        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
-int	key_isalnum(char c)
-{
-	if (c >= '0' && c <= '9')
-		return (1);
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
-		return (1);
-	if (c == '_')
-		return (1);
-	return (0);
-}
-
-char	*getkey(char *str)
-{
-	char	*dest;
-	int		n;
-	int		i;
-
-	n = 0;
-	i = 0;
-	while (str[n] && str[n] != '$' && str[n] != '\'' && str[n] != '\"' \
-	&& str[n] != ' ' && key_isalnum(str[n]))
-		n++;
-	dest = (char *)malloc(sizeof(char) * n + 1);
-	while (i < n)
-	{
-		dest[i] = str[i];
-		i++;
-	}
-	dest[i] = 0;
-	return (dest);
-}
 
 char	*env_find_value(char *key, t_list *envp)
 {

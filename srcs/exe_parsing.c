@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: junhyeong <junhyeong@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 22:43:50 by heerpark          #+#    #+#             */
-/*   Updated: 2024/07/03 17:37:44 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/07/07 18:15:12 by junhyeong        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ void	get_processes(t_head *head, char **envp)
 		processes[i] = get_process(head, node, path);
 		node = node->next;
 		i++;
-		// free_filterd(head);
 	}
 	processes[i] = NULL;
 	if (path)
