@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   processes_exe.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeong <junhyeong@student.42.fr>        +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 03:11:25 by heerpark          #+#    #+#             */
-/*   Updated: 2024/07/07 18:01:20 by junhyeong        ###   ########.fr       */
+/*   Updated: 2024/07/08 19:14:15 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	run_cmd(t_head *head, char **envp, int i)
 		head->processes[i]->exec_cmd, envp) == -1)
 		{
 			perror("file exe execve error");
-			exit(127);
+			exit(126);
 		}
 	}
 	if (execve(head->processes[i]->exec_path, \
