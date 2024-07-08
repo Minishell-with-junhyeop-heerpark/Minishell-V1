@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_to_process_utils4.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeong <junhyeong@student.42.fr>        +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 17:26:53 by junhyeong         #+#    #+#             */
-/*   Updated: 2024/07/07 17:41:48 by junhyeong        ###   ########.fr       */
+/*   Updated: 2024/07/08 20:21:10 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	*quote_parsing(char *str, int *ind)
 	return (str);
 }
 
-char	*token_to_cmd(char *str, t_process *process)
+char	*token_to_cmd(char *str, t_process *process, t_token **filtered)
 {
 	int		i;
 	int		max;
@@ -95,7 +95,7 @@ char	*token_to_cmd(char *str, t_process *process)
 		else if (str[i] == '$' && str[i + 1] == '?')
 			str = apply_exit_status(str, &i);
 		else if (str[i] == '$' && key_check(str[i + 1]) && str[i + 1] != '\"')
-			str = apply_env(str, env, &i);
+			str = apply_env(str, env, &i, filtered);
 		else
 			i++;
 		if (i < 0)
@@ -118,7 +118,7 @@ t_token	*filtering(t_token *token, t_process *process, char **cmd)
 	while (token)
 	{
 		str = ft_strdup(token->cmd);
-		tmp = token_to_cmd(str, process);
+		tmp = token_to_cmd(str, process, &filtered);
 		if (!tmp)
 			error_msg(1, NULL);
 		if (token->redir_flag)

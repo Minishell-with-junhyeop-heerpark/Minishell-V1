@@ -3,42 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   list_to_process_utils3.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeong <junhyeong@student.42.fr>        +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 21:53:55 by heerpark          #+#    #+#             */
-/*   Updated: 2024/07/07 17:49:11 by junhyeong        ###   ########.fr       */
+/*   Updated: 2024/07/08 20:29:09 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	check_env(t_token *token, t_process *process)
+int	check_changed(char **str, int start, int end, t_token **filtered)
 {
-	t_list	*env;
-	char	*cmd;
-	int		i;
+	char	*tmp;
+	char	*changed;
+	int		flag;
 
-	i = 0;
-	cmd = token->cmd;
-	env = process->env->next;
-	while (cmd[i] != 0)
+	flag = 0;
+	changed = *str;
+	while (start < end)
 	{
-		if (cmd[i] == '$' && cmd[i + 1] == '?')
+		if (changed[start] == ' ')
 		{
-			cmd = apply_exit_status(cmd, &i);
-			token->cmd = cmd;
+			ft_token_add(filtered, \
+			token_new(ft_strndup(changed, start), 0));
+			tmp = changed;
+			changed = ft_strdup(&changed[start + 1]);
+			free(tmp);
+			start = 0;
+			flag = 1;
 		}
-		else if (cmd[i] == '$' && key_check(cmd[i + 1]) && cmd[i + 1] != '\"')
-		{
-			cmd = apply_env(token->cmd, env, &i);
-			token->cmd = cmd;
-		}
-		else
-			i++;
+		start++;
 	}
+	*str = changed;
+	return (flag);
 }
 
-char	*apply_env(char *cmd, t_list *env, int *ind)
+char	*apply_env(char *cmd, t_list *env, int *ind, t_token **filtered)
 {
 	char	*changed;
 	char	*key;
@@ -49,7 +49,10 @@ char	*apply_env(char *cmd, t_list *env, int *ind)
 	if (!value)
 		error_msg(0, NULL);
 	changed = replace_cmd(cmd, key, value, ind);
-	*ind = *ind + (ft_strlen(value) - 1 - ft_strlen(key));
+	if (check_changed(&changed, *ind, *ind + ft_strlen(value), filtered))
+		*ind = 0;
+	else
+		*ind = *ind + (ft_strlen(value) - 1 - ft_strlen(key));
 	free(key);
 	free(value);
 	free(cmd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeong <junhyeong@student.42.fr>        +#+  +:+       +#+        */
+/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/07/07 18:31:49 by junhyeong        ###   ########.fr       */
+/*   Updated: 2024/07/08 20:22:55 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,7 +226,7 @@ void		filter_lst_add(t_head *head, t_list *new);
 t_list		*list_new(t_token *token);
 char		*dquote_parsing(char *str, t_process *process, int *ind);
 char		*quote_parsing(char *str, int *ind);
-char		*token_to_cmd(char *str, t_process *process);
+char		*token_to_cmd(char *str, t_process *process, t_token **filtered);
 t_token		*filtering(t_token *token, t_process *process, char **cmd);
 
 //processes_exe
@@ -346,7 +346,7 @@ int			redir_size(char *cmd);
 char		*replace_str(char *str, int end, int start);
 void		free_filterd(t_head *head);
 void		free_token(t_token *token);
-char		*apply_env(char *cmd, t_list *env, int *ind);
+char		*apply_env(char *cmd, t_list *env, int *ind, t_token **filtered);
 char		*add_exit_status(char *cmd, int *ind);
 
 #endif

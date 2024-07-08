@@ -6,7 +6,7 @@
 /*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 21:34:06 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/07/03 19:06:51 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/07/08 20:29:29 by junhyeop         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,23 @@
 int	check_disit(char *cmd)
 {
 	int	i;
+	int	s;
 
-	i = 0;
+	s = 0;
+	while (cmd[s] == ' ')
+		s++;
+	i = s;
 	if (cmd[i] != '-' && !ft_isdigit(cmd[i]))
 		return (0);
 	i++;
 	while (cmd[i])
 	{
-		if (!ft_isdigit(cmd[i]))
+		if (!ft_isdigit(cmd[i]) || i - s > 11)
 			return (0);
 		i++;
 	}
+	if (ft_atoi(&cmd[s]) == 0 && cmd[s] != 0)
+		return (0);
 	return (1);
 }
 
