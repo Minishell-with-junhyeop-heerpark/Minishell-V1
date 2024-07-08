@@ -1,4 +1,6 @@
-# 🚧 진행중..
+# ⚒️ Minishell-V1 완성 2024-07-09
+---
+
 # heerpark To do list
 
 <signal>
