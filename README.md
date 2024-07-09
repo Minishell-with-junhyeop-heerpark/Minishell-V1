@@ -1,4 +1,6 @@
 # ⚒️ Minishell-V1 완성 2024-07-09
+
+free_filtered, void_argument, 마지막에 head free
 ---
 
 # heerpark To do list

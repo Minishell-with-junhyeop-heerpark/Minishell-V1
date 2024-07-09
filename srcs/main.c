@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeong <junhyeong@student.42.fr>        +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:10:35 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/07/07 18:05:53 by junhyeong        ###   ########.fr       */
+/*   Updated: 2024/07/09 11:13:13 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,13 @@ int	check_white_space(char *str)
 		i++;
 	}
 	return (1);
+}
+
+int	free_org_fd(t_head *head)
+{
+	free(head->data->original_stdin);
+	free(head->data->original_stdin);
+	return (0);
 }
 
 void	void_argument(int argc, char **argv)
@@ -66,5 +73,5 @@ int	main(int argc, char **argv, char **envp)
 			clear(head, str);
 		}
 	}
-	return (0);
+	return (free_org_fd(head));
 }

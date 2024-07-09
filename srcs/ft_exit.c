@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 21:34:06 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/07/08 20:29:29 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/07/09 10:43:30 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	ft_exit(char **exec_cmd)
 	else if (!check_disit(exec_cmd[1]))
 	{
 		printf("minishell: exit: %s: \
-numeric argument required\n", exec_cmd[1]);
+		numeric argument required\n", exec_cmd[1]);
 		exit(255);
 	}
 	printf("exit\n");
