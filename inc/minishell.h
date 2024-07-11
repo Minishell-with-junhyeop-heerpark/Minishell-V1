@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 22:33:50 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/07/08 20:22:55 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/07/09 15:12:17 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -276,7 +276,7 @@ void		temi_print_off(void);
 void		temi_print_on(void);
 void		set_signal_heredoc(void);
 void		do_sigint_heredoc(int signum);
-void		exit_signal(void);
+void		exit_signal(t_head *head);
 
 // ft_exit.c
 int			ft_exit(char **exec_cmd);
@@ -322,7 +322,6 @@ void		temi_print_off(void);
 void		set_signal_heredoc(void);
 void		set_signal_origin(void);
 void		do_sigint_heredoc(int signum);
-void		exit_signal(void);
 void		sig_handler(int signo);
 void		set_signal(void);
 void		temi_print_on(void);

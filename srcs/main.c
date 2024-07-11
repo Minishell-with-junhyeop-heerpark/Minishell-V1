@@ -6,7 +6,7 @@
 /*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:10:35 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/07/09 11:13:13 by heerpark         ###   ########.fr       */
+/*   Updated: 2024/07/09 15:11:58 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,6 @@ int	check_white_space(char *str)
 		i++;
 	}
 	return (1);
-}
-
-int	free_org_fd(t_head *head)
-{
-	free(head->data->original_stdin);
-	free(head->data->original_stdin);
-	return (0);
 }
 
 void	void_argument(int argc, char **argv)
@@ -57,7 +50,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		str = readline("minishell$ ");
 		if (!str)
-			exit_signal();
+			exit_signal(head);
 		else if (*str == '\0' || check_white_space(str))
 			free(str);
 		else
@@ -73,5 +66,5 @@ int	main(int argc, char **argv, char **envp)
 			clear(head, str);
 		}
 	}
-	return (free_org_fd(head));
+	return (0);
 }

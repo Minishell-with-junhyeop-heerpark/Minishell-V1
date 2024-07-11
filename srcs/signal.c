@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeop <junhyeop@student.42.fr>          +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 18:06:54 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/05/30 14:48:35 by junhyeop         ###   ########.fr       */
+/*   Updated: 2024/07/09 19:35:08 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,5 @@ void	temi_print_on(void)
 	tcgetattr(1, &term);
 	term.c_lflag |= (ECHOCTL);
 	tcsetattr(1, 0, &term);
+	signal(SIGQUIT, SIG_DFL);
 }

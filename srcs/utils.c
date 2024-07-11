@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhyeong <junhyeong@student.42.fr>        +#+  +:+       +#+        */
+/*   By: heerpark <heerpark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 18:17:19 by junhyeop          #+#    #+#             */
-/*   Updated: 2024/07/07 18:07:59 by junhyeong        ###   ########.fr       */
+/*   Updated: 2024/07/09 15:07:12 by heerpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,23 +25,6 @@ void	free_token(t_token *token)
 		free(rmv);
 	}
 }
-
-// void	free_filterd(t_head *head)
-// {
-// 	t_token	*tmp;
-// 	t_token *rmv;
-
-// 	tmp = head->filtered->token;
-// 	while (tmp)
-// 	{
-// 		rmv = tmp;
-// 		tmp = tmp->next;
-// 		if (rmv->cmd)
-// 			free(rmv->cmd);
-// 		free(rmv);
-// 	}
-// 	head->filtered->token = NULL;
-// }
 
 void	free_filterd(t_head *head)
 {
