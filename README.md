@@ -1,4 +1,4 @@
-# Let's make our own shell 🖥️
+# Let's make our own shell with C 🖥️
 
 
 https://github.com/user-attachments/assets/9c744f18-aad3-462d-8545-47ba3901006e
