@@ -1,4 +1,4 @@
-# Let's make our own shell with C 🖥️
+# Let's make our own shell 🖥️
 
 
 https://github.com/user-attachments/assets/9c744f18-aad3-462d-8545-47ba3901006e
@@ -7,7 +7,7 @@ https://github.com/user-attachments/assets/9c744f18-aad3-462d-8545-47ba3901006e
 
 ## how to use 📖
 
-After cloning, open a terminal in the project folder and type make to create a minishell file. <br/>
+After cloning, open a terminal in the project folder and type "make" to create a minishell file. <br/>
 Once you've created your minishell file, run it !!
 
 ## Description 📝
