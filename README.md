@@ -16,7 +16,7 @@ You can use the following features !!
 
 1. You can use Linux commands with options. ex) ls, wc, grep ...
 2. You can use builtin commands. ex) echo, pwd, cd ...
-3. Minishell has a working history.
+3. You can use working history.
 4. You can use redirections(<, >, <<, >>) and pipes(|).
-5. You can check exit status with $?. ex) echo $?
+5. You can check exit status with "$?". ex) echo $?
 6. You can send signals by pressing the ctrl+c, ctrl+d, ctrl+\\. And this works exactly the same as it does in bash.
