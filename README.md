@@ -5,6 +5,7 @@ https://github.com/user-attachments/assets/9c744f18-aad3-462d-8545-47ba3901006e
 
 
 
+[Comparison video between Minishell and Bash]
 ## how to use 📖
 
 After cloning, open a terminal in the project folder and type "make" to create a minishell file. <br/>
